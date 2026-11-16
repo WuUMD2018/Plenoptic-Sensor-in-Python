@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="300" viewBox="0 0 1500 300">
+<defs>
+ <linearGradient id="metal" x2="1" y2="1"><stop stop-color="#41516a"/><stop offset=".4" stop-color="#192b42"/><stop offset="1" stop-color="#080f1c"/></linearGradient>
+ <linearGradient id="glass" x2="1" y2="0"><stop stop-color="#60e8ec" stop-opacity=".15"/><stop offset=".45" stop-color="#54d7e9" stop-opacity=".55"/><stop offset="1" stop-color="#9ceaff" stop-opacity=".1"/></linearGradient>
+ <linearGradient id="beam" x2="0" y2="1"><stop stop-color="#4cebd2" stop-opacity=".02"/><stop offset=".5" stop-color="#4cebd2" stop-opacity=".16"/><stop offset="1" stop-color="#4cebd2" stop-opacity=".02"/></linearGradient>
+ <pattern id="holes" width="25" height="19" patternUnits="userSpaceOnUse"><ellipse cx="8" cy="8" rx="2.2" ry="1.2" fill="#53647b" opacity=".35"/></pattern>
+</defs>
+<rect width="1500" height="300" rx="18" fill="#101c2e"/>
+<!-- Optical breadboard and machined posts -->
+<path d="M75 230 L1392 230 L1455 269 L122 269Z" fill="#16263b" stroke="#35465c"/>
+<path d="M75 230 L1392 230 L1455 269 L122 269Z" fill="url(#holes)"/>
+<path d="M122 269 H1455 V278 H122Z" fill="#0a1422"/>
+<g fill="url(#metal)" stroke="#486079">
+ <path d="M321 173H340V239H321Z"/><path d="M293 237H369L385 247H306Z"/>
+ <path d="M932 170H948V237H932Z"/><path d="M903 237H978L994 247H916Z"/>
+ <path d="M1203 168H1221V238H1203Z"/><path d="M1178 238H1250L1264 249H1190Z"/>
+</g>
+<!-- Incident field and rays, illustrative and not to scale -->
+<path d="M85 94H330L730 130L941 92V168L730 130L330 169H85Z" fill="url(#beam)"/>
+<path d="M86 100H330L730 130L941 101L1212 111 M86 130H330L730 130L941 130H1212 M86 161H330L730 130L941 160L1212 149" fill="none" stroke="#55dec7" stroke-width="1.8" opacity=".85"/>
+<path d="M86 114H330L730 130L941 118L1212 126 M86 147H330L730 130L941 143L1212 137" fill="none" stroke="#57c9e3" stroke-width="1" opacity=".55"/>
+<!-- Objective mount and coated glass -->
+<ellipse cx="332" cy="130" rx="30" ry="76" fill="url(#metal)" stroke="#60748f" stroke-width="2"/>
+<ellipse cx="332" cy="130" rx="20" ry="62" fill="url(#glass)" stroke="#80e5ef" stroke-width="1.2"/>
+<path d="M327 74Q306 132 327 188" fill="none" stroke="#b4f4f3" opacity=".7"/>
+<g fill="#9ba9bb"><circle cx="332" cy="61" r="2.7"/><circle cx="332" cy="199" r="2.7"/><circle cx="307" cy="130" r="2.7"/><circle cx="357" cy="130" r="2.7"/></g>
+<path d="M730 65V191" stroke="#f2b464" stroke-dasharray="4 5" opacity=".8"/>
+<circle cx="730" cy="130" r="4" fill="#f1bd79"/>
+<!-- MLA holder and square cell grid -->
+<path d="M918 65L956 75V188L918 178Z" fill="url(#metal)" stroke="#60748f" stroke-width="2"/>
+<path d="M926 80L947 85V172L926 167Z" fill="url(#glass)" stroke="#72d5e6"/>
+<g stroke="#a4edee" stroke-width=".8" opacity=".8">
+ <path d="M933 82V169M940 84V171M926 94L947 99M926 109L947 114M926 124L947 129M926 139L947 144M926 154L947 159"/>
+</g>
+<g fill="#a2b2c2"><circle cx="923" cy="73" r="2"/><circle cx="951" cy="82" r="2"/><circle cx="923" cy="174" r="2"/><circle cx="951" cy="182" r="2"/></g>
+<!-- Sensor and industrial camera body -->
+<path d="M1197 76L1257 66L1313 87V169L1257 190L1197 176Z" fill="url(#metal)" stroke="#5c7087" stroke-width="2"/>
+<path d="M1197 76L1257 91V190L1197 176Z" fill="#13283c" stroke="#617b8d"/>
+<path d="M1205 94L1239 102V161L1205 153Z" fill="#284657" stroke="#f0ba78"/>
+<g stroke="#77cfd2" opacity=".6" stroke-width="1"><path d="M1216 97V155M1228 100V158M1205 108L1239 116M1205 123L1239 131M1205 138L1239 146"/></g>
+<g stroke="#70849a" opacity=".7"><path d="M1265 95L1305 88M1265 103L1305 96M1265 111L1305 104M1265 119L1305 112M1265 127L1305 120M1265 135L1305 128"/></g>
+<circle cx="1291" cy="151" r="3" fill="#5ee2ba"/>
+<!-- Annotation system -->
+<g font-family="Segoe UI,Arial,sans-serif" text-anchor="middle" fill="#c9d9ed" font-size="18">
+ <text x="159" y="47">INPUT BEAM</text><text x="332" y="30">OBJECTIVE</text>
+ <text x="730" y="39" fill="#f2bd7e">SHARED FOCUS</text><text x="940" y="30">SQUARE MLA</text><text x="1251" y="31">CAMERA</text>
+</g>
+<g stroke="#8b9db5" stroke-width="1" fill="none" opacity=".85"><path d="M371 212H903M371 206V218M903 206V218M973 212H1180M973 206V218M1180 206V218"/></g>
+<g fill="#9fb3cb" font-family="Segoe UI,Arial,sans-serif" font-size="17" text-anchor="middle"><text x="636" y="206">f objective + f MLA</text><text x="1075" y="206">f MLA</text></g>
+<text x="1452" y="295" text-anchor="end" fill="#748ba6" font-family="Segoe UI,Arial,sans-serif" font-size="13">Shared-focus Keplerian array · illustrative, not to scale</text>
+</svg>

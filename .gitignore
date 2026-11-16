@@ -1,0 +1,25 @@
+# Local Python environments and caches
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Build outputs
+*.egg-info/
+build/
+dist/
+
+# New local runs; curated examples and demo exports are versioned separately
+example_output/
+
+# Intermediate screen captures; publish only the finished demo media
+docs/media/frames/
+
+# Local operating-system files
+.DS_Store
+Thumbs.db
+desktop.ini

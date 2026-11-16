@@ -1,0 +1,22 @@
+test_export_uses_successful_result_settings_after_input_edits (test_gui.GuiInteractionTests.test_export_uses_successful_result_settings_after_input_edits) ... ok
+test_invalid_zero_and_requested_f_number_warning (test_gui.GuiInteractionTests.test_invalid_zero_and_requested_f_number_warning) ... ok
+test_mode_preview_and_piston_behavior (test_gui.GuiInteractionTests.test_mode_preview_and_piston_behavior) ... ok
+test_slider_anchor_and_explicit_same_value_entry (test_gui.GuiInteractionTests.test_slider_anchor_and_explicit_same_value_entry) ... ok
+test_validation_does_not_replace_single_tab (test_gui.GuiInteractionTests.test_validation_does_not_replace_single_tab) ... ok
+test_worker_delivers_result_without_blocking_the_gui (test_gui.GuiInteractionTests.test_worker_delivers_result_without_blocking_the_gui) ... ok
+test_analytic_intensity_jacobian (test_optics.PropagationTests.test_analytic_intensity_jacobian) ... ok
+test_cancel_before_work (test_optics.PropagationTests.test_cancel_before_work) ... ok
+test_image_only_low_aberration_reconstruction (test_optics.PropagationTests.test_image_only_low_aberration_reconstruction) ... ok
+test_independent_camera_window_reconstruction (test_optics.PropagationTests.test_independent_camera_window_reconstruction) ... ok
+test_independent_pupil_sampling_reconstruction (test_optics.PropagationTests.test_independent_pupil_sampling_reconstruction) ... ok
+test_normalized_intensity_and_piston_invariance (test_optics.PropagationTests.test_normalized_intensity_and_piston_invariance) ... ok
+test_objective_fourier_nyquist_warning (test_optics.PropagationTests.test_objective_fourier_nyquist_warning) ... ok
+test_invalid_zero_and_equal_fnumber_warning (test_optics.WavefrontTests.test_invalid_zero_and_equal_fnumber_warning) ... ok
+test_metric_does_not_hide_amplitude_error (test_optics.WavefrontTests.test_metric_does_not_hide_amplitude_error) ... ok
+test_noll_order_and_phase_range (test_optics.WavefrontTests.test_noll_order_and_phase_range) ... ok
+test_piston_is_explicitly_unobservable (test_optics.WavefrontTests.test_piston_is_explicitly_unobservable) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 4.185s
+
+OK
