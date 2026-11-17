@@ -14,7 +14,7 @@ import numpy as np
 import matplotlib
 matplotlib.use("Agg")
 from matplotlib import pyplot as plt
-from .optics import MODES, Parameters, simulate, validate_all
+from .optics import MODES, Parameters, simulate, validate_all, phase_residual
 
 
 def plot_result(result, destination, title="Plenoptic Studio · image-only wavefront reconstruction"):
@@ -25,12 +25,19 @@ def plot_result(result, destination, title="Plenoptic Studio · image-only wavef
     wf = result.wavefront
     radius = result.metadata["parameters"]["beam_diameter_mm"]/2
     extent = [-radius, radius, -radius, radius]
-    magnitude = max(float(np.max(np.abs(wf.phase[wf.mask]))), .01)
+    wrapped = result.metadata.get("wrapped_phase_comparison", False)
+    truth = np.angle(np.exp(1j*wf.phase)) if wrapped else wf.phase
+    reconstruction = (np.angle(np.exp(1j*result.reconstructed_phase))
+                      if wrapped else result.reconstructed_phase)
+    residual = phase_residual(wf.phase, result.reconstructed_phase, wf.mask, wrapped=wrapped)
+    magnitude = np.pi if wrapped else max(float(np.max(np.abs(truth[wf.mask]))), .01)
     data = [np.log10(result.image/max(float(result.image.max()), 1e-20)+1e-5),
-            np.where(wf.mask, wf.phase, np.nan),
-            np.where(wf.mask, result.reconstructed_phase, np.nan),
-            np.where(wf.mask, result.reconstructed_phase-wf.phase, np.nan)]
+            np.where(wf.mask, truth, np.nan),
+            np.where(wf.mask, reconstruction, np.nan),
+            np.where(wf.mask, residual, np.nan)]
     labels = ["Camera · log₁₀ relative intensity", "Ground truth · rad", "Reconstruction · rad", "Residual · rad"]
+    if wrapped:
+        labels[1:] = ["Input · wrapped rad", "Reconstruction · wrapped rad", "Circular residual · rad"]
     for i, (ax, values, text) in enumerate(zip(axes, data, labels)):
         ax.set_facecolor("#101c2e")
         ax.set_title(text, color="#e5edf8", fontsize=10)
@@ -58,22 +65,27 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=Path("example_output"))
     parser.add_argument("--validate", action="store_true", help="Also run and export all 21 Noll modes")
+    parser.add_argument("--vortex-charge", type=int, choices=range(7), default=0,
+                        help="Add an ideal phase-only Gaussian vortex with integer charge 0–6")
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
     weights = np.zeros(21)
     weights[3], weights[4], weights[7] = 1, .25, .2
-    result = simulate(Parameters(), weights, progress=print)
+    parameters = Parameters(vortex_charge=args.vortex_charge)
+    result = simulate(parameters, weights, progress=print)
     plot_result(result, args.output/"simulation.png")
     np.savez_compressed(args.output/"simulation.npz", camera=result.image,
         truth=result.wavefront.phase, reconstruction=result.reconstructed_phase,
         mask=result.wavefront.mask, intensity=result.wavefront.intensity,
         x_mm=result.wavefront.x_mm, y_mm=result.wavefront.y_mm,
-        coefficients=result.coefficients, truth_coefficients=result.wavefront.coefficients)
+        coefficients=result.coefficients, truth_coefficients=result.wavefront.coefficients,
+        input_vortex_charge=args.vortex_charge,
+        recovered_vortex_charge=result.metadata.get("recovered_vortex_charge", 0))
     (args.output/"simulation.json").write_text(json.dumps({**result.metadata,
         "similarity_pct":result.similarity_pct, "rms_error_rad":result.rms_error_rad,
         "warnings":result.warnings}, indent=2), encoding="utf-8")
     if args.validate:
-        results = validate_all(Parameters(), progress=print)
+        results = validate_all(parameters, progress=print)
         with (args.output/"validation.csv").open("w", newline="", encoding="utf-8") as f:
             writer = csv.writer(f)
             writer.writerow(["Noll index", "mode", "similarity percent", "RMSE rad", "image fit residual", "warnings"])
@@ -84,9 +96,12 @@ def main():
         fig, axes = plt.subplots(21, 3, figsize=(9, 42), layout="constrained")
         for row, (mode, res) in enumerate(zip(MODES, results)):
             wf = res.wavefront
-            vmax = max(np.max(np.abs(wf.phase[wf.mask])), .01)
-            maps = [np.where(wf.mask, wf.phase, np.nan), np.log10(res.image/res.image.max()+1e-5),
-                    np.where(wf.mask, res.reconstructed_phase, np.nan)]
+            wrapped = res.metadata.get("wrapped_phase_comparison", False)
+            truth = np.angle(np.exp(1j*wf.phase)) if wrapped else wf.phase
+            rec = np.angle(np.exp(1j*res.reconstructed_phase)) if wrapped else res.reconstructed_phase
+            vmax = np.pi if wrapped else max(np.max(np.abs(truth[wf.mask])), .01)
+            maps = [np.where(wf.mask, truth, np.nan), np.log10(res.image/res.image.max()+1e-5),
+                    np.where(wf.mask, rec, np.nan)]
             for col, data in enumerate(maps):
                 axes[row,col].imshow(data, origin="lower", cmap="magma" if col==1 else "RdBu_r",
                     vmin=-5 if col==1 else -vmax, vmax=0 if col==1 else vmax)
@@ -97,7 +112,7 @@ def main():
             axes[row,2].set_title(score, fontsize=8)
         for ax, title in zip(axes[0], ["Ground truth / rad", "Camera / log intensity", "Reconstructed / rad"]):
             ax.set_title(title, fontsize=11)
-        fig.suptitle("21 Zernike modes · noiseless model consistency", fontsize=14)
+        fig.suptitle(f"21 Zernike modes + charge {args.vortex_charge} · noiseless model consistency", fontsize=14)
         fig.savefig(args.output/"validation_gallery.png", dpi=100)
         plt.close(fig)
     print(f"Saved examples in {args.output.resolve()}")

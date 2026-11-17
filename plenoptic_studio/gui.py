@@ -19,7 +19,7 @@ from matplotlib.figure import Figure
 from matplotlib.backends.backend_pdf import PdfPages
 
 from .optics import (MODES, Parameters, make_wavefront, simulate,
-                     validate_all, validate_parameters)
+                     validate_all, validate_parameters, phase_residual)
 
 BG = "#090f1c"
 PANEL = "#101c2e"
@@ -43,7 +43,7 @@ QLabel#warning { color: #f3b969; background: #29251f; border-radius: 7px; paddin
 QLabel#okay { color: #77ddbd; background: #142d2f; border-radius: 7px; padding: 9px; font-size: 11px; }
 QDoubleSpinBox, QSpinBox, QComboBox { background: #081321; border: 1px solid #32435b; border-radius: 5px; padding: 5px 6px; selection-background-color: #277e83; }
 QDoubleSpinBox:focus, QComboBox:focus { border: 1px solid #50dfd0; }
-QDoubleSpinBox::up-button, QDoubleSpinBox::down-button { width: 16px; border: none; }
+QDoubleSpinBox::up-button, QDoubleSpinBox::down-button, QSpinBox::up-button, QSpinBox::down-button { width: 16px; border: none; }
 QSlider::groove:horizontal { height: 4px; background: #2a3950; border-radius: 2px; }
 QSlider::sub-page:horizontal { background: #3baba8; border-radius: 2px; }
 QSlider::handle:horizontal { background: #6be6da; border: 3px solid #163c47; width: 10px; height: 10px; margin: -6px 0; border-radius: 8px; }
@@ -85,7 +85,7 @@ PARAMETERS = (
     ("mla_pitch_um", "Square MLA pitch", "µm", 3),
     ("mla_focal_mm", "MLA focal length", "mm", 4),
     ("beam_diameter_mm", "Input beam diameter", "mm", 3),
-    ("phase_ptp_rad", "Phase peak-to-peak", "rad", 3),
+    ("phase_ptp_rad", "Zernike peak-to-peak", "rad", 3),
     ("pixel_um", "Camera pixel size", "µm", 4),
     ("wavelength_nm", "Central wavelength", "nm", 3),
     ("bandwidth_nm", "Spectral FWHM", "nm", 4),
@@ -198,6 +198,62 @@ class AnchoredParameter(QtWidgets.QWidget):
         self._entry_changed(value)
 
 
+class VortexChargeControl(QtWidgets.QWidget):
+    """An absolute integer charge, independent of the Zernike amplitude slider."""
+    value_changed = QtCore.Signal()
+
+    def __init__(self, value=0, parent=None):
+        super().__init__(parent)
+        self.setObjectName("vortex_charge")
+        layout = QtWidgets.QVBoxLayout(self)
+        layout.setContentsMargins(0, 2, 0, 2)
+        layout.setSpacing(3)
+        line = QtWidgets.QHBoxLayout()
+        line.addWidget(label("Vortex charge ℓ", "section"), 1)
+        self.box = QtWidgets.QSpinBox()
+        self.box.setRange(0, 6)
+        self.box.setSingleStep(1)
+        self.box.setValue(int(value))
+        self.box.setFixedWidth(72)
+        self.box.setAlignment(QtCore.Qt.AlignmentFlag.AlignLeft)
+        line.addWidget(self.box)
+        layout.addLayout(line)
+        line = QtWidgets.QHBoxLayout()
+        line.addWidget(label("0 · off", "muted"))
+        self.slider = QtWidgets.QSlider(QtCore.Qt.Orientation.Horizontal)
+        self.slider.setRange(0, 6)
+        self.slider.setSingleStep(1)
+        self.slider.setPageStep(1)
+        self.slider.setTickInterval(1)
+        self.slider.setTickPosition(QtWidgets.QSlider.TickPosition.TicksBelow)
+        self.slider.setValue(int(value))
+        line.addWidget(self.slider, 1)
+        line.addWidget(label("6", "muted"))
+        layout.addLayout(line)
+        layout.addWidget(label("Adds ℓθ phase to the Gaussian beam.\nZernike amplitude does not change the charge.", "muted", True))
+        self.setToolTip("Integer topological charge 0–6. Zero disables the vortex. The Gaussian intensity is unchanged; this is a phase-only vortex, not a Laguerre–Gaussian amplitude profile.")
+        self.slider.valueChanged.connect(self._slide)
+        self.box.valueChanged.connect(self._edit)
+
+    def _slide(self, value):
+        blocker = QtCore.QSignalBlocker(self.box)
+        self.box.setValue(value)
+        del blocker
+        self.value_changed.emit()
+
+    def _edit(self, value):
+        blocker = QtCore.QSignalBlocker(self.slider)
+        self.slider.setValue(value)
+        del blocker
+        self.value_changed.emit()
+
+    def value(self):
+        return self.box.value()
+
+    def reset(self, value=0):
+        self.box.setValue(int(value))
+
+
 class MetricCard(QtWidgets.QFrame):
     def __init__(self, heading, value="—", foot="", parent=None):
         super().__init__(parent)
@@ -205,7 +261,8 @@ class MetricCard(QtWidgets.QFrame):
         layout = QtWidgets.QVBoxLayout(self)
         layout.setContentsMargins(14, 10, 14, 10)
         layout.setSpacing(2)
-        layout.addWidget(label(heading.upper(), "eyebrow"))
+        self.heading_label = label(heading.upper(), "eyebrow")
+        layout.addWidget(self.heading_label)
         self.value_label = label(value, "metric")
         layout.addWidget(self.value_label)
         self.foot_label = label(foot, "muted", True)
@@ -266,19 +323,28 @@ class ResultCanvas(FigureCanvasQTAgg):
         self.fig.clear()
         wf = result.wavefront
         mask = np.asarray(wf.mask, dtype=bool)
-        truth = np.where(mask, wf.phase, np.nan)
-        rec = np.where(mask, result.reconstructed_phase, np.nan)
-        # Phase is compared after piston removal by the optical core.
-        if np.any(mask):
-            truth = truth - np.nanmean(truth)
-            rec = rec - np.nanmean(rec)
-        residual = rec - truth
+        wrapped = bool(result.metadata.get("wrapped_phase_comparison", False))
+        residual = np.where(mask, phase_residual(wf.phase, result.reconstructed_phase,
+                                                mask, wrapped=wrapped), np.nan)
+        if wrapped:
+            # Match the core's circular global-phase gauge. Wrapping each image
+            # independently and then subtracting would create false 2π errors.
+            truth = np.where(mask, np.angle(np.exp(1j * wf.phase)), np.nan)
+            rec = np.angle(np.exp(1j * (truth + residual)))
+        else:
+            truth = np.where(mask, wf.phase, np.nan)
+            rec = np.where(mask, result.reconstructed_phase, np.nan)
+            if np.any(mask):
+                truth = truth - np.nanmean(truth)
+                rec = rec - np.nanmean(rec)
         extent = [float(wf.x_mm[0]), float(wf.x_mm[-1]), float(wf.y_mm[0]), float(wf.y_mm[-1])]
-        phase_limit = max(float(np.nanmax(np.abs(truth))) if np.any(mask) else 0,
-                          float(np.nanmax(np.abs(rec))) if np.any(mask) else 0, 1e-6)
-        fields = [(truth, "02  INPUT PHASE", phase_limit),
-                  (rec, "03  RECONSTRUCTED PHASE", phase_limit),
-                  (residual, "04  PHASE RESIDUAL", max(float(np.nanmax(np.abs(residual))), 1e-6))]
+        phase_limit = np.pi if wrapped else max(float(np.nanmax(np.abs(truth))) if np.any(mask) else 0,
+                                                float(np.nanmax(np.abs(rec))) if np.any(mask) else 0, 1e-6)
+        suffix = " · WRAPPED" if wrapped else ""
+        fields = [(truth, "02  INPUT PHASE" + suffix, phase_limit),
+                  (rec, "03  RECONSTRUCTED PHASE" + suffix, phase_limit),
+                  (residual, "04  CIRCULAR RESIDUAL" if wrapped else "04  PHASE RESIDUAL",
+                   max(float(np.nanmax(np.abs(residual))), 1e-6))]
         camera = self.fig.add_subplot(2, 2, 1)
         image_data = np.maximum(np.asarray(result.image, dtype=float), 0)
         normed = image_data / max(float(image_data.max()), 1e-30)
@@ -372,7 +438,7 @@ class WavefrontDialog(QtWidgets.QDialog):
         self.params = params
         self.live = False
         self.ax = None
-        self.setWindowTitle("Input composer · 21 Zernike modes")
+        self.setWindowTitle("Input composer · Gaussian vortex + Zernike modes")
         self.resize(1120, 820)
         self.setMinimumSize(920, 620)
         layout = QtWidgets.QVBoxLayout(self)
@@ -380,7 +446,8 @@ class WavefrontDialog(QtWidgets.QDialog):
         layout.addWidget(label("WAVEFRONT COMPOSER", "eyebrow"))
         layout.addWidget(label("Build the distortion", "title"))
         layout.addWidget(label(
-            f"Relative Noll coefficients · normalized to {params.phase_ptp_rad:g} rad peak-to-peak on the illuminated pupil.",
+            f"Zernike mixture: {params.phase_ptp_rad:g} rad peak-to-peak. "
+            f"Vortex charge ℓ = {params.vortex_charge} adds an independent ℓθ phase.",
             "subtitle", True))
         split = QtWidgets.QSplitter(QtCore.Qt.Orientation.Horizontal)
         left = card()
@@ -424,7 +491,7 @@ class WavefrontDialog(QtWidgets.QDialog):
         split.addWidget(right)
         split.setSizes([480, 580])
         layout.addWidget(split, 1)
-        layout.addWidget(label("Piston (Noll 01) is a constant phase offset: intensity cannot sense it and its peak-to-peak is zero. A piston-only input remains flat.", "muted", True))
+        layout.addWidget(label("Piston (Noll 01) is unobservable and removed. Clear coefficients removes the Zernike phase; the vortex charge is set in the main window.", "muted", True))
         bottom = QtWidgets.QHBoxLayout()
         bottom.addWidget(label("Gaussian intensity σ = beam diameter / 4", "muted"), 1)
         cancel = QtWidgets.QPushButton("Cancel")
@@ -477,9 +544,19 @@ class WavefrontDialog(QtWidgets.QDialog):
         self.ax = self.figure.add_subplot(111, projection="3d")
         ax = self.ax
         x, y = np.meshgrid(wf.x_mm, wf.y_mm)
-        z = np.where(wf.mask, wf.phase, np.nan)
+        wrapped = self.params.vortex_charge != 0
+        phase = np.angle(np.exp(1j * wf.phase)) if wrapped else wf.phase
+        z = np.where(wf.mask, phase, np.nan)
+        if wrapped:
+            # Leave a gap at each plotting branch cut rather than draw a false
+            # continuous surface between opposite sides of the principal phase.
+            cuts = np.zeros_like(wf.mask)
+            cuts[:, 1:] |= np.abs(np.diff(phase, axis=1)) > np.pi
+            cuts[1:, :] |= np.abs(np.diff(phase, axis=0)) > np.pi
+            z[cuts] = np.nan
         peak = float(np.nanmax(z) - np.nanmin(z))
-        ax.plot_surface(x, y, z, cmap="turbo", linewidth=0, antialiased=True, rcount=80, ccount=80)
+        surface_sampling = {"rstride": 1, "cstride": 1} if wrapped else {"rcount": 80, "ccount": 80}
+        ax.plot_surface(x, y, z, cmap="turbo", linewidth=0, antialiased=True, **surface_sampling)
         ax.view_init(elev=elev, azim=azim)
         ax.set_facecolor(PANEL)
         for axis in [ax.xaxis, ax.yaxis, ax.zaxis]:
@@ -489,10 +566,14 @@ class WavefrontDialog(QtWidgets.QDialog):
         ax.tick_params(colors=MUTED, labelsize=8, pad=0)
         ax.set_xlabel("x (mm)", color=MUTED, fontsize=9, labelpad=2)
         ax.set_ylabel("y (mm)", color=MUTED, fontsize=9, labelpad=2)
-        ax.set_zlabel("Phase (rad)", color=MUTED, fontsize=9, labelpad=4)
+        ax.set_zlabel("Wrapped phase (rad)" if wrapped else "Phase (rad)", color=MUTED, fontsize=9, labelpad=4)
         ax.set_box_aspect((1, 1, .65))
         self.figure.subplots_adjust(left=0, right=1, bottom=.03, top=.98)
-        self.note.setText(f"Actual peak-to-peak: {peak:.3f} rad · drag to rotate. Relative weights set the shape; the main amplitude sets its scale.")
+        if wrapped:
+            self.note.setText(f"ℓ = {self.params.vortex_charge} · phase wrapped to ±π for display; gaps are plotting branch cuts. "
+                              "Drag to rotate. Zernike amplitude scales only the smooth phase.")
+        else:
+            self.note.setText(f"Actual peak-to-peak: {peak:.3f} rad · drag to rotate. Relative weights set the shape; Zernike amplitude sets its scale.")
         self.canvas.draw_idle()
 
 
@@ -548,7 +629,9 @@ class BeamProfileDialog(QtWidgets.QDialog):
         layout.setContentsMargins(18, 18, 18, 18)
         layout.addWidget(label("INPUT AMPLITUDE", "eyebrow"))
         layout.addWidget(label(f"Gaussian intensity · σ = {params.beam_diameter_mm / 4:g} mm", "section"))
-        layout.addWidget(label("I(x,y) = exp[−(x²+y²)/(2σ²)] inside the circular transmitted pupil. The optical field amplitude is √I.", "muted", True))
+        layout.addWidget(label("I(x,y) = exp[−(x²+y²)/(2σ²)] inside the circular transmitted pupil. "
+                               f"Vortex charge ℓ = {params.vortex_charge} changes phase, not this Gaussian intensity profile; "
+                               "the singular center has undefined phase.", "muted", True))
         wf = make_wavefront(params, weights, resolution=128)
         fig = Figure(figsize=(8.2, 4), dpi=100, facecolor=PANEL)
         canvas = FigureCanvasQTAgg(fig)
@@ -655,7 +738,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.defaults_button.clicked.connect(self._reset)
         heading.addWidget(self.defaults_button)
         outer.addLayout(heading)
-        outer.addWidget(label("Sliders span 0–200% of the last typed value.\nTyping a value resets its slider to 100%.", "muted", True))
+        self.vortex_control = VortexChargeControl()
+        self.vortex_control.value_changed.connect(self._parameters_changed)
+        outer.addWidget(self.vortex_control)
+        outer.addWidget(label("Physical-parameter sliders span 0–200% of the last typed value.\nVortex charge uses fixed integer steps.", "muted", True))
         scroll = QtWidgets.QScrollArea()
         scroll.setWidgetResizable(True)
         scroll.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
@@ -663,7 +749,7 @@ class MainWindow(QtWidgets.QMainWindow):
         form = QtWidgets.QVBoxLayout(body)
         form.setContentsMargins(0, 1, 4, 0)
         form.setSpacing(4)
-        self.controls = {}
+        self.controls = {"vortex_charge": self.vortex_control}
         defaults = Parameters()
         for key, title, unit, decimals in PARAMETERS:
             widget = AnchoredParameter(title, unit, getattr(defaults, key), decimals)
@@ -676,7 +762,7 @@ class MainWindow(QtWidgets.QMainWindow):
         outer.addWidget(scroll, 1)
         self.f_status = label("", "okay", True)
         outer.addWidget(self.f_status)
-        self.setup_button = QtWidgets.QPushButton("Setup input · 21 Zernike modes")
+        self.setup_button = QtWidgets.QPushButton("Setup phase · vortex + Zernike modes")
         self.setup_button.clicked.connect(self._setup)
         outer.addWidget(self.setup_button)
         self.beam_button = QtWidgets.QPushButton("Preview Gaussian input beam")
@@ -694,7 +780,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.validate_button.setEnabled(False)
         self.validate_button.clicked.connect(self._validate)
         outer.addWidget(self.validate_button)
-        outer.addWidget(label("Input intensity: Gaussian, σ = diameter / 4.\nPiston is unobservable; all phases are piston-free.", "muted", True))
+        outer.addWidget(label("Gaussian intensity, σ = diameter / 4.\nInteger vortex phase is added to the Zernike mixture.", "muted", True))
         return panel
 
     def _workspace(self):
@@ -705,7 +791,7 @@ class MainWindow(QtWidgets.QMainWindow):
         metrics = QtWidgets.QHBoxLayout()
         metrics.setSpacing(10)
         self.similarity_card = MetricCard("Phase similarity", "—", "Piston removed · amplitude-sensitive")
-        self.similarity_card.setToolTip("Synthetic same-model comparison, not experimental accuracy. Ground truth is used only for this metric; the reconstruction uses camera intensity. Piston is removed, but phase amplitude and sign are not fitted away.")
+        self.similarity_card.setToolTip("Synthetic same-model comparison, not experimental accuracy. Vortices use circular RMSE divided by π; non-vortex results use RMSE divided by truth RMS. Recovered charge is reported separately. Ground truth is used only to score the image-derived reconstruction.")
         self.error_card = MetricCard("Phase RMSE", "—", "Radians across the illuminated pupil")
         self.geometry_card = MetricCard("Objective / MLA", "—", "f-number ratio · requested target > 1")
         for item in [self.similarity_card, self.error_card, self.geometry_card]:
@@ -818,7 +904,9 @@ class MainWindow(QtWidgets.QMainWindow):
         if dialog.exec() == QtWidgets.QDialog.DialogCode.Accepted:
             self.weights = dialog.weights
             active = int(np.count_nonzero(self.weights[1:]))
-            self.status_text.setText(f"Input saved · {active} non-piston modes · {self.parameters().phase_ptp_rad:g} rad requested peak-to-peak. Run to update the sensor.")
+            p = self.parameters()
+            self.status_text.setText(f"Input saved · ℓ = {p.vortex_charge} · {active} non-piston modes · "
+                                     f"{p.phase_ptp_rad:g} rad Zernike peak-to-peak. Run to update the sensor.")
 
     def _beam(self):
         BeamProfileDialog(self.parameters(), self.weights, self).exec()
@@ -897,7 +985,10 @@ class MainWindow(QtWidgets.QMainWindow):
             sim = result.similarity_pct
             self.validation_table.item(row, 1).setText(("N/A · piston" if index == 1 else "N/A · flat") if sim is None else f"{sim:.1f}%")
             self.validation_table.item(row, 2).setText(f"{result.rms_error_rad:.4g}")
-            status = "Piston unobservable" if index == 1 else ("Review warnings" if result.warnings else "Complete")
+            vortex = int(result.metadata.get("input_vortex_charge", 0))
+            status = ("Piston removed; vortex retained" if index == 1 and vortex else
+                      "Piston unobservable" if index == 1 else
+                      "Review warnings" if result.warnings else "Complete")
             self.validation_table.item(row, 3).setText(status)
             self.validation_table.selectRow(row)
             if self.tabs.currentIndex() == 1:
@@ -907,20 +998,29 @@ class MainWindow(QtWidgets.QMainWindow):
         self.current_result = result
         self.canvas.show_result(result, name)
         similarity = result.similarity_pct
+        wrapped = bool(result.metadata.get("wrapped_phase_comparison", False))
+        self.similarity_card.heading_label.setText("CIRCULAR PHASE SCORE" if wrapped else "PHASE SIMILARITY")
         self.similarity_card.value_label.setText("N/A" if similarity is None else f"{similarity:.1f}%")
-        self.similarity_card.foot_label.setText("Piston / flat phase is unobservable" if similarity is None else "100 × max(0, 1 − normalized RMSE)")
+        self.similarity_card.foot_label.setText("Piston / flat phase is unobservable" if similarity is None else
+                                               "100 × max(0, 1 − circular RMSE / π)" if wrapped else
+                                               "100 × max(0, 1 − RMSE / truth RMS)")
         self.error_card.value_label.setText(f"{result.rms_error_rad:.4f} rad")
+        self.error_card.foot_label.setText("Circular error after global phase alignment" if wrapped else
+                                          "Piston removed across the illuminated pupil")
         self.export_button.setEnabled(True)
         if result.warnings:
             self.result_warning.setText("⚠  " + "  •  ".join(str(w) for w in result.warnings))
             self.result_warning.setStyleSheet("color:#f3b969; font-size:11px;")
         else:
-            self.result_warning.setText("Intensity-only reconstruction; ground truth is used only for this comparison. Known Gaussian amplitude and a 21-mode phase basis are assumed.")
+            self.result_warning.setText("Intensity-only reconstruction with known Gaussian amplitude, charge candidates 0–6, and low-order Zernike phase. Ground truth is used only for comparison.")
             self.result_warning.setStyleSheet("color:#8fa4bf; font-size:11px;")
         shape = result.image.shape
         fit_error = result.metadata.get("image_fit_error")
         fit_text = f"  ·  image fit {fit_error:.2e}" if isinstance(fit_error, (int, float)) else ""
-        self.plot_label.setText(f"{name}  ·  {shape[1]} × {shape[0]} camera pixels{fit_text}")
+        charge = result.metadata.get("input_vortex_charge")
+        recovered = result.metadata.get("recovered_vortex_charge")
+        charge_text = f"  ·  ℓ input {charge}, recovered {recovered}" if charge is not None and recovered is not None else ""
+        self.plot_label.setText(f"{name}{charge_text}  ·  {shape[1]} × {shape[0]} camera pixels{fit_text}")
         self.plot_label.setToolTip("Image fit is the L2 distance between square roots of the two unit-sum intensity images. A small residual indicates consistency with the assumed optical model; it does not establish real-instrument accuracy.")
 
     def _select_validation(self):
@@ -938,8 +1038,11 @@ class MainWindow(QtWidgets.QMainWindow):
     def _clear_display(self):
         self.current_result = None
         self.canvas.empty()
+        self.similarity_card.heading_label.setText("PHASE SIMILARITY")
         self.similarity_card.value_label.setText("—")
+        self.similarity_card.foot_label.setText("Metric follows the displayed result")
         self.error_card.value_label.setText("—")
+        self.error_card.foot_label.setText("Radians across the illuminated pupil")
         self.export_button.setEnabled(False)
         self.result_warning.setText("Run the sensor or validate the 21 modes to inspect results here.")
         self.plot_label.setText("Model: scalar paraxial optics · known Gaussian amplitude")
@@ -986,10 +1089,14 @@ class MainWindow(QtWidgets.QMainWindow):
                 results = sorted(self.validation_results.items())
                 with (directory / "validation_summary.csv").open("w", newline="", encoding="utf-8") as stream:
                     writer = csv.writer(stream)
-                    writer.writerow(["noll_j", "mode", "similarity_percent", "phase_rmse_rad", "warnings"])
+                    writer.writerow(["noll_j", "mode", "similarity_percent", "phase_rmse_rad", "warnings",
+                                     "input_vortex_charge", "recovered_vortex_charge", "phase_comparison"])
                     for index, result in results:
                         writer.writerow([index, MODES[index - 1].name, result.similarity_pct,
-                                         result.rms_error_rad, " | ".join(result.warnings)])
+                                         result.rms_error_rad, " | ".join(result.warnings),
+                                         result.metadata.get("input_vortex_charge", 0),
+                                         result.metadata.get("recovered_vortex_charge", 0),
+                                         result.metadata.get("phase_comparison", "unwrapped")])
                 previous = self.current_result
                 with PdfPages(directory / "validation_21_modes.pdf") as pdf:
                     for index, result in results:
@@ -1002,7 +1109,8 @@ class MainWindow(QtWidgets.QMainWindow):
                 self._save_result(directory / "plenoptic_result.npz", self.current_result)
             info = {"parameters": self.current_result.metadata.get("parameters", {}),
                     "relative_weights": self.current_result.metadata.get("relative_weights", "Individual unit Noll modes 1–21"),
-                    "similarity_definition": "100 * max(0, 1 - RMSE / ground-truth RMS), after piston removal; flat phase N/A",
+                    "similarity_definition": self.current_result.metadata.get("similarity_definition",
+                        "100 * max(0, 1 - RMSE / ground-truth RMS), after piston removal; flat phase N/A"),
                     "metadata": self.current_result.metadata,
                     "warnings": self.current_result.warnings}
             (directory / "run_settings.json").write_text(json.dumps(info, indent=2, default=str), encoding="utf-8")
@@ -1018,7 +1126,11 @@ class MainWindow(QtWidgets.QMainWindow):
                             pupil_mask=wf.mask, input_intensity=wf.intensity,
                             x_mm=wf.x_mm, y_mm=wf.y_mm,
                             input_coefficients_rad=wf.coefficients,
-                            reconstructed_coefficients=result.coefficients)
+                            reconstructed_coefficients=result.coefficients,
+                            input_vortex_charge=result.metadata.get("input_vortex_charge", getattr(wf, "vortex_charge", 0)),
+                            reconstructed_vortex_charge=result.metadata.get("recovered_vortex_charge", 0),
+                            phase_residual_rad=phase_residual(wf.phase, result.reconstructed_phase, wf.mask,
+                                wrapped=bool(result.metadata.get("wrapped_phase_comparison", False))))
 
     def closeEvent(self, event):
         if self.busy:

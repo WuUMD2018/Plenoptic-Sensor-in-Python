@@ -1,0 +1,3632 @@
+{
+  "parameters": {
+    "objective_diameter_mm": 10.0,
+    "objective_focal_mm": 400.0,
+    "mla_pitch_um": 150.0,
+    "mla_focal_mm": 5.0,
+    "beam_diameter_mm": 8.0,
+    "phase_ptp_rad": 6.0,
+    "pixel_um": 5.0,
+    "wavelength_nm": 633.0,
+    "bandwidth_nm": 0.0,
+    "vortex_charge": 0
+  },
+  "rows": [
+    {
+      "case": "pure",
+      "input_charge": 0,
+      "recovered_charge": 0,
+      "charge_correct": 1,
+      "circular_rmse_rad": 0.0,
+      "image_fit_error": 0.0,
+      "smooth_only_circular_rmse_rad": 0.0,
+      "smooth_only_image_fit_error": 0.0,
+      "paper_global_circular_rmse_rad": 0.6689160940012424,
+      "paper_cut_circular_rmse_rad": 0.6690625474047953,
+      "calibrated_cut_circular_rmse_rad": 0.0,
+      "paper_circulation_charge": 0.0013616717193567773,
+      "paper_nearest_integer_charge": 0,
+      "optimizer_success": true
+    },
+    {
+      "case": "pure",
+      "input_charge": 1,
+      "recovered_charge": 1,
+      "charge_correct": 1,
+      "circular_rmse_rad": 0.0,
+      "image_fit_error": 0.0,
+      "smooth_only_circular_rmse_rad": 1.8051663628096783,
+      "smooth_only_image_fit_error": 0.2021832769829418,
+      "paper_global_circular_rmse_rad": 1.8118880964641515,
+      "paper_cut_circular_rmse_rad": 1.766758336286752,
+      "calibrated_cut_circular_rmse_rad": 1.726426102111038,
+      "paper_circulation_charge": 0.028795939518194272,
+      "paper_nearest_integer_charge": 0,
+      "optimizer_success": true
+    },
+    {
+      "case": "pure",
+      "input_charge": 2,
+      "recovered_charge": 2,
+      "charge_correct": 1,
+      "circular_rmse_rad": 0.0,
+      "image_fit_error": 1.1851617125031552e-16,
+      "smooth_only_circular_rmse_rad": 1.7808525180797172,
+      "smooth_only_image_fit_error": 0.48605511255628236,
+      "paper_global_circular_rmse_rad": 1.804704592513946,
+      "paper_cut_circular_rmse_rad": 1.6429785827601036,
+      "calibrated_cut_circular_rmse_rad": 1.5744252772795067,
+      "paper_circulation_charge": 0.37155809017646607,
+      "paper_nearest_integer_charge": 0,
+      "optimizer_success": true
+    },
+    {
+      "case": "pure",
+      "input_charge": 3,
+      "recovered_charge": 3,
+      "charge_correct": 1,
+      "circular_rmse_rad": 0.0,
+      "image_fit_error": 0.0,
+      "smooth_only_circular_rmse_rad": 1.820747361582806,
+      "smooth_only_image_fit_error": 0.6029293860119285,
+      "paper_global_circular_rmse_rad": 1.8139009263945838,
+      "paper_cut_circular_rmse_rad": 1.6310101169896034,
+      "calibrated_cut_circular_rmse_rad": 1.54930867799243,
+      "paper_circulation_charge": 1.3772604061855582,
+      "paper_nearest_integer_charge": 1,
+      "optimizer_success": true
+    },
+    {
+      "case": "pure",
+      "input_charge": 4,
+      "recovered_charge": 4,
+      "charge_correct": 1,
+      "circular_rmse_rad": 0.0,
+      "image_fit_error": 0.0,
+      "smooth_only_circular_rmse_rad": 1.53946226379616,
+      "smooth_only_image_fit_error": 0.6869673128340257,
+      "paper_global_circular_rmse_rad": 1.7578925453201333,
+      "paper_cut_circular_rmse_rad": 1.5743077055325578,
+      "calibrated_cut_circular_rmse_rad": 1.534410784376447,
+      "paper_circulation_charge": 3.143241753387614,
+      "paper_nearest_integer_charge": 3,
+      "optimizer_success": true
+    },
+    {
+      "case": "pure",
+      "input_charge": 5,
+      "recovered_charge": 5,
+      "charge_correct": 1,
+      "circular_rmse_rad": 0.0,
+      "image_fit_error": 0.0,
+      "smooth_only_circular_rmse_rad": 1.8089638821616014,
+      "smooth_only_image_fit_error": 0.7690532228558624,
+      "paper_global_circular_rmse_rad": 1.812197499550361,
+      "paper_cut_circular_rmse_rad": 1.5905094659055212,
+      "calibrated_cut_circular_rmse_rad": 1.5903907881110504,
+      "paper_circulation_charge": 5.440525536046523,
+      "paper_nearest_integer_charge": 5,
+      "optimizer_success": true
+    },
+    {
+      "case": "pure",
+      "input_charge": 6,
+      "recovered_charge": 6,
+      "charge_correct": 1,
+      "circular_rmse_rad": 0.0,
+      "image_fit_error": 0.0,
+      "smooth_only_circular_rmse_rad": 1.803342501167199,
+      "smooth_only_image_fit_error": 0.8423687903221423,
+      "paper_global_circular_rmse_rad": 1.8175003418267583,
+      "paper_cut_circular_rmse_rad": 1.8490870113418014,
+      "calibrated_cut_circular_rmse_rad": 1.7414569455282534,
+      "paper_circulation_charge": 7.008839641316689,
+      "paper_nearest_integer_charge": 7,
+      "optimizer_success": true
+    },
+    {
+      "case": "mixed",
+      "input_charge": 0,
+      "recovered_charge": 0,
+      "charge_correct": 1,
+      "circular_rmse_rad": 1.573486782309606e-13,
+      "image_fit_error": 2.214985623192532e-14,
+      "smooth_only_circular_rmse_rad": 1.573486782309606e-13,
+      "smooth_only_image_fit_error": 2.214985623192532e-14,
+      "paper_global_circular_rmse_rad": 0.5829803130017316,
+      "paper_cut_circular_rmse_rad": 0.5830388103407358,
+      "calibrated_cut_circular_rmse_rad": 1.1250691453667596,
+      "paper_circulation_charge": 0.0030383645879828464,
+      "paper_nearest_integer_charge": 0,
+      "optimizer_success": true
+    },
+    {
+      "case": "mixed",
+      "input_charge": 1,
+      "recovered_charge": 1,
+      "charge_correct": 1,
+      "circular_rmse_rad": 1.3759595960811067e-12,
+      "image_fit_error": 3.4356066872707814e-13,
+      "smooth_only_circular_rmse_rad": 1.3739358678904607,
+      "smooth_only_image_fit_error": 0.2028190228244039,
+      "paper_global_circular_rmse_rad": 1.828055665209788,
+      "paper_cut_circular_rmse_rad": 1.6969736231668582,
+      "calibrated_cut_circular_rmse_rad": 1.6668340898568792,
+      "paper_circulation_charge": 0.060717863170445294,
+      "paper_nearest_integer_charge": 0,
+      "optimizer_success": true
+    },
+    {
+      "case": "mixed",
+      "input_charge": 2,
+      "recovered_charge": 2,
+      "charge_correct": 1,
+      "circular_rmse_rad": 3.741918822550869e-15,
+      "image_fit_error": 1.813968503835883e-15,
+      "smooth_only_circular_rmse_rad": 1.5272400451318517,
+      "smooth_only_image_fit_error": 0.3394860641180656,
+      "paper_global_circular_rmse_rad": 1.5887819127029414,
+      "paper_cut_circular_rmse_rad": 1.6021641250026082,
+      "calibrated_cut_circular_rmse_rad": 1.7116792927929654,
+      "paper_circulation_charge": 0.36143611715424345,
+      "paper_nearest_integer_charge": 0,
+      "optimizer_success": true
+    },
+    {
+      "case": "mixed",
+      "input_charge": 3,
+      "recovered_charge": 3,
+      "charge_correct": 1,
+      "circular_rmse_rad": 6.264643750532543e-16,
+      "image_fit_error": 6.477452822918624e-16,
+      "smooth_only_circular_rmse_rad": 1.344174291176819,
+      "smooth_only_image_fit_error": 0.5006915371303118,
+      "paper_global_circular_rmse_rad": 1.6876601367101778,
+      "paper_cut_circular_rmse_rad": 1.5715218521005383,
+      "calibrated_cut_circular_rmse_rad": 1.6696783376374307,
+      "paper_circulation_charge": 0.9872371787846688,
+      "paper_nearest_integer_charge": 1,
+      "optimizer_success": true
+    },
+    {
+      "case": "mixed",
+      "input_charge": 4,
+      "recovered_charge": 4,
+      "charge_correct": 1,
+      "circular_rmse_rad": 7.892842277949775e-11,
+      "image_fit_error": 3.857547286381911e-11,
+      "smooth_only_circular_rmse_rad": 1.5335687549515256,
+      "smooth_only_image_fit_error": 0.6705374056867075,
+      "paper_global_circular_rmse_rad": 1.8054514675976139,
+      "paper_cut_circular_rmse_rad": 1.5228731895110312,
+      "calibrated_cut_circular_rmse_rad": 1.6116157583944413,
+      "paper_circulation_charge": 3.170766376339197,
+      "paper_nearest_integer_charge": 3,
+      "optimizer_success": true
+    },
+    {
+      "case": "mixed",
+      "input_charge": 5,
+      "recovered_charge": 5,
+      "charge_correct": 1,
+      "circular_rmse_rad": 8.620055843394586e-16,
+      "image_fit_error": 7.335355669290823e-16,
+      "smooth_only_circular_rmse_rad": 1.5929955094750654,
+      "smooth_only_image_fit_error": 0.7772870548060957,
+      "paper_global_circular_rmse_rad": 1.7903449852730333,
+      "paper_cut_circular_rmse_rad": 1.5612018864981245,
+      "calibrated_cut_circular_rmse_rad": 1.58212721048282,
+      "paper_circulation_charge": 5.11519227825871,
+      "paper_nearest_integer_charge": 5,
+      "optimizer_success": true
+    },
+    {
+      "case": "mixed",
+      "input_charge": 6,
+      "recovered_charge": 6,
+      "charge_correct": 1,
+      "circular_rmse_rad": 2.759947047907607e-10,
+      "image_fit_error": 1.2203976785797448e-10,
+      "smooth_only_circular_rmse_rad": 1.611271705896115,
+      "smooth_only_image_fit_error": 0.7597251886369621,
+      "paper_global_circular_rmse_rad": 1.7646591208583435,
+      "paper_cut_circular_rmse_rad": 1.7898344575263392,
+      "calibrated_cut_circular_rmse_rad": 1.7493556309267064,
+      "paper_circulation_charge": 7.051511518225194,
+      "paper_nearest_integer_charge": 7,
+      "optimizer_success": true
+    }
+  ],
+  "details": [
+    {
+      "case": "pure",
+      "input_charge": 0,
+      "recovered_charge": 0,
+      "charge_correct": 1,
+      "circular_rmse_rad": 0.0,
+      "image_fit_error": 0.0,
+      "smooth_only_circular_rmse_rad": 0.0,
+      "smooth_only_image_fit_error": 0.0,
+      "paper_global_circular_rmse_rad": 0.6689160940012424,
+      "paper_cut_circular_rmse_rad": 0.6690625474047953,
+      "calibrated_cut_circular_rmse_rad": 0.0,
+      "paper_circulation_charge": 0.0013616717193567773,
+      "paper_nearest_integer_charge": 0,
+      "optimizer_success": true,
+      "camera_fit": {
+        "optimizer_success": true,
+        "optimizer_message": "`gtol` termination condition is satisfied.",
+        "optimizer_evaluations": 1,
+        "image_fit_error": 0.0,
+        "jacobian_condition": 5.983787838329021,
+        "initialization": "zero Zernike phase",
+        "recovered_vortex_charge": 0,
+        "charge_candidates": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "charge_template_residuals": {
+          "0": 0.0,
+          "1": 0.2198648445509691,
+          "2": 0.5016606762415717,
+          "3": 0.7506144489087594,
+          "4": 0.9511236802818575,
+          "5": 1.0971273075727048,
+          "6": 1.2031130683496232
+        },
+        "charge_fits": [
+          {
+            "charge": 0,
+            "image_fit_error": 0.0,
+            "optimizer_success": true,
+            "optimizer_evaluations": 1
+          }
+        ],
+        "charge_search_exact_fit_early_stop": true,
+        "charge_search_complete": false,
+        "charge_search_note": "Discrete image-only model selection over the listed charges; an exact numerical fit does not establish uniqueness.",
+        "total_optimizer_evaluations": 1
+      },
+      "smooth_only_fit": {
+        "optimizer_success": true,
+        "optimizer_message": "`gtol` termination condition is satisfied.",
+        "optimizer_evaluations": 1,
+        "image_fit_error": 0.0,
+        "jacobian_condition": 5.983787838329021,
+        "initialization": "zero Zernike phase",
+        "recovered_vortex_charge": 0,
+        "charge_candidates": [
+          0
+        ],
+        "charge_template_residuals": {
+          "0": 0.0
+        },
+        "charge_fits": [
+          {
+            "charge": 0,
+            "image_fit_error": 0.0,
+            "optimizer_success": true,
+            "optimizer_evaluations": 1
+          }
+        ],
+        "charge_search_exact_fit_early_stop": false,
+        "charge_search_complete": true,
+        "charge_search_note": "Discrete image-only model selection over the listed charges; an exact numerical fit does not establish uniqueness.",
+        "total_optimizer_evaluations": 1
+      },
+      "paper": {
+        "method": "measured-gradient global LSQR versus one radial branch cut",
+        "gradient_units": "rad/mm",
+        "curl_units": "rad/mm^2",
+        "center_mm": [
+          -1.0972310439196489,
+          -1.504362044703388
+        ],
+        "center_source": "inner absolute-curl peak",
+        "inner_curl_peak_center_mm": [
+          -1.0972310439196489,
+          -1.504362044703388
+        ],
+        "inner_curl_peak_abs": 0.004853993229080862,
+        "core_radius_mm": 0.2500000000000002,
+        "cut_angle_rad": 0.0,
+        "supported_samples": 5008,
+        "circulation_contours": [
+          {
+            "radius_mm": 1.4630006434149898,
+            "coverage": 1.0,
+            "charge": 0.0013616717193567773
+          },
+          {
+            "radius_mm": 2.3408010294639836,
+            "coverage": 0.7765625,
+            "charge": null
+          },
+          {
+            "radius_mm": 3.218601415512978,
+            "coverage": 0.5453125,
+            "charge": null
+          },
+          {
+            "radius_mm": 4.096401801561972,
+            "coverage": 0.396875,
+            "charge": null
+          },
+          {
+            "radius_mm": 4.681602058927967,
+            "coverage": 0.3046875,
+            "charge": null
+          }
+        ],
+        "circulation_charge_estimate": 0.0013616717193567773,
+        "nearest_integer_charge": 0,
+        "circulation_charge_spread": 0.0,
+        "global_lmse": {
+          "edge_count": 9848,
+          "cut_edges_removed": 0,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 808,
+          "gradient_residual_rms_rad_per_mm": 0.004213606871110274,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "branchcut_lmse": {
+          "edge_count": 9802,
+          "cut_edges_removed": 46,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 929,
+          "gradient_residual_rms_rad_per_mm": 0.004208446735654299,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "warnings": [
+          "Curl-peak localization is heuristic; diffraction or sampling artifacts can move the inferred center.",
+          "Geometric camera mapping neglects coherent diffraction and path overlap; compare against independent data before interpreting phase accuracy."
+        ],
+        "interpretation": "Circulation is a diagnostic of the measured gradient field, not a guaranteed optical charge measurement.",
+        "source": "camera intensity and calibrated geometry only",
+        "reference": "Wu, Ko & Davis (2016), doi:10.1364/OL.41.003169, Eqs. 2-4",
+        "flat_reference_subtracted": false,
+        "smoothing": "normalized masked 3x3 Gaussian, sigma=1 pupil-grid pixel",
+        "min_relative_mapped_intensity": 0.0001,
+        "wavelength_for_mapping_nm": 633.0
+      },
+      "calibrated_paper": {
+        "method": "measured-gradient global LSQR versus one radial branch cut",
+        "gradient_units": "rad/mm",
+        "curl_units": "rad/mm^2",
+        "center_mm": [
+          0.0,
+          0.0
+        ],
+        "center_source": "origin fallback; no significant curl peak",
+        "inner_curl_peak_center_mm": [
+          0.0,
+          0.0
+        ],
+        "inner_curl_peak_abs": 0.0,
+        "core_radius_mm": 0.2500000000000002,
+        "cut_angle_rad": 0.0,
+        "supported_samples": 5008,
+        "circulation_contours": [
+          {
+            "radius_mm": 0.9976534969617458,
+            "coverage": 1.0,
+            "charge": 0.0
+          },
+          {
+            "radius_mm": 1.5962455951387933,
+            "coverage": 1.0,
+            "charge": 0.0
+          },
+          {
+            "radius_mm": 2.194837693315841,
+            "coverage": 1.0,
+            "charge": 0.0
+          },
+          {
+            "radius_mm": 2.793429791492888,
+            "coverage": 1.0,
+            "charge": 0.0
+          },
+          {
+            "radius_mm": 3.1924911902775865,
+            "coverage": 1.0,
+            "charge": 0.0
+          }
+        ],
+        "circulation_charge_estimate": 0.0,
+        "nearest_integer_charge": 0,
+        "circulation_charge_spread": 0.0,
+        "global_lmse": {
+          "edge_count": 9848,
+          "cut_edges_removed": 0,
+          "connected_components": 1,
+          "lsqr_stop_code": 0,
+          "lsqr_iterations": 0,
+          "gradient_residual_rms_rad_per_mm": 0.0,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "branchcut_lmse": {
+          "edge_count": 9810,
+          "cut_edges_removed": 38,
+          "connected_components": 1,
+          "lsqr_stop_code": 0,
+          "lsqr_iterations": 0,
+          "gradient_residual_rms_rad_per_mm": 0.0,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "warnings": [
+          "Curl-peak localization is heuristic; diffraction or sampling artifacts can move the inferred center.",
+          "Geometric camera mapping neglects coherent diffraction and path overlap; compare against independent data before interpreting phase accuracy."
+        ],
+        "interpretation": "Circulation is a diagnostic of the measured gradient field, not a guaranteed optical charge measurement.",
+        "source": "camera intensity and calibrated geometry only",
+        "reference": "Wu, Ko & Davis (2016), doi:10.1364/OL.41.003169, Eqs. 2-4",
+        "flat_reference_subtracted": true,
+        "smoothing": "normalized masked 3x3 Gaussian, sigma=1 pupil-grid pixel",
+        "min_relative_mapped_intensity": 0.0001,
+        "wavelength_for_mapping_nm": 633.0
+      }
+    },
+    {
+      "case": "pure",
+      "input_charge": 1,
+      "recovered_charge": 1,
+      "charge_correct": 1,
+      "circular_rmse_rad": 0.0,
+      "image_fit_error": 0.0,
+      "smooth_only_circular_rmse_rad": 1.8051663628096783,
+      "smooth_only_image_fit_error": 0.2021832769829418,
+      "paper_global_circular_rmse_rad": 1.8118880964641515,
+      "paper_cut_circular_rmse_rad": 1.766758336286752,
+      "calibrated_cut_circular_rmse_rad": 1.726426102111038,
+      "paper_circulation_charge": 0.028795939518194272,
+      "paper_nearest_integer_charge": 0,
+      "optimizer_success": true,
+      "camera_fit": {
+        "optimizer_success": true,
+        "optimizer_message": "`gtol` termination condition is satisfied.",
+        "optimizer_evaluations": 1,
+        "image_fit_error": 0.0,
+        "jacobian_condition": 3.9369275014719314,
+        "initialization": "zero Zernike phase",
+        "recovered_vortex_charge": 1,
+        "charge_candidates": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "charge_template_residuals": {
+          "0": 0.2198648445509691,
+          "1": 0.0,
+          "2": 0.37600247414911153,
+          "3": 0.6666681580063828,
+          "4": 0.8936036931649763,
+          "5": 1.0483438425795604,
+          "6": 1.1582738112202855
+        },
+        "charge_fits": [
+          {
+            "charge": 1,
+            "image_fit_error": 0.0,
+            "optimizer_success": true,
+            "optimizer_evaluations": 1
+          }
+        ],
+        "charge_search_exact_fit_early_stop": true,
+        "charge_search_complete": false,
+        "charge_search_note": "Discrete image-only model selection over the listed charges; an exact numerical fit does not establish uniqueness.",
+        "total_optimizer_evaluations": 1
+      },
+      "smooth_only_fit": {
+        "optimizer_success": true,
+        "optimizer_message": "`ftol` termination condition is satisfied.",
+        "optimizer_evaluations": 12,
+        "image_fit_error": 0.2021832769829418,
+        "jacobian_condition": 6.85350773809189,
+        "initialization": "camera centroid \u00d7 8",
+        "recovered_vortex_charge": 0,
+        "charge_candidates": [
+          0
+        ],
+        "charge_template_residuals": {
+          "0": 0.2198648445509691
+        },
+        "charge_fits": [
+          {
+            "charge": 0,
+            "image_fit_error": 0.2021832769829418,
+            "optimizer_success": true,
+            "optimizer_evaluations": 12
+          }
+        ],
+        "charge_search_exact_fit_early_stop": false,
+        "charge_search_complete": true,
+        "charge_search_note": "Discrete image-only model selection over the listed charges; an exact numerical fit does not establish uniqueness.",
+        "total_optimizer_evaluations": 12
+      },
+      "paper": {
+        "method": "measured-gradient global LSQR versus one radial branch cut",
+        "gradient_units": "rad/mm",
+        "curl_units": "rad/mm^2",
+        "center_mm": [
+          -0.03962578204082426,
+          -0.040337059513333336
+        ],
+        "center_source": "inner absolute-curl peak",
+        "inner_curl_peak_center_mm": [
+          -0.03962578204082426,
+          -0.040337059513333336
+        ],
+        "inner_curl_peak_abs": 1.4037094814259627,
+        "core_radius_mm": 0.2500000000000002,
+        "cut_angle_rad": 0.0,
+        "supported_samples": 5003,
+        "circulation_contours": [
+          {
+            "radius_mm": 1.0116968137708848,
+            "coverage": 1.0,
+            "charge": 0.07017649139653268
+          },
+          {
+            "radius_mm": 1.6187149020334157,
+            "coverage": 1.0,
+            "charge": 0.028795939518194272
+          },
+          {
+            "radius_mm": 2.225732990295947,
+            "coverage": 1.0,
+            "charge": 0.0016248369043176077
+          },
+          {
+            "radius_mm": 2.8327510785584775,
+            "coverage": 1.0,
+            "charge": 0.027594850189502588
+          },
+          {
+            "radius_mm": 3.2374298040668315,
+            "coverage": 1.0,
+            "charge": 0.04984773168840599
+          }
+        ],
+        "circulation_charge_estimate": 0.028795939518194272,
+        "nearest_integer_charge": 0,
+        "circulation_charge_spread": 0.06855165449221506,
+        "global_lmse": {
+          "edge_count": 9836,
+          "cut_edges_removed": 0,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 676,
+          "gradient_residual_rms_rad_per_mm": 0.026887879486582562,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "branchcut_lmse": {
+          "edge_count": 9798,
+          "cut_edges_removed": 38,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 799,
+          "gradient_residual_rms_rad_per_mm": 0.013371193885430068,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "warnings": [
+          "Curl-peak localization is heuristic; diffraction or sampling artifacts can move the inferred center.",
+          "Geometric camera mapping neglects coherent diffraction and path overlap; compare against independent data before interpreting phase accuracy."
+        ],
+        "interpretation": "Circulation is a diagnostic of the measured gradient field, not a guaranteed optical charge measurement.",
+        "source": "camera intensity and calibrated geometry only",
+        "reference": "Wu, Ko & Davis (2016), doi:10.1364/OL.41.003169, Eqs. 2-4",
+        "flat_reference_subtracted": false,
+        "smoothing": "normalized masked 3x3 Gaussian, sigma=1 pupil-grid pixel",
+        "min_relative_mapped_intensity": 0.0001,
+        "wavelength_for_mapping_nm": 633.0
+      },
+      "calibrated_paper": {
+        "method": "measured-gradient global LSQR versus one radial branch cut",
+        "gradient_units": "rad/mm",
+        "curl_units": "rad/mm^2",
+        "center_mm": [
+          -0.03962702877232631,
+          -0.040335812781831286
+        ],
+        "center_source": "inner absolute-curl peak",
+        "inner_curl_peak_center_mm": [
+          -0.03962702877232631,
+          -0.040335812781831286
+        ],
+        "inner_curl_peak_abs": 1.4037094814259627,
+        "core_radius_mm": 0.2500000000000002,
+        "cut_angle_rad": 0.0,
+        "supported_samples": 5003,
+        "circulation_contours": [
+          {
+            "radius_mm": 1.0116967598023143,
+            "coverage": 1.0,
+            "charge": 0.07017649404296504
+          },
+          {
+            "radius_mm": 1.618714815683703,
+            "coverage": 1.0,
+            "charge": 0.028795945772310653
+          },
+          {
+            "radius_mm": 2.225732871565092,
+            "coverage": 1.0,
+            "charge": 0.0016248350837831712
+          },
+          {
+            "radius_mm": 2.83275092744648,
+            "coverage": 1.0,
+            "charge": 0.02759483718841516
+          },
+          {
+            "radius_mm": 3.237429631367406,
+            "coverage": 1.0,
+            "charge": 0.049847729050167544
+          }
+        ],
+        "circulation_charge_estimate": 0.028795945772310653,
+        "nearest_integer_charge": 0,
+        "circulation_charge_spread": 0.06855165895918187,
+        "global_lmse": {
+          "edge_count": 9836,
+          "cut_edges_removed": 0,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 643,
+          "gradient_residual_rms_rad_per_mm": 0.027078178144538795,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "branchcut_lmse": {
+          "edge_count": 9798,
+          "cut_edges_removed": 38,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 761,
+          "gradient_residual_rms_rad_per_mm": 0.013749299654890341,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "warnings": [
+          "Curl-peak localization is heuristic; diffraction or sampling artifacts can move the inferred center.",
+          "Geometric camera mapping neglects coherent diffraction and path overlap; compare against independent data before interpreting phase accuracy."
+        ],
+        "interpretation": "Circulation is a diagnostic of the measured gradient field, not a guaranteed optical charge measurement.",
+        "source": "camera intensity and calibrated geometry only",
+        "reference": "Wu, Ko & Davis (2016), doi:10.1364/OL.41.003169, Eqs. 2-4",
+        "flat_reference_subtracted": true,
+        "smoothing": "normalized masked 3x3 Gaussian, sigma=1 pupil-grid pixel",
+        "min_relative_mapped_intensity": 0.0001,
+        "wavelength_for_mapping_nm": 633.0
+      }
+    },
+    {
+      "case": "pure",
+      "input_charge": 2,
+      "recovered_charge": 2,
+      "charge_correct": 1,
+      "circular_rmse_rad": 0.0,
+      "image_fit_error": 1.1851617125031552e-16,
+      "smooth_only_circular_rmse_rad": 1.7808525180797172,
+      "smooth_only_image_fit_error": 0.48605511255628236,
+      "paper_global_circular_rmse_rad": 1.804704592513946,
+      "paper_cut_circular_rmse_rad": 1.6429785827601036,
+      "calibrated_cut_circular_rmse_rad": 1.5744252772795067,
+      "paper_circulation_charge": 0.37155809017646607,
+      "paper_nearest_integer_charge": 0,
+      "optimizer_success": true,
+      "camera_fit": {
+        "optimizer_success": true,
+        "optimizer_message": "`gtol` termination condition is satisfied.",
+        "optimizer_evaluations": 1,
+        "image_fit_error": 1.1851617125031552e-16,
+        "jacobian_condition": 3.407843961031058,
+        "initialization": "zero Zernike phase",
+        "recovered_vortex_charge": 2,
+        "charge_candidates": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "charge_template_residuals": {
+          "0": 0.5016606762415717,
+          "1": 0.3760024741491116,
+          "2": 1.1150317220294068e-16,
+          "3": 0.3876632731593393,
+          "4": 0.6843156951482519,
+          "5": 0.8918148804953465,
+          "6": 1.0295886919215507
+        },
+        "charge_fits": [
+          {
+            "charge": 2,
+            "image_fit_error": 1.1851617125031552e-16,
+            "optimizer_success": true,
+            "optimizer_evaluations": 1
+          }
+        ],
+        "charge_search_exact_fit_early_stop": true,
+        "charge_search_complete": false,
+        "charge_search_note": "Discrete image-only model selection over the listed charges; an exact numerical fit does not establish uniqueness.",
+        "total_optimizer_evaluations": 1
+      },
+      "smooth_only_fit": {
+        "optimizer_success": true,
+        "optimizer_message": "`ftol` termination condition is satisfied.",
+        "optimizer_evaluations": 12,
+        "image_fit_error": 0.48605511255628236,
+        "jacobian_condition": 5.6684081067126595,
+        "initialization": "camera centroid \u00d7 1",
+        "recovered_vortex_charge": 0,
+        "charge_candidates": [
+          0
+        ],
+        "charge_template_residuals": {
+          "0": 0.5016606762415717
+        },
+        "charge_fits": [
+          {
+            "charge": 0,
+            "image_fit_error": 0.48605511255628236,
+            "optimizer_success": true,
+            "optimizer_evaluations": 12
+          }
+        ],
+        "charge_search_exact_fit_early_stop": false,
+        "charge_search_complete": true,
+        "charge_search_note": "Discrete image-only model selection over the listed charges; an exact numerical fit does not establish uniqueness.",
+        "total_optimizer_evaluations": 12
+      },
+      "paper": {
+        "method": "measured-gradient global LSQR versus one radial branch cut",
+        "gradient_units": "rad/mm",
+        "curl_units": "rad/mm^2",
+        "center_mm": [
+          -0.04853095069877346,
+          -0.04843649267514717
+        ],
+        "center_source": "inner absolute-curl peak",
+        "inner_curl_peak_center_mm": [
+          -0.04853095069877346,
+          -0.04843649267514717
+        ],
+        "inner_curl_peak_abs": 4.697257869631877,
+        "core_radius_mm": 0.2500000000000002,
+        "cut_angle_rad": 0.0,
+        "supported_samples": 5003,
+        "circulation_contours": [
+          {
+            "radius_mm": 1.014666975862921,
+            "coverage": 1.0,
+            "charge": 1.2276939175023749
+          },
+          {
+            "radius_mm": 1.6234671613806737,
+            "coverage": 1.0,
+            "charge": 0.6257376461050785
+          },
+          {
+            "radius_mm": 2.232267346898426,
+            "coverage": 1.0,
+            "charge": 0.1988053534924245
+          },
+          {
+            "radius_mm": 2.8410675324161785,
+            "coverage": 1.0,
+            "charge": 0.24737421883624436
+          },
+          {
+            "radius_mm": 3.2469343227613474,
+            "coverage": 1.0,
+            "charge": 0.37155809017646607
+          }
+        ],
+        "circulation_charge_estimate": 0.37155809017646607,
+        "nearest_integer_charge": 0,
+        "circulation_charge_spread": 1.0288885640099503,
+        "global_lmse": {
+          "edge_count": 9836,
+          "cut_edges_removed": 0,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 551,
+          "gradient_residual_rms_rad_per_mm": 0.3131610286911722,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "branchcut_lmse": {
+          "edge_count": 9798,
+          "cut_edges_removed": 38,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 666,
+          "gradient_residual_rms_rad_per_mm": 0.15438570045461864,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "warnings": [
+          "Curl-peak localization is heuristic; diffraction or sampling artifacts can move the inferred center.",
+          "Geometric camera mapping neglects coherent diffraction and path overlap; compare against independent data before interpreting phase accuracy."
+        ],
+        "interpretation": "Circulation is a diagnostic of the measured gradient field, not a guaranteed optical charge measurement.",
+        "source": "camera intensity and calibrated geometry only",
+        "reference": "Wu, Ko & Davis (2016), doi:10.1364/OL.41.003169, Eqs. 2-4",
+        "flat_reference_subtracted": false,
+        "smoothing": "normalized masked 3x3 Gaussian, sigma=1 pupil-grid pixel",
+        "min_relative_mapped_intensity": 0.0001,
+        "wavelength_for_mapping_nm": 633.0
+      },
+      "calibrated_paper": {
+        "method": "measured-gradient global LSQR versus one radial branch cut",
+        "gradient_units": "rad/mm",
+        "curl_units": "rad/mm^2",
+        "center_mm": [
+          -0.048531267735208654,
+          -0.04843617563871197
+        ],
+        "center_source": "inner absolute-curl peak",
+        "inner_curl_peak_center_mm": [
+          -0.048531267735208654,
+          -0.04843617563871197
+        ],
+        "inner_curl_peak_abs": 4.697257869631878,
+        "core_radius_mm": 0.2500000000000002,
+        "cut_angle_rad": 0.0,
+        "supported_samples": 5003,
+        "circulation_contours": [
+          {
+            "radius_mm": 1.0146669895346205,
+            "coverage": 1.0,
+            "charge": 1.2276939189437792
+          },
+          {
+            "radius_mm": 1.6234671832553929,
+            "coverage": 1.0,
+            "charge": 0.6257376196264007
+          },
+          {
+            "radius_mm": 2.232267376976165,
+            "coverage": 1.0,
+            "charge": 0.1988053476825306
+          },
+          {
+            "radius_mm": 2.8410675706969375,
+            "coverage": 1.0,
+            "charge": 0.2473742304860789
+          },
+          {
+            "radius_mm": 3.2469343665107857,
+            "coverage": 1.0,
+            "charge": 0.3715581026453603
+          }
+        ],
+        "circulation_charge_estimate": 0.3715581026453603,
+        "nearest_integer_charge": 0,
+        "circulation_charge_spread": 1.0288885712612486,
+        "global_lmse": {
+          "edge_count": 9836,
+          "cut_edges_removed": 0,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 543,
+          "gradient_residual_rms_rad_per_mm": 0.3130737193886058,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "branchcut_lmse": {
+          "edge_count": 9798,
+          "cut_edges_removed": 38,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 651,
+          "gradient_residual_rms_rad_per_mm": 0.15401306563371828,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "warnings": [
+          "Curl-peak localization is heuristic; diffraction or sampling artifacts can move the inferred center.",
+          "Geometric camera mapping neglects coherent diffraction and path overlap; compare against independent data before interpreting phase accuracy."
+        ],
+        "interpretation": "Circulation is a diagnostic of the measured gradient field, not a guaranteed optical charge measurement.",
+        "source": "camera intensity and calibrated geometry only",
+        "reference": "Wu, Ko & Davis (2016), doi:10.1364/OL.41.003169, Eqs. 2-4",
+        "flat_reference_subtracted": true,
+        "smoothing": "normalized masked 3x3 Gaussian, sigma=1 pupil-grid pixel",
+        "min_relative_mapped_intensity": 0.0001,
+        "wavelength_for_mapping_nm": 633.0
+      }
+    },
+    {
+      "case": "pure",
+      "input_charge": 3,
+      "recovered_charge": 3,
+      "charge_correct": 1,
+      "circular_rmse_rad": 0.0,
+      "image_fit_error": 0.0,
+      "smooth_only_circular_rmse_rad": 1.820747361582806,
+      "smooth_only_image_fit_error": 0.6029293860119285,
+      "paper_global_circular_rmse_rad": 1.8139009263945838,
+      "paper_cut_circular_rmse_rad": 1.6310101169896034,
+      "calibrated_cut_circular_rmse_rad": 1.54930867799243,
+      "paper_circulation_charge": 1.3772604061855582,
+      "paper_nearest_integer_charge": 1,
+      "optimizer_success": true,
+      "camera_fit": {
+        "optimizer_success": true,
+        "optimizer_message": "`gtol` termination condition is satisfied.",
+        "optimizer_evaluations": 1,
+        "image_fit_error": 0.0,
+        "jacobian_condition": 2.939610891790512,
+        "initialization": "zero Zernike phase",
+        "recovered_vortex_charge": 3,
+        "charge_candidates": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "charge_template_residuals": {
+          "0": 0.7506144489087594,
+          "1": 0.6666681580063828,
+          "2": 0.3876632731593393,
+          "3": 0.0,
+          "4": 0.3816054140911208,
+          "5": 0.650724308640123,
+          "6": 0.8358479564913814
+        },
+        "charge_fits": [
+          {
+            "charge": 3,
+            "image_fit_error": 0.0,
+            "optimizer_success": true,
+            "optimizer_evaluations": 1
+          }
+        ],
+        "charge_search_exact_fit_early_stop": true,
+        "charge_search_complete": false,
+        "charge_search_note": "Discrete image-only model selection over the listed charges; an exact numerical fit does not establish uniqueness.",
+        "total_optimizer_evaluations": 1
+      },
+      "smooth_only_fit": {
+        "optimizer_success": true,
+        "optimizer_message": "`ftol` termination condition is satisfied.",
+        "optimizer_evaluations": 11,
+        "image_fit_error": 0.6029293860119285,
+        "jacobian_condition": 2.7305136535529155,
+        "initialization": "camera centroid \u00d7 2",
+        "recovered_vortex_charge": 0,
+        "charge_candidates": [
+          0
+        ],
+        "charge_template_residuals": {
+          "0": 0.7506144489087594
+        },
+        "charge_fits": [
+          {
+            "charge": 0,
+            "image_fit_error": 0.6029293860119285,
+            "optimizer_success": true,
+            "optimizer_evaluations": 11
+          }
+        ],
+        "charge_search_exact_fit_early_stop": false,
+        "charge_search_complete": true,
+        "charge_search_note": "Discrete image-only model selection over the listed charges; an exact numerical fit does not establish uniqueness.",
+        "total_optimizer_evaluations": 11
+      },
+      "paper": {
+        "method": "measured-gradient global LSQR versus one radial branch cut",
+        "gradient_units": "rad/mm",
+        "curl_units": "rad/mm^2",
+        "center_mm": [
+          -0.048621355101818156,
+          -0.04861302802072988
+        ],
+        "center_source": "inner absolute-curl peak",
+        "inner_curl_peak_center_mm": [
+          -0.048621355101818156,
+          -0.04861302802072988
+        ],
+        "inner_curl_peak_abs": 7.564076912746581,
+        "core_radius_mm": 0.2500000000000002,
+        "cut_angle_rad": 0.0,
+        "supported_samples": 5003,
+        "circulation_contours": [
+          {
+            "radius_mm": 1.014711955344604,
+            "coverage": 1.0,
+            "charge": 2.6708212330302215
+          },
+          {
+            "radius_mm": 1.6235391285513665,
+            "coverage": 1.0,
+            "charge": 3.093239213566781
+          },
+          {
+            "radius_mm": 2.232366301758129,
+            "coverage": 1.0,
+            "charge": 1.3772604061855582
+          },
+          {
+            "radius_mm": 2.841193474964891,
+            "coverage": 1.0,
+            "charge": 0.8286079744282664
+          },
+          {
+            "radius_mm": 3.247078257102733,
+            "coverage": 1.0,
+            "charge": 0.8330862803498508
+          }
+        ],
+        "circulation_charge_estimate": 1.3772604061855582,
+        "nearest_integer_charge": 1,
+        "circulation_charge_spread": 2.264631239138515,
+        "global_lmse": {
+          "edge_count": 9836,
+          "cut_edges_removed": 0,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 526,
+          "gradient_residual_rms_rad_per_mm": 0.8883236753464518,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "branchcut_lmse": {
+          "edge_count": 9798,
+          "cut_edges_removed": 38,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 626,
+          "gradient_residual_rms_rad_per_mm": 0.45313364543272777,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "warnings": [
+          "Curl-peak localization is heuristic; diffraction or sampling artifacts can move the inferred center.",
+          "Geometric camera mapping neglects coherent diffraction and path overlap; compare against independent data before interpreting phase accuracy."
+        ],
+        "interpretation": "Circulation is a diagnostic of the measured gradient field, not a guaranteed optical charge measurement.",
+        "source": "camera intensity and calibrated geometry only",
+        "reference": "Wu, Ko & Davis (2016), doi:10.1364/OL.41.003169, Eqs. 2-4",
+        "flat_reference_subtracted": false,
+        "smoothing": "normalized masked 3x3 Gaussian, sigma=1 pupil-grid pixel",
+        "min_relative_mapped_intensity": 0.0001,
+        "wavelength_for_mapping_nm": 633.0
+      },
+      "calibrated_paper": {
+        "method": "measured-gradient global LSQR versus one radial branch cut",
+        "gradient_units": "rad/mm",
+        "curl_units": "rad/mm^2",
+        "center_mm": [
+          -0.04862155117896645,
+          -0.048612831943581555
+        ],
+        "center_source": "inner absolute-curl peak",
+        "inner_curl_peak_center_mm": [
+          -0.04862155117896645,
+          -0.048612831943581555
+        ],
+        "inner_curl_peak_abs": 7.564076912746579,
+        "core_radius_mm": 0.2500000000000002,
+        "cut_angle_rad": 0.0,
+        "supported_samples": 5003,
+        "circulation_contours": [
+          {
+            "radius_mm": 1.0147119637987072,
+            "coverage": 1.0,
+            "charge": 2.670821261503067
+          },
+          {
+            "radius_mm": 1.6235391420779317,
+            "coverage": 1.0,
+            "charge": 3.0932391792222687
+          },
+          {
+            "radius_mm": 2.232366320357156,
+            "coverage": 1.0,
+            "charge": 1.377260370791286
+          },
+          {
+            "radius_mm": 2.84119349863638,
+            "coverage": 1.0,
+            "charge": 0.8286079696658721
+          },
+          {
+            "radius_mm": 3.2470782841558634,
+            "coverage": 1.0,
+            "charge": 0.8330862867707878
+          }
+        ],
+        "circulation_charge_estimate": 1.377260370791286,
+        "nearest_integer_charge": 1,
+        "circulation_charge_spread": 2.2646312095563967,
+        "global_lmse": {
+          "edge_count": 9836,
+          "cut_edges_removed": 0,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 523,
+          "gradient_residual_rms_rad_per_mm": 0.8882065765864527,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "branchcut_lmse": {
+          "edge_count": 9798,
+          "cut_edges_removed": 38,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 627,
+          "gradient_residual_rms_rad_per_mm": 0.4527625937614043,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "warnings": [
+          "Curl-peak localization is heuristic; diffraction or sampling artifacts can move the inferred center.",
+          "Geometric camera mapping neglects coherent diffraction and path overlap; compare against independent data before interpreting phase accuracy."
+        ],
+        "interpretation": "Circulation is a diagnostic of the measured gradient field, not a guaranteed optical charge measurement.",
+        "source": "camera intensity and calibrated geometry only",
+        "reference": "Wu, Ko & Davis (2016), doi:10.1364/OL.41.003169, Eqs. 2-4",
+        "flat_reference_subtracted": true,
+        "smoothing": "normalized masked 3x3 Gaussian, sigma=1 pupil-grid pixel",
+        "min_relative_mapped_intensity": 0.0001,
+        "wavelength_for_mapping_nm": 633.0
+      }
+    },
+    {
+      "case": "pure",
+      "input_charge": 4,
+      "recovered_charge": 4,
+      "charge_correct": 1,
+      "circular_rmse_rad": 0.0,
+      "image_fit_error": 0.0,
+      "smooth_only_circular_rmse_rad": 1.53946226379616,
+      "smooth_only_image_fit_error": 0.6869673128340257,
+      "paper_global_circular_rmse_rad": 1.7578925453201333,
+      "paper_cut_circular_rmse_rad": 1.5743077055325578,
+      "calibrated_cut_circular_rmse_rad": 1.534410784376447,
+      "paper_circulation_charge": 3.143241753387614,
+      "paper_nearest_integer_charge": 3,
+      "optimizer_success": true,
+      "camera_fit": {
+        "optimizer_success": true,
+        "optimizer_message": "`gtol` termination condition is satisfied.",
+        "optimizer_evaluations": 1,
+        "image_fit_error": 0.0,
+        "jacobian_condition": 2.6213562099714856,
+        "initialization": "zero Zernike phase",
+        "recovered_vortex_charge": 4,
+        "charge_candidates": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "charge_template_residuals": {
+          "0": 0.9511236802818575,
+          "1": 0.8936036931649763,
+          "2": 0.6843156951482519,
+          "3": 0.3816054140911208,
+          "4": 0.0,
+          "5": 0.3479760489531204,
+          "6": 0.5874050478379615
+        },
+        "charge_fits": [
+          {
+            "charge": 4,
+            "image_fit_error": 0.0,
+            "optimizer_success": true,
+            "optimizer_evaluations": 1
+          }
+        ],
+        "charge_search_exact_fit_early_stop": true,
+        "charge_search_complete": false,
+        "charge_search_note": "Discrete image-only model selection over the listed charges; an exact numerical fit does not establish uniqueness.",
+        "total_optimizer_evaluations": 1
+      },
+      "smooth_only_fit": {
+        "optimizer_success": true,
+        "optimizer_message": "`ftol` termination condition is satisfied.",
+        "optimizer_evaluations": 13,
+        "image_fit_error": 0.6869673128340257,
+        "jacobian_condition": 2.5819586243303227,
+        "initialization": "camera centroid \u00d7 8",
+        "recovered_vortex_charge": 0,
+        "charge_candidates": [
+          0
+        ],
+        "charge_template_residuals": {
+          "0": 0.9511236802818575
+        },
+        "charge_fits": [
+          {
+            "charge": 0,
+            "image_fit_error": 0.6869673128340257,
+            "optimizer_success": true,
+            "optimizer_evaluations": 13
+          }
+        ],
+        "charge_search_exact_fit_early_stop": false,
+        "charge_search_complete": true,
+        "charge_search_note": "Discrete image-only model selection over the listed charges; an exact numerical fit does not establish uniqueness.",
+        "total_optimizer_evaluations": 13
+      },
+      "paper": {
+        "method": "measured-gradient global LSQR versus one radial branch cut",
+        "gradient_units": "rad/mm",
+        "curl_units": "rad/mm^2",
+        "center_mm": [
+          -0.048599318067353126,
+          -0.048600928165104244
+        ],
+        "center_source": "inner absolute-curl peak",
+        "inner_curl_peak_center_mm": [
+          -0.048599318067353126,
+          -0.048600928165104244
+        ],
+        "inner_curl_peak_abs": 9.46210891035545,
+        "core_radius_mm": 0.2500000000000002,
+        "cut_angle_rad": 0.0,
+        "supported_samples": 5003,
+        "circulation_contours": [
+          {
+            "radius_mm": 1.0147058209742772,
+            "coverage": 1.0,
+            "charge": 3.143241753387614
+          },
+          {
+            "radius_mm": 1.6235293135588436,
+            "coverage": 1.0,
+            "charge": 4.835912402838793
+          },
+          {
+            "radius_mm": 2.23235280614341,
+            "coverage": 1.0,
+            "charge": 4.267858268478689
+          },
+          {
+            "radius_mm": 2.841176298727976,
+            "coverage": 1.0,
+            "charge": 2.511642912899109
+          },
+          {
+            "radius_mm": 3.247058627117687,
+            "coverage": 1.0,
+            "charge": 1.7109379060757703
+          }
+        ],
+        "circulation_charge_estimate": 3.143241753387614,
+        "nearest_integer_charge": 3,
+        "circulation_charge_spread": 3.1249744967630226,
+        "global_lmse": {
+          "edge_count": 9836,
+          "cut_edges_removed": 0,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 568,
+          "gradient_residual_rms_rad_per_mm": 1.424236866871846,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "branchcut_lmse": {
+          "edge_count": 9798,
+          "cut_edges_removed": 38,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 690,
+          "gradient_residual_rms_rad_per_mm": 0.7159192562272556,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "warnings": [
+          "Curl-peak localization is heuristic; diffraction or sampling artifacts can move the inferred center.",
+          "Geometric camera mapping neglects coherent diffraction and path overlap; compare against independent data before interpreting phase accuracy."
+        ],
+        "interpretation": "Circulation is a diagnostic of the measured gradient field, not a guaranteed optical charge measurement.",
+        "source": "camera intensity and calibrated geometry only",
+        "reference": "Wu, Ko & Davis (2016), doi:10.1364/OL.41.003169, Eqs. 2-4",
+        "flat_reference_subtracted": false,
+        "smoothing": "normalized masked 3x3 Gaussian, sigma=1 pupil-grid pixel",
+        "min_relative_mapped_intensity": 0.0001,
+        "wavelength_for_mapping_nm": 633.0
+      },
+      "calibrated_paper": {
+        "method": "measured-gradient global LSQR versus one radial branch cut",
+        "gradient_units": "rad/mm",
+        "curl_units": "rad/mm^2",
+        "center_mm": [
+          -0.04859947469691637,
+          -0.04860077153554101
+        ],
+        "center_source": "inner absolute-curl peak",
+        "inner_curl_peak_center_mm": [
+          -0.04859947469691637,
+          -0.04860077153554101
+        ],
+        "inner_curl_peak_abs": 9.462108910355452,
+        "core_radius_mm": 0.2500000000000002,
+        "cut_angle_rad": 0.0,
+        "supported_samples": 5003,
+        "circulation_contours": [
+          {
+            "radius_mm": 1.0147058142210315,
+            "coverage": 1.0,
+            "charge": 3.1432417268537325
+          },
+          {
+            "radius_mm": 1.6235293027536504,
+            "coverage": 1.0,
+            "charge": 4.835912389833816
+          },
+          {
+            "radius_mm": 2.2323527912862695,
+            "coverage": 1.0,
+            "charge": 4.267858309754835
+          },
+          {
+            "radius_mm": 2.841176279818888,
+            "coverage": 1.0,
+            "charge": 2.511642958385286
+          },
+          {
+            "radius_mm": 3.2470586055073007,
+            "coverage": 1.0,
+            "charge": 1.7109379377059664
+          }
+        ],
+        "circulation_charge_estimate": 3.1432417268537325,
+        "nearest_integer_charge": 3,
+        "circulation_charge_spread": 3.1249744521278497,
+        "global_lmse": {
+          "edge_count": 9836,
+          "cut_edges_removed": 0,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 563,
+          "gradient_residual_rms_rad_per_mm": 1.4243489738233341,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "branchcut_lmse": {
+          "edge_count": 9798,
+          "cut_edges_removed": 38,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 687,
+          "gradient_residual_rms_rad_per_mm": 0.7161448071514979,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "warnings": [
+          "Curl-peak localization is heuristic; diffraction or sampling artifacts can move the inferred center.",
+          "Geometric camera mapping neglects coherent diffraction and path overlap; compare against independent data before interpreting phase accuracy."
+        ],
+        "interpretation": "Circulation is a diagnostic of the measured gradient field, not a guaranteed optical charge measurement.",
+        "source": "camera intensity and calibrated geometry only",
+        "reference": "Wu, Ko & Davis (2016), doi:10.1364/OL.41.003169, Eqs. 2-4",
+        "flat_reference_subtracted": true,
+        "smoothing": "normalized masked 3x3 Gaussian, sigma=1 pupil-grid pixel",
+        "min_relative_mapped_intensity": 0.0001,
+        "wavelength_for_mapping_nm": 633.0
+      }
+    },
+    {
+      "case": "pure",
+      "input_charge": 5,
+      "recovered_charge": 5,
+      "charge_correct": 1,
+      "circular_rmse_rad": 0.0,
+      "image_fit_error": 0.0,
+      "smooth_only_circular_rmse_rad": 1.8089638821616014,
+      "smooth_only_image_fit_error": 0.7690532228558624,
+      "paper_global_circular_rmse_rad": 1.812197499550361,
+      "paper_cut_circular_rmse_rad": 1.5905094659055212,
+      "calibrated_cut_circular_rmse_rad": 1.5903907881110504,
+      "paper_circulation_charge": 5.440525536046523,
+      "paper_nearest_integer_charge": 5,
+      "optimizer_success": true,
+      "camera_fit": {
+        "optimizer_success": true,
+        "optimizer_message": "`gtol` termination condition is satisfied.",
+        "optimizer_evaluations": 1,
+        "image_fit_error": 0.0,
+        "jacobian_condition": 2.46139469650379,
+        "initialization": "zero Zernike phase",
+        "recovered_vortex_charge": 5,
+        "charge_candidates": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "charge_template_residuals": {
+          "0": 1.0971273075727048,
+          "1": 1.0483438425795604,
+          "2": 0.8918148804953465,
+          "3": 0.650724308640123,
+          "4": 0.3479760489531204,
+          "5": 0.0,
+          "6": 0.30556978306906196
+        },
+        "charge_fits": [
+          {
+            "charge": 5,
+            "image_fit_error": 0.0,
+            "optimizer_success": true,
+            "optimizer_evaluations": 1
+          }
+        ],
+        "charge_search_exact_fit_early_stop": true,
+        "charge_search_complete": false,
+        "charge_search_note": "Discrete image-only model selection over the listed charges; an exact numerical fit does not establish uniqueness.",
+        "total_optimizer_evaluations": 1
+      },
+      "smooth_only_fit": {
+        "optimizer_success": true,
+        "optimizer_message": "`ftol` termination condition is satisfied.",
+        "optimizer_evaluations": 24,
+        "image_fit_error": 0.7690532228558624,
+        "jacobian_condition": 2.5301115613288974,
+        "initialization": "camera centroid \u00d7 4",
+        "recovered_vortex_charge": 0,
+        "charge_candidates": [
+          0
+        ],
+        "charge_template_residuals": {
+          "0": 1.0971273075727048
+        },
+        "charge_fits": [
+          {
+            "charge": 0,
+            "image_fit_error": 0.7690532228558624,
+            "optimizer_success": true,
+            "optimizer_evaluations": 24
+          }
+        ],
+        "charge_search_exact_fit_early_stop": false,
+        "charge_search_complete": true,
+        "charge_search_note": "Discrete image-only model selection over the listed charges; an exact numerical fit does not establish uniqueness.",
+        "total_optimizer_evaluations": 24
+      },
+      "paper": {
+        "method": "measured-gradient global LSQR versus one radial branch cut",
+        "gradient_units": "rad/mm",
+        "curl_units": "rad/mm^2",
+        "center_mm": [
+          -0.04789719347522068,
+          -0.04793393779289729
+        ],
+        "center_source": "inner absolute-curl peak",
+        "inner_curl_peak_center_mm": [
+          -0.04789719347522068,
+          -0.04793393779289729
+        ],
+        "inner_curl_peak_abs": 11.83876503424267,
+        "core_radius_mm": 0.2500000000000002,
+        "cut_angle_rad": 0.0,
+        "supported_samples": 5003,
+        "circulation_contours": [
+          {
+            "radius_mm": 1.0144663578594835,
+            "coverage": 1.0,
+            "charge": 3.4011087094655914
+          },
+          {
+            "radius_mm": 1.6231461725751737,
+            "coverage": 1.0,
+            "charge": 5.440525536046523
+          },
+          {
+            "radius_mm": 2.231825987290864,
+            "coverage": 1.0,
+            "charge": 6.317700951190977
+          },
+          {
+            "radius_mm": 2.8405058020065534,
+            "coverage": 1.0,
+            "charge": 5.728751607348875
+          },
+          {
+            "radius_mm": 3.2462923451503474,
+            "coverage": 1.0,
+            "charge": 4.520624422388878
+          }
+        ],
+        "circulation_charge_estimate": 5.440525536046523,
+        "nearest_integer_charge": 5,
+        "circulation_charge_spread": 2.9165922417253856,
+        "global_lmse": {
+          "edge_count": 9836,
+          "cut_edges_removed": 0,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 598,
+          "gradient_residual_rms_rad_per_mm": 1.8650306526973262,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "branchcut_lmse": {
+          "edge_count": 9798,
+          "cut_edges_removed": 38,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 736,
+          "gradient_residual_rms_rad_per_mm": 0.9189326791944487,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "warnings": [
+          "Curl-peak localization is heuristic; diffraction or sampling artifacts can move the inferred center.",
+          "Geometric camera mapping neglects coherent diffraction and path overlap; compare against independent data before interpreting phase accuracy."
+        ],
+        "interpretation": "Circulation is a diagnostic of the measured gradient field, not a guaranteed optical charge measurement.",
+        "source": "camera intensity and calibrated geometry only",
+        "reference": "Wu, Ko & Davis (2016), doi:10.1364/OL.41.003169, Eqs. 2-4",
+        "flat_reference_subtracted": false,
+        "smoothing": "normalized masked 3x3 Gaussian, sigma=1 pupil-grid pixel",
+        "min_relative_mapped_intensity": 0.0001,
+        "wavelength_for_mapping_nm": 633.0
+      },
+      "calibrated_paper": {
+        "method": "measured-gradient global LSQR versus one radial branch cut",
+        "gradient_units": "rad/mm",
+        "curl_units": "rad/mm^2",
+        "center_mm": [
+          -0.04789732032327978,
+          -0.04793381094483819
+        ],
+        "center_source": "inner absolute-curl peak",
+        "inner_curl_peak_center_mm": [
+          -0.04789732032327978,
+          -0.04793381094483819
+        ],
+        "inner_curl_peak_abs": 11.838765034242668,
+        "core_radius_mm": 0.2500000000000002,
+        "cut_angle_rad": 0.0,
+        "supported_samples": 5003,
+        "circulation_contours": [
+          {
+            "radius_mm": 1.0144663523887325,
+            "coverage": 1.0,
+            "charge": 3.401108687634556
+          },
+          {
+            "radius_mm": 1.6231461638219722,
+            "coverage": 1.0,
+            "charge": 5.440525513497328
+          },
+          {
+            "radius_mm": 2.231825975255212,
+            "coverage": 1.0,
+            "charge": 6.317700948740028
+          },
+          {
+            "radius_mm": 2.8405057866884507,
+            "coverage": 1.0,
+            "charge": 5.728751641442421
+          },
+          {
+            "radius_mm": 3.2462923276439444,
+            "coverage": 1.0,
+            "charge": 4.520624486023402
+          }
+        ],
+        "circulation_charge_estimate": 5.440525513497328,
+        "nearest_integer_charge": 5,
+        "circulation_charge_spread": 2.916592261105472,
+        "global_lmse": {
+          "edge_count": 9836,
+          "cut_edges_removed": 0,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 571,
+          "gradient_residual_rms_rad_per_mm": 1.8653005315295068,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "branchcut_lmse": {
+          "edge_count": 9798,
+          "cut_edges_removed": 38,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 732,
+          "gradient_residual_rms_rad_per_mm": 0.919419374326773,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "warnings": [
+          "Curl-peak localization is heuristic; diffraction or sampling artifacts can move the inferred center.",
+          "Geometric camera mapping neglects coherent diffraction and path overlap; compare against independent data before interpreting phase accuracy."
+        ],
+        "interpretation": "Circulation is a diagnostic of the measured gradient field, not a guaranteed optical charge measurement.",
+        "source": "camera intensity and calibrated geometry only",
+        "reference": "Wu, Ko & Davis (2016), doi:10.1364/OL.41.003169, Eqs. 2-4",
+        "flat_reference_subtracted": true,
+        "smoothing": "normalized masked 3x3 Gaussian, sigma=1 pupil-grid pixel",
+        "min_relative_mapped_intensity": 0.0001,
+        "wavelength_for_mapping_nm": 633.0
+      }
+    },
+    {
+      "case": "pure",
+      "input_charge": 6,
+      "recovered_charge": 6,
+      "charge_correct": 1,
+      "circular_rmse_rad": 0.0,
+      "image_fit_error": 0.0,
+      "smooth_only_circular_rmse_rad": 1.803342501167199,
+      "smooth_only_image_fit_error": 0.8423687903221423,
+      "paper_global_circular_rmse_rad": 1.8175003418267583,
+      "paper_cut_circular_rmse_rad": 1.8490870113418014,
+      "calibrated_cut_circular_rmse_rad": 1.7414569455282534,
+      "paper_circulation_charge": 7.008839641316689,
+      "paper_nearest_integer_charge": 7,
+      "optimizer_success": true,
+      "camera_fit": {
+        "optimizer_success": true,
+        "optimizer_message": "`gtol` termination condition is satisfied.",
+        "optimizer_evaluations": 1,
+        "image_fit_error": 0.0,
+        "jacobian_condition": 2.4581360897133355,
+        "initialization": "zero Zernike phase",
+        "recovered_vortex_charge": 6,
+        "charge_candidates": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "charge_template_residuals": {
+          "0": 1.2031130683496232,
+          "1": 1.1582738112202855,
+          "2": 1.0295886919215507,
+          "3": 0.8358479564913814,
+          "4": 0.5874050478379615,
+          "5": 0.30556978306906196,
+          "6": 0.0
+        },
+        "charge_fits": [
+          {
+            "charge": 6,
+            "image_fit_error": 0.0,
+            "optimizer_success": true,
+            "optimizer_evaluations": 1
+          }
+        ],
+        "charge_search_exact_fit_early_stop": true,
+        "charge_search_complete": false,
+        "charge_search_note": "Discrete image-only model selection over the listed charges; an exact numerical fit does not establish uniqueness.",
+        "total_optimizer_evaluations": 1
+      },
+      "smooth_only_fit": {
+        "optimizer_success": true,
+        "optimizer_message": "`ftol` termination condition is satisfied.",
+        "optimizer_evaluations": 23,
+        "image_fit_error": 0.8423687903221423,
+        "jacobian_condition": 2.5232993511776987,
+        "initialization": "image-selected defocus seed -2 rad",
+        "recovered_vortex_charge": 0,
+        "charge_candidates": [
+          0
+        ],
+        "charge_template_residuals": {
+          "0": 1.2031130683496232
+        },
+        "charge_fits": [
+          {
+            "charge": 0,
+            "image_fit_error": 0.8423687903221423,
+            "optimizer_success": true,
+            "optimizer_evaluations": 23
+          }
+        ],
+        "charge_search_exact_fit_early_stop": false,
+        "charge_search_complete": true,
+        "charge_search_note": "Discrete image-only model selection over the listed charges; an exact numerical fit does not establish uniqueness.",
+        "total_optimizer_evaluations": 23
+      },
+      "paper": {
+        "method": "measured-gradient global LSQR versus one radial branch cut",
+        "gradient_units": "rad/mm",
+        "curl_units": "rad/mm^2",
+        "center_mm": [
+          -0.048266740612852875,
+          -0.04831645412304123
+        ],
+        "center_source": "inner absolute-curl peak",
+        "inner_curl_peak_center_mm": [
+          -0.048266740612852875,
+          -0.04831645412304123
+        ],
+        "inner_curl_peak_abs": 13.21238119336154,
+        "core_radius_mm": 0.2500000000000002,
+        "cut_angle_rad": 0.0,
+        "supported_samples": 5003,
+        "circulation_contours": [
+          {
+            "radius_mm": 1.0145985920539755,
+            "coverage": 1.0,
+            "charge": 3.941749810101859
+          },
+          {
+            "radius_mm": 1.623357747286361,
+            "coverage": 1.0,
+            "charge": 5.803173546394646
+          },
+          {
+            "radius_mm": 2.2321169025187464,
+            "coverage": 1.0,
+            "charge": 7.008839641316689
+          },
+          {
+            "radius_mm": 2.840876057751131,
+            "coverage": 1.0,
+            "charge": 7.973514941731395
+          },
+          {
+            "radius_mm": 3.246715494572722,
+            "coverage": 1.0,
+            "charge": 7.772119297879266
+          }
+        ],
+        "circulation_charge_estimate": 7.008839641316689,
+        "nearest_integer_charge": 7,
+        "circulation_charge_spread": 4.031765131629536,
+        "global_lmse": {
+          "edge_count": 9836,
+          "cut_edges_removed": 0,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 605,
+          "gradient_residual_rms_rad_per_mm": 2.195689243559125,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "branchcut_lmse": {
+          "edge_count": 9798,
+          "cut_edges_removed": 38,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 728,
+          "gradient_residual_rms_rad_per_mm": 1.0540582783739172,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "warnings": [
+          "Curl-peak localization is heuristic; diffraction or sampling artifacts can move the inferred center.",
+          "Geometric camera mapping neglects coherent diffraction and path overlap; compare against independent data before interpreting phase accuracy."
+        ],
+        "interpretation": "Circulation is a diagnostic of the measured gradient field, not a guaranteed optical charge measurement.",
+        "source": "camera intensity and calibrated geometry only",
+        "reference": "Wu, Ko & Davis (2016), doi:10.1364/OL.41.003169, Eqs. 2-4",
+        "flat_reference_subtracted": false,
+        "smoothing": "normalized masked 3x3 Gaussian, sigma=1 pupil-grid pixel",
+        "min_relative_mapped_intensity": 0.0001,
+        "wavelength_for_mapping_nm": 633.0
+      },
+      "calibrated_paper": {
+        "method": "measured-gradient global LSQR versus one radial branch cut",
+        "gradient_units": "rad/mm",
+        "curl_units": "rad/mm^2",
+        "center_mm": [
+          -0.04826685350771291,
+          -0.04831634122818121
+        ],
+        "center_source": "inner absolute-curl peak",
+        "inner_curl_peak_center_mm": [
+          -0.04826685350771291,
+          -0.04831634122818121
+        ],
+        "inner_curl_peak_abs": 13.212381193361539,
+        "core_radius_mm": 0.2500000000000002,
+        "cut_angle_rad": 0.0,
+        "supported_samples": 5003,
+        "circulation_contours": [
+          {
+            "radius_mm": 1.0145985871855476,
+            "coverage": 1.0,
+            "charge": 3.941749789357615
+          },
+          {
+            "radius_mm": 1.6233577394968763,
+            "coverage": 1.0,
+            "charge": 5.803173529353581
+          },
+          {
+            "radius_mm": 2.232116891808205,
+            "coverage": 1.0,
+            "charge": 7.008839620605328
+          },
+          {
+            "radius_mm": 2.840876044119533,
+            "coverage": 1.0,
+            "charge": 7.973514932628804
+          },
+          {
+            "radius_mm": 3.2467154789937527,
+            "coverage": 1.0,
+            "charge": 7.772119330347152
+          }
+        ],
+        "circulation_charge_estimate": 7.008839620605328,
+        "nearest_integer_charge": 7,
+        "circulation_charge_spread": 4.031765143271189,
+        "global_lmse": {
+          "edge_count": 9836,
+          "cut_edges_removed": 0,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 599,
+          "gradient_residual_rms_rad_per_mm": 2.19592131702192,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "branchcut_lmse": {
+          "edge_count": 9798,
+          "cut_edges_removed": 38,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 748,
+          "gradient_residual_rms_rad_per_mm": 1.054427634574199,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "warnings": [
+          "Curl-peak localization is heuristic; diffraction or sampling artifacts can move the inferred center.",
+          "Geometric camera mapping neglects coherent diffraction and path overlap; compare against independent data before interpreting phase accuracy."
+        ],
+        "interpretation": "Circulation is a diagnostic of the measured gradient field, not a guaranteed optical charge measurement.",
+        "source": "camera intensity and calibrated geometry only",
+        "reference": "Wu, Ko & Davis (2016), doi:10.1364/OL.41.003169, Eqs. 2-4",
+        "flat_reference_subtracted": true,
+        "smoothing": "normalized masked 3x3 Gaussian, sigma=1 pupil-grid pixel",
+        "min_relative_mapped_intensity": 0.0001,
+        "wavelength_for_mapping_nm": 633.0
+      }
+    },
+    {
+      "case": "mixed",
+      "input_charge": 0,
+      "recovered_charge": 0,
+      "charge_correct": 1,
+      "circular_rmse_rad": 1.573486782309606e-13,
+      "image_fit_error": 2.214985623192532e-14,
+      "smooth_only_circular_rmse_rad": 1.573486782309606e-13,
+      "smooth_only_image_fit_error": 2.214985623192532e-14,
+      "paper_global_circular_rmse_rad": 0.5829803130017316,
+      "paper_cut_circular_rmse_rad": 0.5830388103407358,
+      "calibrated_cut_circular_rmse_rad": 1.1250691453667596,
+      "paper_circulation_charge": 0.0030383645879828464,
+      "paper_nearest_integer_charge": 0,
+      "optimizer_success": true,
+      "camera_fit": {
+        "optimizer_success": true,
+        "optimizer_message": "`gtol` termination condition is satisfied.",
+        "optimizer_evaluations": 16,
+        "image_fit_error": 2.214985623192532e-14,
+        "jacobian_condition": 8.411761991140803,
+        "initialization": "camera centroid \u00d7 4",
+        "recovered_vortex_charge": 0,
+        "charge_candidates": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "charge_template_residuals": {
+          "0": 0.16965139783697622,
+          "1": 0.2611209165211621,
+          "2": 0.5201981077668536,
+          "3": 0.7757959565671668,
+          "4": 0.9819275219536189,
+          "5": 1.1269529206552078,
+          "6": 1.229117746761313
+        },
+        "charge_fits": [
+          {
+            "charge": 0,
+            "image_fit_error": 2.214985623192532e-14,
+            "optimizer_success": true,
+            "optimizer_evaluations": 16
+          }
+        ],
+        "charge_search_exact_fit_early_stop": true,
+        "charge_search_complete": false,
+        "charge_search_note": "Discrete image-only model selection over the listed charges; an exact numerical fit does not establish uniqueness.",
+        "total_optimizer_evaluations": 16
+      },
+      "smooth_only_fit": {
+        "optimizer_success": true,
+        "optimizer_message": "`gtol` termination condition is satisfied.",
+        "optimizer_evaluations": 16,
+        "image_fit_error": 2.214985623192532e-14,
+        "jacobian_condition": 8.411761991140803,
+        "initialization": "camera centroid \u00d7 4",
+        "recovered_vortex_charge": 0,
+        "charge_candidates": [
+          0
+        ],
+        "charge_template_residuals": {
+          "0": 0.16965139783697622
+        },
+        "charge_fits": [
+          {
+            "charge": 0,
+            "image_fit_error": 2.214985623192532e-14,
+            "optimizer_success": true,
+            "optimizer_evaluations": 16
+          }
+        ],
+        "charge_search_exact_fit_early_stop": false,
+        "charge_search_complete": true,
+        "charge_search_note": "Discrete image-only model selection over the listed charges; an exact numerical fit does not establish uniqueness.",
+        "total_optimizer_evaluations": 16
+      },
+      "paper": {
+        "method": "measured-gradient global LSQR versus one radial branch cut",
+        "gradient_units": "rad/mm",
+        "curl_units": "rad/mm^2",
+        "center_mm": [
+          -0.3516909529095316,
+          1.795489470647447
+        ],
+        "center_source": "inner absolute-curl peak",
+        "inner_curl_peak_center_mm": [
+          -0.3516909529095316,
+          1.795489470647447
+        ],
+        "inner_curl_peak_abs": 0.006976811367345383,
+        "core_radius_mm": 0.2500000000000002,
+        "cut_angle_rad": 0.0,
+        "supported_samples": 5005,
+        "circulation_contours": [
+          {
+            "radius_mm": 1.4542242109338663,
+            "coverage": 1.0,
+            "charge": 0.0030383645879828464
+          },
+          {
+            "radius_mm": 2.326758737494186,
+            "coverage": 0.7890625,
+            "charge": null
+          },
+          {
+            "radius_mm": 3.199293264054506,
+            "coverage": 0.553125,
+            "charge": null
+          },
+          {
+            "radius_mm": 4.071827790614826,
+            "coverage": 0.4046875,
+            "charge": null
+          },
+          {
+            "radius_mm": 4.653517474988372,
+            "coverage": 0.3125,
+            "charge": null
+          }
+        ],
+        "circulation_charge_estimate": 0.0030383645879828464,
+        "nearest_integer_charge": 0,
+        "circulation_charge_spread": 0.0,
+        "global_lmse": {
+          "edge_count": 9840,
+          "cut_edges_removed": 0,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 836,
+          "gradient_residual_rms_rad_per_mm": 0.013707168969845897,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "branchcut_lmse": {
+          "edge_count": 9804,
+          "cut_edges_removed": 36,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 925,
+          "gradient_residual_rms_rad_per_mm": 0.013688456493670636,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "warnings": [
+          "Curl-peak localization is heuristic; diffraction or sampling artifacts can move the inferred center.",
+          "Geometric camera mapping neglects coherent diffraction and path overlap; compare against independent data before interpreting phase accuracy."
+        ],
+        "interpretation": "Circulation is a diagnostic of the measured gradient field, not a guaranteed optical charge measurement.",
+        "source": "camera intensity and calibrated geometry only",
+        "reference": "Wu, Ko & Davis (2016), doi:10.1364/OL.41.003169, Eqs. 2-4",
+        "flat_reference_subtracted": false,
+        "smoothing": "normalized masked 3x3 Gaussian, sigma=1 pupil-grid pixel",
+        "min_relative_mapped_intensity": 0.0001,
+        "wavelength_for_mapping_nm": 633.0
+      },
+      "calibrated_paper": {
+        "method": "measured-gradient global LSQR versus one radial branch cut",
+        "gradient_units": "rad/mm",
+        "curl_units": "rad/mm^2",
+        "center_mm": [
+          -0.42533526097767416,
+          1.7890111324181772
+        ],
+        "center_source": "inner absolute-curl peak",
+        "inner_curl_peak_center_mm": [
+          -0.42533526097767416,
+          1.7890111324181772
+        ],
+        "inner_curl_peak_abs": 0.010122524429271602,
+        "core_radius_mm": 0.2500000000000002,
+        "cut_angle_rad": 0.0,
+        "supported_samples": 5005,
+        "circulation_contours": [
+          {
+            "radius_mm": 1.4572032434560263,
+            "coverage": 1.0,
+            "charge": 0.00702691396016652
+          },
+          {
+            "radius_mm": 2.3315251895296423,
+            "coverage": 0.778125,
+            "charge": null
+          },
+          {
+            "radius_mm": 3.205847135603258,
+            "coverage": 0.5515625,
+            "charge": null
+          },
+          {
+            "radius_mm": 4.080169081676873,
+            "coverage": 0.4078125,
+            "charge": null
+          },
+          {
+            "radius_mm": 4.6630503790592845,
+            "coverage": 0.309375,
+            "charge": null
+          }
+        ],
+        "circulation_charge_estimate": 0.00702691396016652,
+        "nearest_integer_charge": 0,
+        "circulation_charge_spread": 0.0,
+        "global_lmse": {
+          "edge_count": 9840,
+          "cut_edges_removed": 0,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 792,
+          "gradient_residual_rms_rad_per_mm": 0.016072283258119914,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "branchcut_lmse": {
+          "edge_count": 9803,
+          "cut_edges_removed": 37,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 899,
+          "gradient_residual_rms_rad_per_mm": 0.016053344398283834,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "warnings": [
+          "Curl-peak localization is heuristic; diffraction or sampling artifacts can move the inferred center.",
+          "Geometric camera mapping neglects coherent diffraction and path overlap; compare against independent data before interpreting phase accuracy."
+        ],
+        "interpretation": "Circulation is a diagnostic of the measured gradient field, not a guaranteed optical charge measurement.",
+        "source": "camera intensity and calibrated geometry only",
+        "reference": "Wu, Ko & Davis (2016), doi:10.1364/OL.41.003169, Eqs. 2-4",
+        "flat_reference_subtracted": true,
+        "smoothing": "normalized masked 3x3 Gaussian, sigma=1 pupil-grid pixel",
+        "min_relative_mapped_intensity": 0.0001,
+        "wavelength_for_mapping_nm": 633.0
+      }
+    },
+    {
+      "case": "mixed",
+      "input_charge": 1,
+      "recovered_charge": 1,
+      "charge_correct": 1,
+      "circular_rmse_rad": 1.3759595960811067e-12,
+      "image_fit_error": 3.4356066872707814e-13,
+      "smooth_only_circular_rmse_rad": 1.3739358678904607,
+      "smooth_only_image_fit_error": 0.2028190228244039,
+      "paper_global_circular_rmse_rad": 1.828055665209788,
+      "paper_cut_circular_rmse_rad": 1.6969736231668582,
+      "calibrated_cut_circular_rmse_rad": 1.6668340898568792,
+      "paper_circulation_charge": 0.060717863170445294,
+      "paper_nearest_integer_charge": 0,
+      "optimizer_success": true,
+      "camera_fit": {
+        "optimizer_success": true,
+        "optimizer_message": "`gtol` termination condition is satisfied.",
+        "optimizer_evaluations": 6,
+        "image_fit_error": 3.4356066872707814e-13,
+        "jacobian_condition": 7.610151449913955,
+        "initialization": "image-selected defocus seed 1 rad",
+        "recovered_vortex_charge": 1,
+        "charge_candidates": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "charge_template_residuals": {
+          "0": 0.28808382804440796,
+          "1": 0.1967409851117668,
+          "2": 0.38980756113852744,
+          "3": 0.6656009001302456,
+          "4": 0.8968631108309827,
+          "5": 1.0524295217081576,
+          "6": 1.1615614482743792
+        },
+        "charge_fits": [
+          {
+            "charge": 1,
+            "image_fit_error": 3.4356066872707814e-13,
+            "optimizer_success": true,
+            "optimizer_evaluations": 6
+          }
+        ],
+        "charge_search_exact_fit_early_stop": true,
+        "charge_search_complete": false,
+        "charge_search_note": "Discrete image-only model selection over the listed charges; an exact numerical fit does not establish uniqueness.",
+        "total_optimizer_evaluations": 6
+      },
+      "smooth_only_fit": {
+        "optimizer_success": true,
+        "optimizer_message": "`ftol` termination condition is satisfied.",
+        "optimizer_evaluations": 19,
+        "image_fit_error": 0.2028190228244039,
+        "jacobian_condition": 5.302548752097947,
+        "initialization": "camera centroid \u00d7 4",
+        "recovered_vortex_charge": 0,
+        "charge_candidates": [
+          0
+        ],
+        "charge_template_residuals": {
+          "0": 0.28808382804440796
+        },
+        "charge_fits": [
+          {
+            "charge": 0,
+            "image_fit_error": 0.2028190228244039,
+            "optimizer_success": true,
+            "optimizer_evaluations": 19
+          }
+        ],
+        "charge_search_exact_fit_early_stop": false,
+        "charge_search_complete": true,
+        "charge_search_note": "Discrete image-only model selection over the listed charges; an exact numerical fit does not establish uniqueness.",
+        "total_optimizer_evaluations": 19
+      },
+      "paper": {
+        "method": "measured-gradient global LSQR versus one radial branch cut",
+        "gradient_units": "rad/mm",
+        "curl_units": "rad/mm^2",
+        "center_mm": [
+          0.04371539199810675,
+          0.027897986510590733
+        ],
+        "center_source": "inner absolute-curl peak",
+        "inner_curl_peak_center_mm": [
+          0.04371539199810675,
+          0.027897986510590733
+        ],
+        "inner_curl_peak_abs": 2.301724089470116,
+        "core_radius_mm": 0.2500000000000002,
+        "cut_angle_rad": 0.0,
+        "supported_samples": 5003,
+        "circulation_contours": [
+          {
+            "radius_mm": 1.0105628517266647,
+            "coverage": 1.0,
+            "charge": 0.1274145056590141
+          },
+          {
+            "radius_mm": 1.6169005627626636,
+            "coverage": 1.0,
+            "charge": 0.060717863170445294
+          },
+          {
+            "radius_mm": 2.2232382737986627,
+            "coverage": 1.0,
+            "charge": 0.01529359312283324
+          },
+          {
+            "radius_mm": 2.829575984834661,
+            "coverage": 1.0,
+            "charge": 0.046592237034643484
+          },
+          {
+            "radius_mm": 3.233801125525327,
+            "coverage": 1.0,
+            "charge": 0.09719042403760514
+          }
+        ],
+        "circulation_charge_estimate": 0.060717863170445294,
+        "nearest_integer_charge": 0,
+        "circulation_charge_spread": 0.11212091253618087,
+        "global_lmse": {
+          "edge_count": 9836,
+          "cut_edges_removed": 0,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 797,
+          "gradient_residual_rms_rad_per_mm": 0.06563859514860104,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "branchcut_lmse": {
+          "edge_count": 9799,
+          "cut_edges_removed": 37,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 866,
+          "gradient_residual_rms_rad_per_mm": 0.051129348978041486,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "warnings": [
+          "Curl-peak localization is heuristic; diffraction or sampling artifacts can move the inferred center.",
+          "Geometric camera mapping neglects coherent diffraction and path overlap; compare against independent data before interpreting phase accuracy."
+        ],
+        "interpretation": "Circulation is a diagnostic of the measured gradient field, not a guaranteed optical charge measurement.",
+        "source": "camera intensity and calibrated geometry only",
+        "reference": "Wu, Ko & Davis (2016), doi:10.1364/OL.41.003169, Eqs. 2-4",
+        "flat_reference_subtracted": false,
+        "smoothing": "normalized masked 3x3 Gaussian, sigma=1 pupil-grid pixel",
+        "min_relative_mapped_intensity": 0.0001,
+        "wavelength_for_mapping_nm": 633.0
+      },
+      "calibrated_paper": {
+        "method": "measured-gradient global LSQR versus one radial branch cut",
+        "gradient_units": "rad/mm",
+        "curl_units": "rad/mm^2",
+        "center_mm": [
+          0.04371621264204351,
+          0.027897957823856904
+        ],
+        "center_source": "inner absolute-curl peak",
+        "inner_curl_peak_center_mm": [
+          0.04371621264204351,
+          0.027897957823856904
+        ],
+        "inner_curl_peak_abs": 2.3017240894701145,
+        "core_radius_mm": 0.2500000000000002,
+        "cut_angle_rad": 0.0,
+        "supported_samples": 5003,
+        "circulation_contours": [
+          {
+            "radius_mm": 1.0105630094247053,
+            "coverage": 1.0,
+            "charge": 0.12741448733250121
+          },
+          {
+            "radius_mm": 1.6169008150795285,
+            "coverage": 1.0,
+            "charge": 0.06071784427944774
+          },
+          {
+            "radius_mm": 2.2232386207343517,
+            "coverage": 1.0,
+            "charge": 0.015293618369680913
+          },
+          {
+            "radius_mm": 2.829576426389175,
+            "coverage": 1.0,
+            "charge": 0.046592348488370544
+          },
+          {
+            "radius_mm": 3.233801630159057,
+            "coverage": 1.0,
+            "charge": 0.09719046505333699
+          }
+        ],
+        "circulation_charge_estimate": 0.06071784427944774,
+        "nearest_integer_charge": 0,
+        "circulation_charge_spread": 0.11212086896282031,
+        "global_lmse": {
+          "edge_count": 9836,
+          "cut_edges_removed": 0,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 756,
+          "gradient_residual_rms_rad_per_mm": 0.06624301176822424,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "branchcut_lmse": {
+          "edge_count": 9799,
+          "cut_edges_removed": 37,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 855,
+          "gradient_residual_rms_rad_per_mm": 0.051904046732422875,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "warnings": [
+          "Curl-peak localization is heuristic; diffraction or sampling artifacts can move the inferred center.",
+          "Geometric camera mapping neglects coherent diffraction and path overlap; compare against independent data before interpreting phase accuracy."
+        ],
+        "interpretation": "Circulation is a diagnostic of the measured gradient field, not a guaranteed optical charge measurement.",
+        "source": "camera intensity and calibrated geometry only",
+        "reference": "Wu, Ko & Davis (2016), doi:10.1364/OL.41.003169, Eqs. 2-4",
+        "flat_reference_subtracted": true,
+        "smoothing": "normalized masked 3x3 Gaussian, sigma=1 pupil-grid pixel",
+        "min_relative_mapped_intensity": 0.0001,
+        "wavelength_for_mapping_nm": 633.0
+      }
+    },
+    {
+      "case": "mixed",
+      "input_charge": 2,
+      "recovered_charge": 2,
+      "charge_correct": 1,
+      "circular_rmse_rad": 3.741918822550869e-15,
+      "image_fit_error": 1.813968503835883e-15,
+      "smooth_only_circular_rmse_rad": 1.5272400451318517,
+      "smooth_only_image_fit_error": 0.3394860641180656,
+      "paper_global_circular_rmse_rad": 1.5887819127029414,
+      "paper_cut_circular_rmse_rad": 1.6021641250026082,
+      "calibrated_cut_circular_rmse_rad": 1.7116792927929654,
+      "paper_circulation_charge": 0.36143611715424345,
+      "paper_nearest_integer_charge": 0,
+      "optimizer_success": true,
+      "camera_fit": {
+        "optimizer_success": true,
+        "optimizer_message": "`gtol` termination condition is satisfied.",
+        "optimizer_evaluations": 6,
+        "image_fit_error": 1.813968503835883e-15,
+        "jacobian_condition": 5.18699357111773,
+        "initialization": "image-selected defocus seed 1 rad",
+        "recovered_vortex_charge": 2,
+        "charge_candidates": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "charge_template_residuals": {
+          "0": 0.5025752053644346,
+          "1": 0.3884248152498148,
+          "2": 0.2927292707573844,
+          "3": 0.488089503595974,
+          "4": 0.7352219187271422,
+          "5": 0.9206917485514275,
+          "6": 1.0464258868785965
+        },
+        "charge_fits": [
+          {
+            "charge": 2,
+            "image_fit_error": 1.813968503835883e-15,
+            "optimizer_success": true,
+            "optimizer_evaluations": 6
+          }
+        ],
+        "charge_search_exact_fit_early_stop": true,
+        "charge_search_complete": false,
+        "charge_search_note": "Discrete image-only model selection over the listed charges; an exact numerical fit does not establish uniqueness.",
+        "total_optimizer_evaluations": 6
+      },
+      "smooth_only_fit": {
+        "optimizer_success": true,
+        "optimizer_message": "`ftol` termination condition is satisfied.",
+        "optimizer_evaluations": 34,
+        "image_fit_error": 0.3394860641180656,
+        "jacobian_condition": 4.67659693934832,
+        "initialization": "camera centroid \u00d7 4",
+        "recovered_vortex_charge": 0,
+        "charge_candidates": [
+          0
+        ],
+        "charge_template_residuals": {
+          "0": 0.5025752053644346
+        },
+        "charge_fits": [
+          {
+            "charge": 0,
+            "image_fit_error": 0.3394860641180656,
+            "optimizer_success": true,
+            "optimizer_evaluations": 34
+          }
+        ],
+        "charge_search_exact_fit_early_stop": false,
+        "charge_search_complete": true,
+        "charge_search_note": "Discrete image-only model selection over the listed charges; an exact numerical fit does not establish uniqueness.",
+        "total_optimizer_evaluations": 34
+      },
+      "paper": {
+        "method": "measured-gradient global LSQR versus one radial branch cut",
+        "gradient_units": "rad/mm",
+        "curl_units": "rad/mm^2",
+        "center_mm": [
+          -0.048903699321271234,
+          -0.050610121282723644
+        ],
+        "center_source": "inner absolute-curl peak",
+        "inner_curl_peak_center_mm": [
+          -0.048903699321271234,
+          -0.050610121282723644
+        ],
+        "inner_curl_peak_abs": 4.944987910862457,
+        "core_radius_mm": 0.2500000000000002,
+        "cut_angle_rad": 0.0,
+        "supported_samples": 5003,
+        "circulation_contours": [
+          {
+            "radius_mm": 1.0151485373745481,
+            "coverage": 1.0,
+            "charge": 1.1841572794671429
+          },
+          {
+            "radius_mm": 1.6242376597992771,
+            "coverage": 1.0,
+            "charge": 0.6154283284762788
+          },
+          {
+            "radius_mm": 2.233326782224006,
+            "coverage": 1.0,
+            "charge": 0.16835433052452775
+          },
+          {
+            "radius_mm": 2.8424159046487345,
+            "coverage": 1.0,
+            "charge": 0.23065935409201166
+          },
+          {
+            "radius_mm": 3.2484753195985543,
+            "coverage": 1.0,
+            "charge": 0.36143611715424345
+          }
+        ],
+        "circulation_charge_estimate": 0.36143611715424345,
+        "nearest_integer_charge": 0,
+        "circulation_charge_spread": 1.015802948942615,
+        "global_lmse": {
+          "edge_count": 9836,
+          "cut_edges_removed": 0,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 738,
+          "gradient_residual_rms_rad_per_mm": 0.325547625585334,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "branchcut_lmse": {
+          "edge_count": 9798,
+          "cut_edges_removed": 38,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 829,
+          "gradient_residual_rms_rad_per_mm": 0.1823884505593086,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "warnings": [
+          "Curl-peak localization is heuristic; diffraction or sampling artifacts can move the inferred center.",
+          "Geometric camera mapping neglects coherent diffraction and path overlap; compare against independent data before interpreting phase accuracy."
+        ],
+        "interpretation": "Circulation is a diagnostic of the measured gradient field, not a guaranteed optical charge measurement.",
+        "source": "camera intensity and calibrated geometry only",
+        "reference": "Wu, Ko & Davis (2016), doi:10.1364/OL.41.003169, Eqs. 2-4",
+        "flat_reference_subtracted": false,
+        "smoothing": "normalized masked 3x3 Gaussian, sigma=1 pupil-grid pixel",
+        "min_relative_mapped_intensity": 0.0001,
+        "wavelength_for_mapping_nm": 633.0
+      },
+      "calibrated_paper": {
+        "method": "measured-gradient global LSQR versus one radial branch cut",
+        "gradient_units": "rad/mm",
+        "curl_units": "rad/mm^2",
+        "center_mm": [
+          -0.04890400442933618,
+          -0.050609816174658706
+        ],
+        "center_source": "inner absolute-curl peak",
+        "inner_curl_peak_center_mm": [
+          -0.04890400442933618,
+          -0.050609816174658706
+        ],
+        "inner_curl_peak_abs": 4.944987910862457,
+        "core_radius_mm": 0.2500000000000002,
+        "cut_angle_rad": 0.0,
+        "supported_samples": 5003,
+        "circulation_contours": [
+          {
+            "radius_mm": 1.0151485241932137,
+            "coverage": 1.0,
+            "charge": 1.1841573195998774
+          },
+          {
+            "radius_mm": 1.624237638709142,
+            "coverage": 1.0,
+            "charge": 0.6154282100027126
+          },
+          {
+            "radius_mm": 2.2333267532250702,
+            "coverage": 1.0,
+            "charge": 0.16835427617749127
+          },
+          {
+            "radius_mm": 2.842415867740998,
+            "coverage": 1.0,
+            "charge": 0.23065927105872122
+          },
+          {
+            "radius_mm": 3.248475277418284,
+            "coverage": 1.0,
+            "charge": 0.36143605135328977
+          }
+        ],
+        "circulation_charge_estimate": 0.36143605135328977,
+        "nearest_integer_charge": 0,
+        "circulation_charge_spread": 1.0158030434223861,
+        "global_lmse": {
+          "edge_count": 9836,
+          "cut_edges_removed": 0,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 734,
+          "gradient_residual_rms_rad_per_mm": 0.325647722527574,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "branchcut_lmse": {
+          "edge_count": 9798,
+          "cut_edges_removed": 38,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 810,
+          "gradient_residual_rms_rad_per_mm": 0.1826613896673294,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "warnings": [
+          "Curl-peak localization is heuristic; diffraction or sampling artifacts can move the inferred center.",
+          "Geometric camera mapping neglects coherent diffraction and path overlap; compare against independent data before interpreting phase accuracy."
+        ],
+        "interpretation": "Circulation is a diagnostic of the measured gradient field, not a guaranteed optical charge measurement.",
+        "source": "camera intensity and calibrated geometry only",
+        "reference": "Wu, Ko & Davis (2016), doi:10.1364/OL.41.003169, Eqs. 2-4",
+        "flat_reference_subtracted": true,
+        "smoothing": "normalized masked 3x3 Gaussian, sigma=1 pupil-grid pixel",
+        "min_relative_mapped_intensity": 0.0001,
+        "wavelength_for_mapping_nm": 633.0
+      }
+    },
+    {
+      "case": "mixed",
+      "input_charge": 3,
+      "recovered_charge": 3,
+      "charge_correct": 1,
+      "circular_rmse_rad": 6.264643750532543e-16,
+      "image_fit_error": 6.477452822918624e-16,
+      "smooth_only_circular_rmse_rad": 1.344174291176819,
+      "smooth_only_image_fit_error": 0.5006915371303118,
+      "paper_global_circular_rmse_rad": 1.6876601367101778,
+      "paper_cut_circular_rmse_rad": 1.5715218521005383,
+      "calibrated_cut_circular_rmse_rad": 1.6696783376374307,
+      "paper_circulation_charge": 0.9872371787846688,
+      "paper_nearest_integer_charge": 1,
+      "optimizer_success": true,
+      "camera_fit": {
+        "optimizer_success": true,
+        "optimizer_message": "`gtol` termination condition is satisfied.",
+        "optimizer_evaluations": 6,
+        "image_fit_error": 6.477452822918624e-16,
+        "jacobian_condition": 2.963027843338468,
+        "initialization": "image-selected defocus seed 1 rad",
+        "recovered_vortex_charge": 3,
+        "charge_candidates": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "charge_template_residuals": {
+          "0": 0.7135064557603534,
+          "1": 0.6219337886182105,
+          "2": 0.3985049909475187,
+          "3": 0.3288544237678563,
+          "4": 0.5274418249783717,
+          "5": 0.7417399332496714,
+          "6": 0.900211970415387
+        },
+        "charge_fits": [
+          {
+            "charge": 3,
+            "image_fit_error": 6.477452822918624e-16,
+            "optimizer_success": true,
+            "optimizer_evaluations": 6
+          }
+        ],
+        "charge_search_exact_fit_early_stop": true,
+        "charge_search_complete": false,
+        "charge_search_note": "Discrete image-only model selection over the listed charges; an exact numerical fit does not establish uniqueness.",
+        "total_optimizer_evaluations": 6
+      },
+      "smooth_only_fit": {
+        "optimizer_success": false,
+        "optimizer_message": "The maximum number of function evaluations is exceeded.",
+        "optimizer_evaluations": 35,
+        "image_fit_error": 0.5006915371303118,
+        "jacobian_condition": 3.9574665808115763,
+        "initialization": "camera centroid \u00d7 4",
+        "recovered_vortex_charge": 0,
+        "charge_candidates": [
+          0
+        ],
+        "charge_template_residuals": {
+          "0": 0.7135064557603534
+        },
+        "charge_fits": [
+          {
+            "charge": 0,
+            "image_fit_error": 0.5006915371303118,
+            "optimizer_success": false,
+            "optimizer_evaluations": 35
+          }
+        ],
+        "charge_search_exact_fit_early_stop": false,
+        "charge_search_complete": true,
+        "charge_search_note": "Discrete image-only model selection over the listed charges; an exact numerical fit does not establish uniqueness.",
+        "total_optimizer_evaluations": 35
+      },
+      "paper": {
+        "method": "measured-gradient global LSQR versus one radial branch cut",
+        "gradient_units": "rad/mm",
+        "curl_units": "rad/mm^2",
+        "center_mm": [
+          0.049014729810826344,
+          -0.049275133472245845
+        ],
+        "center_source": "inner absolute-curl peak",
+        "inner_curl_peak_center_mm": [
+          0.049014729810826344,
+          -0.049275133472245845
+        ],
+        "inner_curl_peak_abs": 7.525998456810797,
+        "core_radius_mm": 0.2500000000000002,
+        "cut_angle_rad": 0.0,
+        "supported_samples": 5003,
+        "circulation_contours": [
+          {
+            "radius_mm": 1.0149025815153805,
+            "coverage": 1.0,
+            "charge": 2.5118546813911444
+          },
+          {
+            "radius_mm": 1.623844130424609,
+            "coverage": 1.0,
+            "charge": 2.521138532013093
+          },
+          {
+            "radius_mm": 2.2327856793338374,
+            "coverage": 1.0,
+            "charge": 0.9872371787846688
+          },
+          {
+            "radius_mm": 2.841727228243065,
+            "coverage": 1.0,
+            "charge": 0.6287181584122535
+          },
+          {
+            "radius_mm": 3.247688260849218,
+            "coverage": 1.0,
+            "charge": 0.7016715783599314
+          }
+        ],
+        "circulation_charge_estimate": 0.9872371787846688,
+        "nearest_integer_charge": 1,
+        "circulation_charge_spread": 1.8924203736008391,
+        "global_lmse": {
+          "edge_count": 9836,
+          "cut_edges_removed": 0,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 666,
+          "gradient_residual_rms_rad_per_mm": 0.7748281827784121,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "branchcut_lmse": {
+          "edge_count": 9799,
+          "cut_edges_removed": 37,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 734,
+          "gradient_residual_rms_rad_per_mm": 0.42107715447621186,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "warnings": [
+          "Curl-peak localization is heuristic; diffraction or sampling artifacts can move the inferred center.",
+          "Geometric camera mapping neglects coherent diffraction and path overlap; compare against independent data before interpreting phase accuracy."
+        ],
+        "interpretation": "Circulation is a diagnostic of the measured gradient field, not a guaranteed optical charge measurement.",
+        "source": "camera intensity and calibrated geometry only",
+        "reference": "Wu, Ko & Davis (2016), doi:10.1364/OL.41.003169, Eqs. 2-4",
+        "flat_reference_subtracted": false,
+        "smoothing": "normalized masked 3x3 Gaussian, sigma=1 pupil-grid pixel",
+        "min_relative_mapped_intensity": 0.0001,
+        "wavelength_for_mapping_nm": 633.0
+      },
+      "calibrated_paper": {
+        "method": "measured-gradient global LSQR versus one radial branch cut",
+        "gradient_units": "rad/mm",
+        "curl_units": "rad/mm^2",
+        "center_mm": [
+          0.0490145318141484,
+          -0.04927533146892379
+        ],
+        "center_source": "inner absolute-curl peak",
+        "inner_curl_peak_center_mm": [
+          0.0490145318141484,
+          -0.04927533146892379
+        ],
+        "inner_curl_peak_abs": 7.525998456810797,
+        "core_radius_mm": 0.2500000000000002,
+        "cut_angle_rad": 0.0,
+        "supported_samples": 5003,
+        "circulation_contours": [
+          {
+            "radius_mm": 1.0149025900537167,
+            "coverage": 1.0,
+            "charge": 2.511854658250431
+          },
+          {
+            "radius_mm": 1.6238441440859468,
+            "coverage": 1.0,
+            "charge": 2.5211385029969593
+          },
+          {
+            "radius_mm": 2.232785698118177,
+            "coverage": 1.0,
+            "charge": 0.9872372812644737
+          },
+          {
+            "radius_mm": 2.841727252150407,
+            "coverage": 1.0,
+            "charge": 0.6287181830769984
+          },
+          {
+            "radius_mm": 3.2476882881718936,
+            "coverage": 1.0,
+            "charge": 0.7016715780119108
+          }
+        ],
+        "circulation_charge_estimate": 0.9872372812644737,
+        "nearest_integer_charge": 1,
+        "circulation_charge_spread": 1.8924203199199607,
+        "global_lmse": {
+          "edge_count": 9836,
+          "cut_edges_removed": 0,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 659,
+          "gradient_residual_rms_rad_per_mm": 0.7747750159919695,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "branchcut_lmse": {
+          "edge_count": 9799,
+          "cut_edges_removed": 37,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 735,
+          "gradient_residual_rms_rad_per_mm": 0.42108570229337355,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "warnings": [
+          "Curl-peak localization is heuristic; diffraction or sampling artifacts can move the inferred center.",
+          "Geometric camera mapping neglects coherent diffraction and path overlap; compare against independent data before interpreting phase accuracy."
+        ],
+        "interpretation": "Circulation is a diagnostic of the measured gradient field, not a guaranteed optical charge measurement.",
+        "source": "camera intensity and calibrated geometry only",
+        "reference": "Wu, Ko & Davis (2016), doi:10.1364/OL.41.003169, Eqs. 2-4",
+        "flat_reference_subtracted": true,
+        "smoothing": "normalized masked 3x3 Gaussian, sigma=1 pupil-grid pixel",
+        "min_relative_mapped_intensity": 0.0001,
+        "wavelength_for_mapping_nm": 633.0
+      }
+    },
+    {
+      "case": "mixed",
+      "input_charge": 4,
+      "recovered_charge": 4,
+      "charge_correct": 1,
+      "circular_rmse_rad": 7.892842277949775e-11,
+      "image_fit_error": 3.857547286381911e-11,
+      "smooth_only_circular_rmse_rad": 1.5335687549515256,
+      "smooth_only_image_fit_error": 0.6705374056867075,
+      "paper_global_circular_rmse_rad": 1.8054514675976139,
+      "paper_cut_circular_rmse_rad": 1.5228731895110312,
+      "calibrated_cut_circular_rmse_rad": 1.6116157583944413,
+      "paper_circulation_charge": 3.170766376339197,
+      "paper_nearest_integer_charge": 3,
+      "optimizer_success": true,
+      "camera_fit": {
+        "optimizer_success": true,
+        "optimizer_message": "`gtol` termination condition is satisfied.",
+        "optimizer_evaluations": 5,
+        "image_fit_error": 3.857547286381911e-11,
+        "jacobian_condition": 2.611398035274881,
+        "initialization": "image-selected defocus seed 1 rad",
+        "recovered_vortex_charge": 4,
+        "charge_candidates": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "charge_template_residuals": {
+          "0": 0.9157778830982272,
+          "1": 0.8543311485389625,
+          "2": 0.6381619580661853,
+          "3": 0.4001342546811386,
+          "4": 0.34853790784184135,
+          "5": 0.5318823670708893,
+          "6": 0.7170790565364762
+        },
+        "charge_fits": [
+          {
+            "charge": 4,
+            "image_fit_error": 3.857547286381911e-11,
+            "optimizer_success": true,
+            "optimizer_evaluations": 5
+          }
+        ],
+        "charge_search_exact_fit_early_stop": true,
+        "charge_search_complete": false,
+        "charge_search_note": "Discrete image-only model selection over the listed charges; an exact numerical fit does not establish uniqueness.",
+        "total_optimizer_evaluations": 5
+      },
+      "smooth_only_fit": {
+        "optimizer_success": false,
+        "optimizer_message": "The maximum number of function evaluations is exceeded.",
+        "optimizer_evaluations": 35,
+        "image_fit_error": 0.6705374056867075,
+        "jacobian_condition": 3.043199464588735,
+        "initialization": "camera centroid \u00d7 4",
+        "recovered_vortex_charge": 0,
+        "charge_candidates": [
+          0
+        ],
+        "charge_template_residuals": {
+          "0": 0.9157778830982272
+        },
+        "charge_fits": [
+          {
+            "charge": 0,
+            "image_fit_error": 0.6705374056867075,
+            "optimizer_success": false,
+            "optimizer_evaluations": 35
+          }
+        ],
+        "charge_search_exact_fit_early_stop": false,
+        "charge_search_complete": true,
+        "charge_search_note": "Discrete image-only model selection over the listed charges; an exact numerical fit does not establish uniqueness.",
+        "total_optimizer_evaluations": 35
+      },
+      "paper": {
+        "method": "measured-gradient global LSQR versus one radial branch cut",
+        "gradient_units": "rad/mm",
+        "curl_units": "rad/mm^2",
+        "center_mm": [
+          0.04885435878418587,
+          -0.04919311263884683
+        ],
+        "center_source": "inner absolute-curl peak",
+        "inner_curl_peak_center_mm": [
+          0.04885435878418587,
+          -0.04919311263884683
+        ],
+        "inner_curl_peak_abs": 9.089939222926883,
+        "core_radius_mm": 0.2500000000000002,
+        "cut_angle_rad": 0.0,
+        "supported_samples": 5003,
+        "circulation_contours": [
+          {
+            "radius_mm": 1.0148617417649362,
+            "coverage": 1.0,
+            "charge": 3.170766376339197
+          },
+          {
+            "radius_mm": 1.623778786823898,
+            "coverage": 1.0,
+            "charge": 4.608384726642683
+          },
+          {
+            "radius_mm": 2.2326958318828596,
+            "coverage": 1.0,
+            "charge": 3.4859254175062895
+          },
+          {
+            "radius_mm": 2.841612876941821,
+            "coverage": 1.0,
+            "charge": 2.074490717978098
+          },
+          {
+            "radius_mm": 3.247557573647796,
+            "coverage": 1.0,
+            "charge": 1.6145722667184335
+          }
+        ],
+        "circulation_charge_estimate": 3.170766376339197,
+        "nearest_integer_charge": 3,
+        "circulation_charge_spread": 2.9938124599242495,
+        "global_lmse": {
+          "edge_count": 9836,
+          "cut_edges_removed": 0,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 627,
+          "gradient_residual_rms_rad_per_mm": 1.3024384140213079,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "branchcut_lmse": {
+          "edge_count": 9799,
+          "cut_edges_removed": 37,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 686,
+          "gradient_residual_rms_rad_per_mm": 0.6841041302318491,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "warnings": [
+          "Curl-peak localization is heuristic; diffraction or sampling artifacts can move the inferred center.",
+          "Geometric camera mapping neglects coherent diffraction and path overlap; compare against independent data before interpreting phase accuracy."
+        ],
+        "interpretation": "Circulation is a diagnostic of the measured gradient field, not a guaranteed optical charge measurement.",
+        "source": "camera intensity and calibrated geometry only",
+        "reference": "Wu, Ko & Davis (2016), doi:10.1364/OL.41.003169, Eqs. 2-4",
+        "flat_reference_subtracted": false,
+        "smoothing": "normalized masked 3x3 Gaussian, sigma=1 pupil-grid pixel",
+        "min_relative_mapped_intensity": 0.0001,
+        "wavelength_for_mapping_nm": 633.0
+      },
+      "calibrated_paper": {
+        "method": "measured-gradient global LSQR versus one radial branch cut",
+        "gradient_units": "rad/mm",
+        "curl_units": "rad/mm^2",
+        "center_mm": [
+          0.0488541961909633,
+          -0.04919327523206938
+        ],
+        "center_source": "inner absolute-curl peak",
+        "inner_curl_peak_center_mm": [
+          0.0488541961909633,
+          -0.04919327523206938
+        ],
+        "inner_curl_peak_abs": 9.089939222926883,
+        "core_radius_mm": 0.2500000000000002,
+        "cut_angle_rad": 0.0,
+        "supported_samples": 5003,
+        "circulation_contours": [
+          {
+            "radius_mm": 1.0148617487776133,
+            "coverage": 1.0,
+            "charge": 3.1707664082181495
+          },
+          {
+            "radius_mm": 1.6237787980441813,
+            "coverage": 1.0,
+            "charge": 4.608384618381161
+          },
+          {
+            "radius_mm": 2.232695847310749,
+            "coverage": 1.0,
+            "charge": 3.4859253573234392
+          },
+          {
+            "radius_mm": 2.841612896577317,
+            "coverage": 1.0,
+            "charge": 2.0744907788594125
+          },
+          {
+            "radius_mm": 3.2475575960883627,
+            "coverage": 1.0,
+            "charge": 1.6145722841048558
+          }
+        ],
+        "circulation_charge_estimate": 3.1707664082181495,
+        "nearest_integer_charge": 3,
+        "circulation_charge_spread": 2.9938123342763054,
+        "global_lmse": {
+          "edge_count": 9836,
+          "cut_edges_removed": 0,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 619,
+          "gradient_residual_rms_rad_per_mm": 1.302320343789273,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "branchcut_lmse": {
+          "edge_count": 9799,
+          "cut_edges_removed": 37,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 685,
+          "gradient_residual_rms_rad_per_mm": 0.6838742297943314,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "warnings": [
+          "Curl-peak localization is heuristic; diffraction or sampling artifacts can move the inferred center.",
+          "Geometric camera mapping neglects coherent diffraction and path overlap; compare against independent data before interpreting phase accuracy."
+        ],
+        "interpretation": "Circulation is a diagnostic of the measured gradient field, not a guaranteed optical charge measurement.",
+        "source": "camera intensity and calibrated geometry only",
+        "reference": "Wu, Ko & Davis (2016), doi:10.1364/OL.41.003169, Eqs. 2-4",
+        "flat_reference_subtracted": true,
+        "smoothing": "normalized masked 3x3 Gaussian, sigma=1 pupil-grid pixel",
+        "min_relative_mapped_intensity": 0.0001,
+        "wavelength_for_mapping_nm": 633.0
+      }
+    },
+    {
+      "case": "mixed",
+      "input_charge": 5,
+      "recovered_charge": 5,
+      "charge_correct": 1,
+      "circular_rmse_rad": 8.620055843394586e-16,
+      "image_fit_error": 7.335355669290823e-16,
+      "smooth_only_circular_rmse_rad": 1.5929955094750654,
+      "smooth_only_image_fit_error": 0.7772870548060957,
+      "paper_global_circular_rmse_rad": 1.7903449852730333,
+      "paper_cut_circular_rmse_rad": 1.5612018864981245,
+      "calibrated_cut_circular_rmse_rad": 1.58212721048282,
+      "paper_circulation_charge": 5.11519227825871,
+      "paper_nearest_integer_charge": 5,
+      "optimizer_success": true,
+      "camera_fit": {
+        "optimizer_success": true,
+        "optimizer_message": "`gtol` termination condition is satisfied.",
+        "optimizer_evaluations": 6,
+        "image_fit_error": 7.335355669290823e-16,
+        "jacobian_condition": 2.415822700958475,
+        "initialization": "camera centroid \u00d7 1",
+        "recovered_vortex_charge": 5,
+        "charge_candidates": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "charge_template_residuals": {
+          "0": 1.0761115890566981,
+          "1": 1.0238289375939489,
+          "2": 0.8511347553810399,
+          "3": 0.6242921676887689,
+          "4": 0.42420998465938736,
+          "5": 0.40029989231323315,
+          "6": 0.5423128865840635
+        },
+        "charge_fits": [
+          {
+            "charge": 5,
+            "image_fit_error": 7.335355669290823e-16,
+            "optimizer_success": true,
+            "optimizer_evaluations": 6
+          }
+        ],
+        "charge_search_exact_fit_early_stop": true,
+        "charge_search_complete": false,
+        "charge_search_note": "Discrete image-only model selection over the listed charges; an exact numerical fit does not establish uniqueness.",
+        "total_optimizer_evaluations": 6
+      },
+      "smooth_only_fit": {
+        "optimizer_success": false,
+        "optimizer_message": "The maximum number of function evaluations is exceeded.",
+        "optimizer_evaluations": 35,
+        "image_fit_error": 0.7772870548060957,
+        "jacobian_condition": 3.1851925831928067,
+        "initialization": "camera centroid \u00d7 4",
+        "recovered_vortex_charge": 0,
+        "charge_candidates": [
+          0
+        ],
+        "charge_template_residuals": {
+          "0": 1.0761115890566981
+        },
+        "charge_fits": [
+          {
+            "charge": 0,
+            "image_fit_error": 0.7772870548060957,
+            "optimizer_success": false,
+            "optimizer_evaluations": 35
+          }
+        ],
+        "charge_search_exact_fit_early_stop": false,
+        "charge_search_complete": true,
+        "charge_search_note": "Discrete image-only model selection over the listed charges; an exact numerical fit does not establish uniqueness.",
+        "total_optimizer_evaluations": 35
+      },
+      "paper": {
+        "method": "measured-gradient global LSQR versus one radial branch cut",
+        "gradient_units": "rad/mm",
+        "curl_units": "rad/mm^2",
+        "center_mm": [
+          0.04833182287963224,
+          0.04913417111649659
+        ],
+        "center_source": "inner absolute-curl peak",
+        "inner_curl_peak_center_mm": [
+          0.04833182287963224,
+          0.04913417111649659
+        ],
+        "inner_curl_peak_abs": 12.213736587874825,
+        "core_radius_mm": 0.2500000000000002,
+        "cut_angle_rad": 0.0,
+        "supported_samples": 5003,
+        "circulation_contours": [
+          {
+            "radius_mm": 1.0147697196291106,
+            "coverage": 1.0,
+            "charge": 3.4764688339533283
+          },
+          {
+            "radius_mm": 1.623631551406577,
+            "coverage": 1.0,
+            "charge": 5.521165881404341
+          },
+          {
+            "radius_mm": 2.2324933831840434,
+            "coverage": 1.0,
+            "charge": 5.981064234375517
+          },
+          {
+            "radius_mm": 2.8413552149615096,
+            "coverage": 1.0,
+            "charge": 5.11519227825871
+          },
+          {
+            "radius_mm": 3.247263102813154,
+            "coverage": 1.0,
+            "charge": 4.230292746487621
+          }
+        ],
+        "circulation_charge_estimate": 5.11519227825871,
+        "nearest_integer_charge": 5,
+        "circulation_charge_spread": 2.504595400422189,
+        "global_lmse": {
+          "edge_count": 9836,
+          "cut_edges_removed": 0,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 653,
+          "gradient_residual_rms_rad_per_mm": 1.8095431227669456,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "branchcut_lmse": {
+          "edge_count": 9799,
+          "cut_edges_removed": 37,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 743,
+          "gradient_residual_rms_rad_per_mm": 0.903131530624872,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "warnings": [
+          "Curl-peak localization is heuristic; diffraction or sampling artifacts can move the inferred center.",
+          "Geometric camera mapping neglects coherent diffraction and path overlap; compare against independent data before interpreting phase accuracy."
+        ],
+        "interpretation": "Circulation is a diagnostic of the measured gradient field, not a guaranteed optical charge measurement.",
+        "source": "camera intensity and calibrated geometry only",
+        "reference": "Wu, Ko & Davis (2016), doi:10.1364/OL.41.003169, Eqs. 2-4",
+        "flat_reference_subtracted": false,
+        "smoothing": "normalized masked 3x3 Gaussian, sigma=1 pupil-grid pixel",
+        "min_relative_mapped_intensity": 0.0001,
+        "wavelength_for_mapping_nm": 633.0
+      },
+      "calibrated_paper": {
+        "method": "measured-gradient global LSQR versus one radial branch cut",
+        "gradient_units": "rad/mm",
+        "curl_units": "rad/mm^2",
+        "center_mm": [
+          0.048331946193749524,
+          0.04913404780237929
+        ],
+        "center_source": "inner absolute-curl peak",
+        "inner_curl_peak_center_mm": [
+          0.048331946193749524,
+          0.04913404780237929
+        ],
+        "inner_curl_peak_abs": 12.213736587874823,
+        "core_radius_mm": 0.2500000000000002,
+        "cut_angle_rad": 0.0,
+        "supported_samples": 5003,
+        "circulation_contours": [
+          {
+            "radius_mm": 1.014769714306548,
+            "coverage": 1.0,
+            "charge": 3.4764688252665215
+          },
+          {
+            "radius_mm": 1.6236315428904768,
+            "coverage": 1.0,
+            "charge": 5.521165855106117
+          },
+          {
+            "radius_mm": 2.2324933714744057,
+            "coverage": 1.0,
+            "charge": 5.981064227909263
+          },
+          {
+            "radius_mm": 2.841355200058334,
+            "coverage": 1.0,
+            "charge": 5.115192297622916
+          },
+          {
+            "radius_mm": 3.2472630857809537,
+            "coverage": 1.0,
+            "charge": 4.230292812808943
+          }
+        ],
+        "circulation_charge_estimate": 5.115192297622916,
+        "nearest_integer_charge": 5,
+        "circulation_charge_spread": 2.5045954026427415,
+        "global_lmse": {
+          "edge_count": 9836,
+          "cut_edges_removed": 0,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 661,
+          "gradient_residual_rms_rad_per_mm": 1.8093864739709697,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "branchcut_lmse": {
+          "edge_count": 9799,
+          "cut_edges_removed": 37,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 740,
+          "gradient_residual_rms_rad_per_mm": 0.9029370899056388,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "warnings": [
+          "Curl-peak localization is heuristic; diffraction or sampling artifacts can move the inferred center.",
+          "Geometric camera mapping neglects coherent diffraction and path overlap; compare against independent data before interpreting phase accuracy."
+        ],
+        "interpretation": "Circulation is a diagnostic of the measured gradient field, not a guaranteed optical charge measurement.",
+        "source": "camera intensity and calibrated geometry only",
+        "reference": "Wu, Ko & Davis (2016), doi:10.1364/OL.41.003169, Eqs. 2-4",
+        "flat_reference_subtracted": true,
+        "smoothing": "normalized masked 3x3 Gaussian, sigma=1 pupil-grid pixel",
+        "min_relative_mapped_intensity": 0.0001,
+        "wavelength_for_mapping_nm": 633.0
+      }
+    },
+    {
+      "case": "mixed",
+      "input_charge": 6,
+      "recovered_charge": 6,
+      "charge_correct": 1,
+      "circular_rmse_rad": 2.759947047907607e-10,
+      "image_fit_error": 1.2203976785797448e-10,
+      "smooth_only_circular_rmse_rad": 1.611271705896115,
+      "smooth_only_image_fit_error": 0.7597251886369621,
+      "paper_global_circular_rmse_rad": 1.7646591208583435,
+      "paper_cut_circular_rmse_rad": 1.7898344575263392,
+      "calibrated_cut_circular_rmse_rad": 1.7493556309267064,
+      "paper_circulation_charge": 7.051511518225194,
+      "paper_nearest_integer_charge": 7,
+      "optimizer_success": true,
+      "camera_fit": {
+        "optimizer_success": true,
+        "optimizer_message": "`gtol` termination condition is satisfied.",
+        "optimizer_evaluations": 5,
+        "image_fit_error": 1.2203976785797448e-10,
+        "jacobian_condition": 2.46303486998872,
+        "initialization": "image-selected defocus seed 1 rad",
+        "recovered_vortex_charge": 6,
+        "charge_candidates": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "charge_template_residuals": {
+          "0": 1.1779407063284935,
+          "1": 1.1309617768030507,
+          "2": 0.9835800551204451,
+          "3": 0.7920091079957776,
+          "4": 0.5875620289823166,
+          "5": 0.4454173970599737,
+          "6": 0.4399930483554775
+        },
+        "charge_fits": [
+          {
+            "charge": 6,
+            "image_fit_error": 1.2203976785797448e-10,
+            "optimizer_success": true,
+            "optimizer_evaluations": 5
+          }
+        ],
+        "charge_search_exact_fit_early_stop": true,
+        "charge_search_complete": false,
+        "charge_search_note": "Discrete image-only model selection over the listed charges; an exact numerical fit does not establish uniqueness.",
+        "total_optimizer_evaluations": 5
+      },
+      "smooth_only_fit": {
+        "optimizer_success": false,
+        "optimizer_message": "The maximum number of function evaluations is exceeded.",
+        "optimizer_evaluations": 35,
+        "image_fit_error": 0.7597251886369621,
+        "jacobian_condition": 11.650619031893175,
+        "initialization": "camera centroid \u00d7 8",
+        "recovered_vortex_charge": 0,
+        "charge_candidates": [
+          0
+        ],
+        "charge_template_residuals": {
+          "0": 1.1779407063284935
+        },
+        "charge_fits": [
+          {
+            "charge": 0,
+            "image_fit_error": 0.7597251886369621,
+            "optimizer_success": false,
+            "optimizer_evaluations": 35
+          }
+        ],
+        "charge_search_exact_fit_early_stop": false,
+        "charge_search_complete": true,
+        "charge_search_note": "Discrete image-only model selection over the listed charges; an exact numerical fit does not establish uniqueness.",
+        "total_optimizer_evaluations": 35
+      },
+      "paper": {
+        "method": "measured-gradient global LSQR versus one radial branch cut",
+        "gradient_units": "rad/mm",
+        "curl_units": "rad/mm^2",
+        "center_mm": [
+          0.048210982571974946,
+          0.04863080409467908
+        ],
+        "center_source": "inner absolute-curl peak",
+        "inner_curl_peak_center_mm": [
+          0.048210982571974946,
+          0.04863080409467908
+        ],
+        "inner_curl_peak_abs": 13.694897273650174,
+        "core_radius_mm": 0.2500000000000002,
+        "cut_angle_rad": 0.0,
+        "supported_samples": 5003,
+        "circulation_contours": [
+          {
+            "radius_mm": 1.01465194569205,
+            "coverage": 1.0,
+            "charge": 3.998760551134887
+          },
+          {
+            "radius_mm": 1.62344311310728,
+            "coverage": 1.0,
+            "charge": 5.965447737872614
+          },
+          {
+            "radius_mm": 2.23223428052251,
+            "coverage": 1.0,
+            "charge": 7.051511518225194
+          },
+          {
+            "radius_mm": 2.84102544793774,
+            "coverage": 1.0,
+            "charge": 7.502384452586313
+          },
+          {
+            "radius_mm": 3.24688622621456,
+            "coverage": 1.0,
+            "charge": 7.167823263964666
+          }
+        ],
+        "circulation_charge_estimate": 7.051511518225194,
+        "nearest_integer_charge": 7,
+        "circulation_charge_spread": 3.5036239014514257,
+        "global_lmse": {
+          "edge_count": 9836,
+          "cut_edges_removed": 0,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 674,
+          "gradient_residual_rms_rad_per_mm": 2.17719989315457,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "branchcut_lmse": {
+          "edge_count": 9799,
+          "cut_edges_removed": 37,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 755,
+          "gradient_residual_rms_rad_per_mm": 1.0679220202101993,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "warnings": [
+          "Curl-peak localization is heuristic; diffraction or sampling artifacts can move the inferred center.",
+          "Geometric camera mapping neglects coherent diffraction and path overlap; compare against independent data before interpreting phase accuracy."
+        ],
+        "interpretation": "Circulation is a diagnostic of the measured gradient field, not a guaranteed optical charge measurement.",
+        "source": "camera intensity and calibrated geometry only",
+        "reference": "Wu, Ko & Davis (2016), doi:10.1364/OL.41.003169, Eqs. 2-4",
+        "flat_reference_subtracted": false,
+        "smoothing": "normalized masked 3x3 Gaussian, sigma=1 pupil-grid pixel",
+        "min_relative_mapped_intensity": 0.0001,
+        "wavelength_for_mapping_nm": 633.0
+      },
+      "calibrated_paper": {
+        "method": "measured-gradient global LSQR versus one radial branch cut",
+        "gradient_units": "rad/mm",
+        "curl_units": "rad/mm^2",
+        "center_mm": [
+          0.048211092022872146,
+          0.04863069464378188
+        ],
+        "center_source": "inner absolute-curl peak",
+        "inner_curl_peak_center_mm": [
+          0.048211092022872146,
+          0.04863069464378188
+        ],
+        "inner_curl_peak_abs": 13.694897273650174,
+        "core_radius_mm": 0.2500000000000002,
+        "cut_angle_rad": 0.0,
+        "supported_samples": 5003,
+        "circulation_contours": [
+          {
+            "radius_mm": 1.014651940969891,
+            "coverage": 1.0,
+            "charge": 3.9987605316667447
+          },
+          {
+            "radius_mm": 1.623443105551826,
+            "coverage": 1.0,
+            "charge": 5.965447728682887
+          },
+          {
+            "radius_mm": 2.2322342701337607,
+            "coverage": 1.0,
+            "charge": 7.05151147711469
+          },
+          {
+            "radius_mm": 2.8410254347156947,
+            "coverage": 1.0,
+            "charge": 7.502384429537707
+          },
+          {
+            "radius_mm": 3.246886211103652,
+            "coverage": 1.0,
+            "charge": 7.167823294370262
+          }
+        ],
+        "circulation_charge_estimate": 7.05151147711469,
+        "nearest_integer_charge": 7,
+        "circulation_charge_spread": 3.503623897870962,
+        "global_lmse": {
+          "edge_count": 9836,
+          "cut_edges_removed": 0,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 670,
+          "gradient_residual_rms_rad_per_mm": 2.177118927219965,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "branchcut_lmse": {
+          "edge_count": 9799,
+          "cut_edges_removed": 37,
+          "connected_components": 1,
+          "lsqr_stop_code": 2,
+          "lsqr_iterations": 754,
+          "gradient_residual_rms_rad_per_mm": 1.067793729186992,
+          "piston_gauge": "zero mean independently in each connected component"
+        },
+        "warnings": [
+          "Curl-peak localization is heuristic; diffraction or sampling artifacts can move the inferred center.",
+          "Geometric camera mapping neglects coherent diffraction and path overlap; compare against independent data before interpreting phase accuracy."
+        ],
+        "interpretation": "Circulation is a diagnostic of the measured gradient field, not a guaranteed optical charge measurement.",
+        "source": "camera intensity and calibrated geometry only",
+        "reference": "Wu, Ko & Davis (2016), doi:10.1364/OL.41.003169, Eqs. 2-4",
+        "flat_reference_subtracted": true,
+        "smoothing": "normalized masked 3x3 Gaussian, sigma=1 pupil-grid pixel",
+        "min_relative_mapped_intensity": 0.0001,
+        "wavelength_for_mapping_nm": 633.0
+      }
+    }
+  ],
+  "independent_grid": {
+    "generator_pupil_resolution": 120,
+    "inverse_pupil_resolution": 80,
+    "input_charge": 4,
+    "recovered_charge": 4,
+    "circular_rmse_rad": 0.0006871245642759318,
+    "diagnostics": {
+      "optimizer_success": true,
+      "optimizer_message": "Both `ftol` and `xtol` termination conditions are satisfied.",
+      "optimizer_evaluations": 6,
+      "image_fit_error": 0.013111624365827308,
+      "jacobian_condition": 2.6113509553783847,
+      "initialization": "image-selected defocus seed 1 rad",
+      "recovered_vortex_charge": 4,
+      "charge_candidates": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "charge_template_residuals": {
+        "0": 0.9160832272089581,
+        "1": 0.8544204888855942,
+        "2": 0.6375084793782704,
+        "3": 0.3985922767464444,
+        "4": 0.34838920706821397,
+        "5": 0.5322566022610353,
+        "6": 0.7175899181527858
+      },
+      "charge_fits": [
+        {
+          "charge": 4,
+          "image_fit_error": 0.013111624365827308,
+          "optimizer_success": true,
+          "optimizer_evaluations": 6
+        },
+        {
+          "charge": 3,
+          "image_fit_error": 0.336013590898776,
+          "optimizer_success": false,
+          "optimizer_evaluations": 35
+        },
+        {
+          "charge": 5,
+          "image_fit_error": 0.30501760996567395,
+          "optimizer_success": false,
+          "optimizer_evaluations": 35
+        },
+        {
+          "charge": 2,
+          "image_fit_error": 0.45939553567126906,
+          "optimizer_success": true,
+          "optimizer_evaluations": 22
+        },
+        {
+          "charge": 6,
+          "image_fit_error": 0.4581608417510807,
+          "optimizer_success": true,
+          "optimizer_evaluations": 26
+        },
+        {
+          "charge": 1,
+          "image_fit_error": 0.6061308951811881,
+          "optimizer_success": false,
+          "optimizer_evaluations": 35
+        },
+        {
+          "charge": 0,
+          "image_fit_error": 0.670664111037583,
+          "optimizer_success": false,
+          "optimizer_evaluations": 35
+        }
+      ],
+      "charge_search_exact_fit_early_stop": false,
+      "charge_search_complete": true,
+      "charge_search_note": "Discrete image-only model selection over the listed charges; an exact numerical fit does not establish uniqueness.",
+      "total_optimizer_evaluations": 194
+    },
+    "same_physical_coefficients": true
+  },
+  "elapsed_seconds": 63.5728977000108,
+  "scope": "Ideal centered phase-only Gaussian vortex; charge0\u20136 prior; same-model noiseless fits plus optional independent pupil grid. Geometric diagnostic is inspired by Wu/Ko/Davis 2016, not experimental replication.",
+  "paper_doi": "10.1364/OL.41.003169"
+}

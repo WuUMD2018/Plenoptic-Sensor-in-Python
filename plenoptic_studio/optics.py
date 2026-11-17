@@ -1,9 +1,10 @@
-"""Scalar paraxial plenoptic sensor simulator and image-only Zernike inversion.
+"""Scalar paraxial plenoptic sensor simulator and image-only vortex/Zernike inversion.
 
 Geometry follows Wu, Ko & Davis (2015), doi:10.1364/JOSAA.32.000964:
 pupil -- f_o -- objective -- (f_o + f_l) -- MLA -- f_l -- camera.
 The objective Fourier plane is propagated f_l to the physical microlens array.
-Spectral components share optical path difference and add in intensity.
+Spectral components share Zernike optical path difference and add in intensity.
+An optional ideal achromatic phase imprint exp(i*q*theta) supplies integer winding.
 
 The objective diameter is represented by an entrance-pupil stop; separate
 aberration-dependent vignetting at the physical objective is not modeled.
@@ -126,6 +127,7 @@ class Parameters:
     pixel_um: float = 5.0
     wavelength_nm: float = 633.0
     bandwidth_nm: float = 0.1
+    vortex_charge: int = 0
 
 
 @dataclass(frozen=True)
@@ -163,6 +165,7 @@ class Wavefront:
     mask: np.ndarray
     intensity: np.ndarray
     coefficients: np.ndarray
+    vortex_charge: int = 0
 
 
 @dataclass
@@ -189,6 +192,9 @@ def _check_cancel(cancel):
 def validate_parameters(p: Parameters) -> list[str]:
     values = asdict(p)
     for name, value in values.items():
+        if name == "vortex_charge":
+            _validate_charge(value)
+            continue
         if not np.isfinite(value):
             raise ValueError(f"{name.replace('_', ' ')} must be finite.")
         if name in ("phase_ptp_rad", "bandwidth_nm"):
@@ -218,6 +224,22 @@ def validate_parameters(p: Parameters) -> list[str]:
     if p.phase_ptp_rad > 40:
         warnings.append("Large phase range: nonlinear inversion can converge to a local minimum; inspect image residual and validation.")
     return warnings
+
+
+def _validate_charge(charge):
+    try:
+        valid = (np.isscalar(charge) and not isinstance(charge, (bool, np.bool_)) and
+                 np.isfinite(charge) and charge == int(charge) and 0 <= charge <= 6)
+    except (TypeError, ValueError, OverflowError):
+        valid = False
+    if not valid:
+        raise ValueError("Vortex topological charge must be an integer from 0 to 6.")
+    return int(charge)
+
+
+def _azimuth(axis):
+    xx, yy = np.meshgrid(axis, axis)
+    return np.arctan2(yy, xx), (xx == 0) & (yy == 0)
 
 
 def zernike(n: int, m: int, x: np.ndarray, y: np.ndarray) -> np.ndarray:
@@ -257,7 +279,8 @@ def make_wavefront(p: Parameters, weights, resolution: int = 80) -> Wavefront:
 
     The intensity sigma equals one quarter of the nominal beam diameter.
     Piston is removed: a constant phase has zero peak-to-peak and is unobservable.
-    Zero/only-piston weights produce a flat wavefront, even for a nonzero request.
+    Zero/only-piston weights produce no smooth distortion. The additive vortex
+    q*atan2(y,x) is never scaled by the requested Zernike peak-to-peak.
     """
     validate_parameters(p)
     weights = np.asarray(weights, dtype=float)
@@ -274,10 +297,18 @@ def make_wavefront(p: Parameters, weights, resolution: int = 80) -> Wavefront:
     else:
         coeff[:] = 0
         phase[:] = 0
+    mask, intensity = mask.copy(), intensity.copy()
+    if p.vortex_charge:
+        theta, center = _azimuth(axis)
+        phase += p.vortex_charge * theta
+        # An exact origin has undefined vortex phase. Even grids avoid it;
+        # odd grids explicitly assign zero field and exclude it from metrics.
+        mask[center] = False
+        intensity[center] = 0
     # Fix the piston gauge over the transmitted pupil, including clipped beams.
     phase[mask] -= phase[mask].mean()
     phase[~mask] = 0
-    return Wavefront(axis.copy(), axis.copy(), phase, mask.copy(), intensity.copy(), coeff)
+    return Wavefront(axis.copy(), axis.copy(), phase, mask, intensity, coeff, int(p.vortex_charge))
 
 
 def _spectral_nodes(p):
@@ -305,6 +336,7 @@ class OpticalModel:
         self.axis, self.mask, self.intensity, self.basis = _pupil_grid(
             p.beam_diameter_mm, p.objective_diameter_mm, pupil_resolution)
         self.pupil_resolution = pupil_resolution
+        self.theta, self.vortex_center = _azimuth(self.axis)
         self.dx = p.pixel_um*1e-6
         self.pitch = p.mla_pitch_um*1e-6
         # Seven lenslets across is a fixed simulation field, not inferred from truth.
@@ -342,26 +374,36 @@ class OpticalModel:
             transfer = np.exp(-1j*np.pi*wavelength*self.b*f2)
             lens = np.exp(-1j*np.pi*local_r2/(wavelength*self.b))
             self.transforms.append((mat, transfer, lens, p.wavelength_nm*1e-9/wavelength))
-        self._reference_image = None
+        self._reference_images = {}
 
     @staticmethod
     def _propagate(field, transfer):
         return fft.ifft2(fft.fft2(field, axes=(-2, -1), workers=1)*transfer,
                          axes=(-2, -1), workers=1)
 
-    def forward(self, coefficients, derivatives=False, cancel=None):
-        """Return normalized detector intensity; optionally derivative w.r.t j2..21."""
+    def forward(self, coefficients, derivatives=False, cancel=None, *, vortex_charge=None):
+        """Normalized detector intensity; optionally derivatives w.r.t j2..21.
+
+        Generation defaults to the requested charge. Reconstruction always
+        overrides it explicitly, so the input charge is never an inverse prior.
+        The vortex factor is achromatic; only Zernike OPD scales with wavelength.
+        """
+        charge = _validate_charge(self.p.vortex_charge if vortex_charge is None else vortex_charge)
         coeff = np.asarray(coefficients, dtype=float)
         if coeff.shape == (20,):
             coeff = np.r_[0.0, coeff]
         if coeff.shape != (21,):
             raise ValueError("Expected 20 nonpiston or 21 Noll coefficients.")
         phase = np.einsum("k,kij->ij", coeff, self.basis)
+        amplitude = np.sqrt(self.intensity)
+        if charge:
+            amplitude = amplitude.copy()
+            amplitude[self.vortex_center] = 0
         raw = np.zeros((self.n, self.n))
         derivative = np.zeros((20, self.n, self.n)) if derivatives else None
         for weight, (mat, transfer, lens, spectral_scale) in zip(self.spectral_weights, self.transforms):
             _check_cancel(cancel)
-            pupil = np.sqrt(self.intensity)*np.exp(1j*spectral_scale*phase)
+            pupil = amplitude*np.exp(1j*(spectral_scale*phase + charge*self.theta))
             if derivatives:
                 fields = np.concatenate((pupil[None], 1j*spectral_scale*self.basis[1:]*pupil), axis=0)
             else:
@@ -382,15 +424,15 @@ class OpticalModel:
             return image, jac
         return image
 
-    def geometric_start(self, image):
+    def geometric_start(self, image, vortex_charge=0):
         """Image-derived centroid backprojection as an approximate initial guess.
 
         A pixel t in lenslet c maps to x=-(a/b)(t-c); lenslet centroid
         differences from a flat reference encode angle approximately as dc/a.
         This is an initializer only, not the final coherent reconstruction.
         """
-        if self._reference_image is None:
-            self._reference_image = self.forward(np.zeros(20))
+        if vortex_charge not in self._reference_images:
+            self._reference_images[vortex_charge] = self.forward(np.zeros(20), vortex_charge=vortex_charge)
         # Keep inversion inside camera pixel centers; interpolate each pupil image.
         axis = self.axis*1e-3
         px, py = np.meshgrid(axis, axis)
@@ -414,7 +456,7 @@ class OpticalModel:
                     sy += cy*values
             return sx/np.maximum(den, 1e-20), sy/np.maximum(den, 1e-20), den
         cx, cy, weight = centroid(image)
-        rx, ry, _ = centroid(self._reference_image)
+        rx, ry, _ = centroid(self._reference_images[vortex_charge])
         factor = 2*np.pi/(self.p.wavelength_nm*1e-9)/self.a
         gx = factor*(cx-rx)
         gy = factor*(cy-ry)
@@ -430,60 +472,96 @@ class OpticalModel:
         initial = np.linalg.lstsq(design, target, rcond=1e-7)[0]
         return np.clip(initial, -20, 20)
 
-    def reconstruct(self, image, progress=None, cancel=None, max_nfev=35):
-        """Fit j2..21 to a supplied camera image, with piston fixed at zero.
+    def reconstruct(self, image, progress=None, cancel=None, max_nfev=35,
+                    *, charge_candidates=tuple(range(7))):
+        """Infer integer charge and j2..21 from the camera image alone.
 
-        The optimizer receives neither generating weights nor target PTP.
-        Nonconvex intensity inversion can fail; diagnostics are returned intact.
+        All allowed charges are ranked by their zero-Zernike camera templates.
+        Each tested charge fits the same 20 unknown smooth coefficients. Search
+        stops early only at a numerical exact fit (image residual < 1e-8);
+        otherwise all candidates are fitted. This is not a uniqueness proof.
+        Neither self.p.vortex_charge, generating weights nor target PTP guides
+        inference. charge_candidates=(0,) explicitly requests the old basis.
         """
         image = np.asarray(image, dtype=float)
         if image.shape != (self.n, self.n) or not np.all(np.isfinite(image)) or np.any(image < 0) or image.sum() <= 0:
             raise ValueError("Camera image must be finite, nonnegative, and match the model grid.")
+        charges = tuple(dict.fromkeys(_validate_charge(q) for q in charge_candidates))
+        if not charges:
+            raise ValueError("At least one candidate vortex charge is required.")
         target = np.sqrt(image/image.sum()+1e-12)
         _check_cancel(cancel)
-        if progress:
-            progress("Backprojecting camera light field for an initial estimate…")
-        geometric = self.geometric_start(image)
-        zero = np.zeros(20)
-        # Both candidates use image data only. Pick the better optical residual.
-        # A sparse deterministic scan helps escape the nearly flat-phase basin,
-        # especially for defocus. These radian seeds are fixed independently of
-        # the requested phase amplitude and the unknown generating coefficients.
-        candidates = [zero] + [scale*geometric for scale in (1, 2, 4, 8)]
-        labels = ["zero phase"] + [f"camera centroid × {scale}" for scale in (1, 2, 4, 8)]
+        template_costs = {}
+        for charge in charges:
+            _check_cancel(cancel)
+            if charge not in self._reference_images:
+                self._reference_images[charge] = self.forward(np.zeros(20), cancel=cancel, vortex_charge=charge)
+            template_costs[charge] = float(np.linalg.norm(np.sqrt(self._reference_images[charge]+1e-12)-target))
+        ordered = sorted(charges, key=lambda q: (template_costs[q], q))
+        tested, best, exact_stop = [], None, False
+        for charge in ordered:
+            _check_cancel(cancel)
+            if progress:
+                progress(f"Inferring vortex charge · testing q={charge}…")
+            phase, coeff, info = self._fit_charge(image, target, charge, progress, cancel, max_nfev)
+            tested.append({"charge": charge, "image_fit_error": info["image_fit_error"],
+                           "optimizer_success": info["optimizer_success"],
+                           "optimizer_evaluations": info["optimizer_evaluations"]})
+            if best is None or info["image_fit_error"] < best[2]["image_fit_error"]:
+                best = (phase, coeff, info)
+            if info["image_fit_error"] < 1e-8:
+                exact_stop = len(tested) < len(ordered)
+                break
+        phase, coeff, info = best
+        info.update({
+            "charge_candidates": list(charges),
+            "charge_template_residuals": {str(q): template_costs[q] for q in charges},
+            "charge_fits": tested,
+            "charge_search_exact_fit_early_stop": exact_stop,
+            "charge_search_complete": len(tested) == len(ordered),
+            "charge_search_note": "Discrete image-only model selection over the listed charges; an exact numerical fit does not establish uniqueness.",
+            "total_optimizer_evaluations": sum(item["optimizer_evaluations"] for item in tested),
+        })
+        return phase, coeff, info
+
+    def _fit_charge(self, image, target, charge, progress, cancel, max_nfev):
+        """Fit smooth phase at one explicit candidate charge (no truth inputs)."""
+        geometric = self.geometric_start(image, vortex_charge=charge)
+        candidates = [np.zeros(20)] + [scale*geometric for scale in (1, 2, 4, 8)]
+        labels = ["zero Zernike phase"] + [f"camera centroid × {scale}" for scale in (1, 2, 4, 8)]
         for defocus in (-4, -2, -1, 1, 2, 4):
             seed = np.zeros(20)
             seed[2] = defocus
             candidates.append(seed)
             labels.append(f"image-selected defocus seed {defocus} rad")
-        costs = [np.sum((np.sqrt(self.forward(c, cancel=cancel)+1e-12)-target)**2) for c in candidates]
-        initial = candidates[int(np.argmin(costs))]
-        cache = {}
-        evaluations = 0
+        costs = [np.sum((np.sqrt(self.forward(c, cancel=cancel, vortex_charge=charge)+1e-12)-target)**2)
+                 for c in candidates]
+        initial_index = int(np.argmin(costs))
+        cache, evaluations = {}, 0
         def evaluate(c):
             nonlocal evaluations
             _check_cancel(cancel)
             if "x" not in cache or not np.array_equal(c, cache["x"]):
-                prediction, jac = self.forward(c, derivatives=True, cancel=cancel)
+                prediction, jac = self.forward(c, derivatives=True, cancel=cancel, vortex_charge=charge)
                 square = np.sqrt(prediction+1e-12)
                 cache["x"] = c.copy()
                 cache["residual"] = 100*(square-target).ravel()
                 cache["jacobian"] = (50*jac/square).reshape(20, -1).T.copy()
                 evaluations += 1
                 if progress:
-                    progress(f"Fitting camera image · iteration {evaluations}")
+                    progress(f"Fitting q={charge} · Zernike iteration {evaluations}")
             return cache
-        fit = optimize.least_squares(lambda c: evaluate(c)["residual"], initial,
+        fit = optimize.least_squares(lambda c: evaluate(c)["residual"], candidates[initial_index],
                                      jac=lambda c: evaluate(c)["jacobian"],
                                      method="trf", max_nfev=max_nfev,
                                      ftol=2e-6, xtol=2e-6, gtol=2e-6)
         coeff = np.r_[0.0, fit.x]
-        phase = np.einsum("k,kij->ij", coeff, self.basis)
-        phase[self.mask] -= phase[self.mask].mean()
-        phase[~self.mask] = 0
-        prediction = self.forward(coeff, cancel=cancel)
+        phase = np.einsum("k,kij->ij", coeff, self.basis) + charge*self.theta
+        mask = self.mask & ~self.vortex_center if charge else self.mask
+        phase[mask] -= phase[mask].mean()
+        phase[~mask] = 0
+        prediction = self.forward(coeff, cancel=cancel, vortex_charge=charge)
         image_error = np.linalg.norm(np.sqrt(prediction)-np.sqrt(image/image.sum()))
-        # Singular values expose local identifiability; piston is never fitted.
         singular = np.linalg.svd(fit.jac, compute_uv=False)
         condition = float(singular[0]/max(singular[-1], 1e-15))
         return phase, coeff, {
@@ -492,22 +570,63 @@ class OpticalModel:
             "optimizer_evaluations": int(fit.nfev),
             "image_fit_error": float(image_error),
             "jacobian_condition": condition,
-            "initialization": labels[int(np.argmin(costs))],
+            "initialization": labels[initial_index],
+            "recovered_vortex_charge": int(charge),
         }
 
 
 SIMILARITY_DEFINITION = "100 × max(0, 1 − RMSE / RMS_truth), after independent piston removal on the transmitted pupil; no amplitude or sign fitting. Flat truth: N/A."
+WRAPPED_SIMILARITY_DEFINITION = "100 × max(0, 1 − circular_phase_RMSE / pi), after one global phase-offset alignment; residuals wrapped to [-pi, pi]. Report topological charge separately. This score is not experimental accuracy."
 
 
-def compare_wavefronts(truth, reconstruction, mask):
+def phase_residual(truth, reconstruction, mask, wrapped=False):
+    """Piston-aligned reconstruction-minus-truth, zero outside the metric mask."""
+    mask = np.asarray(mask, dtype=bool)
+    difference = np.asarray(reconstruction, dtype=float) - np.asarray(truth, dtype=float)
+    residual = np.zeros_like(difference, dtype=float)
+    values = difference[mask]
+    if not len(values):
+        raise ValueError("Phase comparison needs at least one valid pupil sample.")
+    if wrapped:
+        mean_phasor = np.mean(np.exp(1j*values))
+        offset = float(np.angle(mean_phasor)) if abs(mean_phasor) > 1e-12 else 0.0
+        residual[mask] = np.angle(np.exp(1j*(values-offset)))
+    else:
+        residual[mask] = values-values.mean()
+    return residual
+
+
+def compare_wavefronts(truth, reconstruction, mask, wrapped=False):
     a = np.asarray(truth)[mask].astype(float)
-    b = np.asarray(reconstruction)[mask].astype(float)
     a -= a.mean()
-    b -= b.mean()
-    rmse = float(np.sqrt(np.mean((a-b)**2)))
+    residual = phase_residual(truth, reconstruction, mask, wrapped=wrapped)
+    rmse = float(np.sqrt(np.mean(residual[mask]**2)))
+    if wrapped:
+        return float(100*max(0, 1-rmse/np.pi)), rmse
     rms = float(np.sqrt(np.mean(a*a)))
     similarity = None if rms < 1e-10 else float(100*max(0, 1-rmse/rms))
     return similarity, rmse
+
+
+def phase_winding_number(phase, mask):
+    """Sampled circulation on a centered interior square, in turns.
+
+    Adjacent phase increments are wrapped before summing. The loop avoids the
+    vortex core; unresolved increments can alias, so this is a grid diagnostic.
+    """
+    phase, mask = np.asarray(phase), np.asarray(mask, dtype=bool)
+    cy, cx = (np.array(mask.shape)-1)//2
+    max_radius = min(cy, cx, mask.shape[0]-1-cy, mask.shape[1]-1-cx)
+    for radius in range(max_radius, 0, -1):
+        top, bottom, left, right = cy-radius, cy+radius, cx-radius, cx+radius
+        ys = np.r_[np.full(2*radius, top), np.arange(top, bottom),
+                   np.full(2*radius, bottom), np.arange(bottom, top, -1)]
+        xs = np.r_[np.arange(left, right), np.full(2*radius, right),
+                   np.arange(right, left, -1), np.full(2*radius, left)]
+        if np.all(mask[ys, xs]):
+            values = phase[ys, xs]
+            return float(np.angle(np.exp(1j*(np.roll(values, -1)-values))).sum()/(2*np.pi))
+    return None
 
 
 def simulate(p: Parameters, weights, progress: Callable[[str], None] | None = None,
@@ -523,13 +642,17 @@ def simulate(p: Parameters, weights, progress: Callable[[str], None] | None = No
         progress("Propagating the Gaussian beam through the objective and microlens array…")
     image = model.forward(wf.coefficients, cancel=cancel)
     phase, coefficients, metadata = model.reconstruct(image, progress, cancel, max_nfev=max_nfev)
-    similarity, rmse = compare_wavefronts(wf.phase, phase, wf.mask)
+    recovered_charge = metadata["recovered_vortex_charge"]
+    wrapped = bool(p.vortex_charge or recovered_charge)
+    similarity, rmse = compare_wavefronts(wf.phase, phase, wf.mask, wrapped=wrapped)
     warnings = list(model.warnings)
     weights = np.asarray(weights)
     if abs(weights[0]) > 0:
         warnings.append("Noll j=1 piston is unobservable in intensity and has zero peak-to-peak. It is removed from generation and reconstruction.")
     if not np.any(np.abs(weights[1:]) > 1e-12) and p.phase_ptp_rad > 0:
-        warnings.append("No nonpiston mode is selected: a flat phase is shown; requested nonzero peak-to-peak cannot be applied.")
+        warnings.append("No nonpiston Zernike mode is selected: no smooth distortion is added; the requested Zernike peak-to-peak cannot be applied.")
+    if recovered_charge != p.vortex_charge:
+        warnings.append(f"Topological-charge mismatch: generated q={p.vortex_charge}, inferred q={recovered_charge}. Inspect charge diagnostics and image residual.")
     if not metadata["optimizer_success"]:
         warnings.append("Reconstruction reached its iteration limit; the current estimate is shown. Convergence is not guaranteed.")
     if metadata["image_fit_error"] > 0.05:
@@ -542,9 +665,20 @@ def simulate(p: Parameters, weights, progress: Callable[[str], None] | None = No
     if metadata["jacobian_condition"] > 1e8:
         warnings.append("The local image Jacobian is poorly conditioned; some fitted modes are weakly identifiable.")
     # High phase frequencies can be unresolved on the fixed pupil sampling.
-    gradient = np.gradient(wf.phase)
-    interior = ndimage.binary_erosion(wf.mask)
-    max_step = max(float(np.max(np.abs(g[interior]))) for g in gradient) if np.any(interior) else 0
+    if p.vortex_charge:
+        # Raw differences across the atan2 branch cut are artificial. Wrapped
+        # increments instead flag unresolved field variation near the core.
+        steps = []
+        for axis in (0, 1):
+            delta = np.angle(np.exp(1j*np.diff(wf.phase, axis=axis)))
+            pair_mask = ((wf.mask[1:, :] & wf.mask[:-1, :]) if axis == 0
+                         else (wf.mask[:, 1:] & wf.mask[:, :-1]))
+            steps.append(float(np.max(np.abs(delta[pair_mask]))) if np.any(pair_mask) else 0.0)
+        max_step = max(steps)
+    else:
+        gradient = np.gradient(wf.phase)
+        interior = ndimage.binary_erosion(wf.mask)
+        max_step = max(float(np.max(np.abs(g[interior]))) for g in gradient) if np.any(interior) else 0
     if max_step > np.pi/2:
         warnings.append("Pupil phase changes by more than pi/2 per sample; increase numerical pupil resolution for convergence studies.")
     metadata.update({
@@ -559,10 +693,18 @@ def simulate(p: Parameters, weights, progress: Callable[[str], None] | None = No
         "f_number_mla": p.mla_focal_mm/(p.mla_pitch_um*1e-3),
         "edge_energy_fraction": edge_energy,
         "elapsed_seconds": time.perf_counter()-start,
-        "similarity_definition": SIMILARITY_DEFINITION,
-        "model": "Scalar paraxial Fourier + Fresnel propagation; shared-focus 4f geometry; entrance-pupil stop approximation; ideal achromatic lenses; midpoint camera-pixel sampling; no detector noise.",
+        "similarity_definition": WRAPPED_SIMILARITY_DEFINITION if wrapped else SIMILARITY_DEFINITION,
+        "phase_comparison": "wrapped" if wrapped else "unwrapped",
+        "wrapped_phase_comparison": wrapped,
+        "input_vortex_charge": int(p.vortex_charge),
+        "vortex_charge_error": int(recovered_charge-p.vortex_charge),
+        "input_winding_number": phase_winding_number(wf.phase, wf.mask),
+        "reconstructed_winding_number": phase_winding_number(phase, wf.mask),
+        "vortex_spectral_convention": "Ideal achromatic phase imprint exp(i*q*theta); smooth Zernike OPD scales as lambda_center/lambda. Gaussian amplitude is unchanged except zero field at the singular origin; not a Laguerre-Gaussian radial mode.",
+        "model": "Scalar paraxial Fourier + Fresnel propagation; shared-focus 4f geometry; entrance-pupil stop approximation; ideal achromatic lenses and vortex phase imprint; midpoint camera-pixel sampling; no detector noise.",
         "requested_phase_ptp_rad": p.phase_ptp_rad,
         "actual_phase_ptp_rad": float(np.ptp(wf.phase[wf.mask])),
+        "actual_zernike_phase_ptp_rad": float(np.ptp(np.einsum("k,kij->ij", wf.coefficients, model.basis)[wf.mask])),
         "validation_scope": "Same-model noiseless self-consistency, not experimental accuracy; use grid refinement and independent calibration for quantitative design.",
         "parameters": asdict(p),
     })
@@ -571,7 +713,7 @@ def simulate(p: Parameters, weights, progress: Callable[[str], None] | None = No
 
 def validate_all(p: Parameters, progress=None, cancel=None, result_callback=None,
                  *, max_nfev=35) -> list[SimulationResult]:
-    """Simulate every Noll mode j1..21 and independently fit all 20 observable modes."""
+    """Simulate Noll j1..21 with the selected vortex; infer charge and 20 modes."""
     model = OpticalModel(p)
     results = []
     for index, mode in enumerate(MODES):

@@ -1,5 +1,11 @@
 # Verification record
 
+## Vortex extension, 2026-11-16
+
+**37 tests passed** in 61.162 seconds on Windows/Python 3.13.2 (NumPy 2.5.5, SciPy 1.18.1, Matplotlib 3.11.2, PySide6 6.12.0). This includes the original regressions, integer charge validation, additive phase and winding, zero-charge compatibility, nonzero-charge analytic derivatives, image-only candidate selection, wrapped metrics, GUI snapshots/exports, and gradient integration with branch cuts.
+
+The native GUI was checked separately for the charge slider and a charge-4 run. A visual defect in the integer spinbox was fixed and rechecked at 0/4/6. The 0–6 pure/mixed sweep recovered all 14 input charges; an independent 120→80 pupil-grid check recovered charge 4. [VORTEX.md](VORTEX.md) contains numerical results and the geometric diagnostic's limitations, including unsuccessful charge recovery using the paper's lens dimensions. The demo and paper-geometry command-line entry points were also executed successfully.
+
 ## Publication check — 2026-11-16
 
 Re-ran `python -m unittest discover -s plenoptic_studio/tests -v` on Windows using the tested source folder's virtual environment: **17 tests passed in 4.139 seconds** (6.18 seconds including process startup). Environment: Python 3.14.5, NumPy 2.5.5, SciPy 1.18.1, Matplotlib 3.11.2, and PySide6 6.12.0. Set `OPENBLAS_NUM_THREADS=1`, `OMP_NUM_THREADS=1`, and `QT_QPA_PLATFORM=offscreen`.

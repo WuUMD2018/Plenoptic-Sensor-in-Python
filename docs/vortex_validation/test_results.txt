@@ -1,0 +1,42 @@
+test_export_uses_successful_result_settings_after_input_edits (test_gui.GuiInteractionTests.test_export_uses_successful_result_settings_after_input_edits) ... ok
+test_invalid_zero_and_requested_f_number_warning (test_gui.GuiInteractionTests.test_invalid_zero_and_requested_f_number_warning) ... ok
+test_mode_preview_and_piston_behavior (test_gui.GuiInteractionTests.test_mode_preview_and_piston_behavior) ... ok
+test_slider_anchor_and_explicit_same_value_entry (test_gui.GuiInteractionTests.test_slider_anchor_and_explicit_same_value_entry) ... ok
+test_validation_does_not_replace_single_tab (test_gui.GuiInteractionTests.test_validation_does_not_replace_single_tab) ... ok
+test_worker_delivers_result_without_blocking_the_gui (test_gui.GuiInteractionTests.test_worker_delivers_result_without_blocking_the_gui) ... ok
+test_charge_slider_is_integer_absolute_and_resets (test_gui_vortex.VortexGuiTests.test_charge_slider_is_integer_absolute_and_resets) ... ok
+test_composer_clear_retains_vortex (test_gui_vortex.VortexGuiTests.test_composer_clear_retains_vortex) ... ok
+test_worker_snapshots_and_locks_charge (test_gui_vortex.VortexGuiTests.test_worker_snapshots_and_locks_charge) ... ok
+test_wrapped_display_and_exports_preserve_completed_charge (test_gui_vortex.VortexGuiTests.test_wrapped_display_and_exports_preserve_completed_charge) ... ok
+test_analytic_intensity_jacobian (test_optics.PropagationTests.test_analytic_intensity_jacobian) ... ok
+test_cancel_before_work (test_optics.PropagationTests.test_cancel_before_work) ... ok
+test_image_only_low_aberration_reconstruction (test_optics.PropagationTests.test_image_only_low_aberration_reconstruction) ... ok
+test_independent_camera_window_reconstruction (test_optics.PropagationTests.test_independent_camera_window_reconstruction) ... ok
+test_independent_pupil_sampling_reconstruction (test_optics.PropagationTests.test_independent_pupil_sampling_reconstruction) ... ok
+test_normalized_intensity_and_piston_invariance (test_optics.PropagationTests.test_normalized_intensity_and_piston_invariance) ... ok
+test_objective_fourier_nyquist_warning (test_optics.PropagationTests.test_objective_fourier_nyquist_warning) ... ok
+test_all_charges_have_correct_winding_and_exclude_singular_origin (test_optics.VortexTests.test_all_charges_have_correct_winding_and_exclude_singular_origin) ... ok
+test_charge_bounds_and_integer_validation (test_optics.VortexTests.test_charge_bounds_and_integer_validation) ... ok
+test_charge_inference_never_uses_requested_charge (test_optics.VortexTests.test_charge_inference_never_uses_requested_charge) ... ok
+test_explicit_zero_charge_matches_legacy_forward_independent_of_parameter (test_optics.VortexTests.test_explicit_zero_charge_matches_legacy_forward_independent_of_parameter) ... ok
+test_inexact_image_searches_all_requested_candidates (test_optics.VortexTests.test_inexact_image_searches_all_requested_candidates) ... ok
+test_nonzero_charge_analytic_jacobian (test_optics.VortexTests.test_nonzero_charge_analytic_jacobian) ... ok
+test_pure_vortex_charge_scan_zero_through_six (test_optics.VortexTests.test_pure_vortex_charge_scan_zero_through_six) ... ok
+test_vortex_is_additive_and_not_rescaled_by_zernike_ptp (test_optics.VortexTests.test_vortex_is_additive_and_not_rescaled_by_zernike_ptp) ... ok
+test_wrapped_residual_ignores_phase_sheets_and_global_piston (test_optics.VortexTests.test_wrapped_residual_ignores_phase_sheets_and_global_piston) ... ok
+test_zernike_only_baseline_cannot_represent_charge_four (test_optics.VortexTests.test_zernike_only_baseline_cannot_represent_charge_four) ... ok
+test_invalid_zero_and_equal_fnumber_warning (test_optics.WavefrontTests.test_invalid_zero_and_equal_fnumber_warning) ... ok
+test_metric_does_not_hide_amplitude_error (test_optics.WavefrontTests.test_metric_does_not_hide_amplitude_error) ... ok
+test_noll_order_and_phase_range (test_optics.WavefrontTests.test_noll_order_and_phase_range) ... ok
+test_piston_is_explicitly_unobservable (test_optics.WavefrontTests.test_piston_is_explicitly_unobservable) ... ok
+test_arbitrary_cut_changes_gauge_but_recovers_same_vortex (test_vortex_diagnostics.VortexDiagnosticsTests.test_arbitrary_cut_changes_gauge_but_recovers_same_vortex) ... ok
+test_branch_cut_recovers_hidden_vortex_phase_that_global_lmse_misses (test_vortex_diagnostics.VortexDiagnosticsTests.test_branch_cut_recovers_hidden_vortex_phase_that_global_lmse_misses) ... ok
+test_camera_diagnostics_and_explicit_flat_calibration (test_vortex_diagnostics.VortexDiagnosticsTests.test_camera_diagnostics_and_explicit_flat_calibration) ... ok
+test_curl_center_is_inferred_from_gradients (test_vortex_diagnostics.VortexDiagnosticsTests.test_curl_center_is_inferred_from_gradients) ... ok
+test_invalid_inputs_fail_informatively (test_vortex_diagnostics.VortexDiagnosticsTests.test_invalid_inputs_fail_informatively) ... ok
+test_smooth_phase_is_recovered_by_both_integrations (test_vortex_diagnostics.VortexDiagnosticsTests.test_smooth_phase_is_recovered_by_both_integrations) ... ok
+
+----------------------------------------------------------------------
+Ran 37 tests in 61.162s
+
+OK

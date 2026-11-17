@@ -3,7 +3,8 @@ import unittest
 from dataclasses import replace
 import numpy as np
 from plenoptic_studio.optics import (Parameters, MODES, OpticalModel, make_wavefront,
-                    validate_parameters, compare_wavefronts, CancelledError, simulate)
+                    validate_parameters, compare_wavefronts, phase_residual,
+                    phase_winding_number, CancelledError, simulate)
 
 
 class WavefrontTests(unittest.TestCase):
@@ -117,6 +118,118 @@ class PropagationTests(unittest.TestCase):
         similarity, _ = compare_wavefronts(wavefront.phase, phase, wavefront.mask)
         self.assertGreater(similarity, 99)
         self.assertLess(info["image_fit_error"], 0.03)
+
+
+class VortexTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.p = Parameters(bandwidth_nm=0, phase_ptp_rad=1.5, pixel_um=10)
+        cls.model = OpticalModel(cls.p, pupil_resolution=48, camera_min=96)
+
+    def test_charge_bounds_and_integer_validation(self):
+        for charge in range(7):
+            validate_parameters(replace(self.p, vortex_charge=charge))
+        for charge in (-1, 7, .5, np.nan, np.inf, True, None, "4", 4+0j):
+            with self.subTest(charge=charge), self.assertRaises(ValueError):
+                validate_parameters(replace(self.p, vortex_charge=charge))
+        with self.assertRaises(ValueError):
+            self.model.reconstruct(np.ones((self.model.n, self.model.n)), charge_candidates=())
+
+    def test_vortex_is_additive_and_not_rescaled_by_zernike_ptp(self):
+        weights = np.zeros(21)
+        weights[3], weights[7] = 1.0, .3
+        smooth = make_wavefront(self.p, weights)
+        combined = make_wavefront(replace(self.p, vortex_charge=4), weights)
+        xx, yy = np.meshgrid(combined.x_mm, combined.y_mm)
+        expected = 4*np.arctan2(yy, xx)
+        expected[combined.mask] -= expected[combined.mask].mean()
+        np.testing.assert_allclose(combined.coefficients, smooth.coefficients, atol=0)
+        np.testing.assert_allclose((combined.phase-smooth.phase)[combined.mask], expected[combined.mask], atol=1e-12)
+        np.testing.assert_array_equal(combined.intensity, smooth.intensity)
+        no_smooth = make_wavefront(replace(self.p, phase_ptp_rad=0, vortex_charge=4), weights)
+        np.testing.assert_allclose(no_smooth.phase[no_smooth.mask], expected[no_smooth.mask], atol=1e-12)
+        self.assertAlmostEqual(phase_winding_number(combined.phase, combined.mask), 4)
+
+    def test_all_charges_have_correct_winding_and_exclude_singular_origin(self):
+        for charge in range(7):
+            with self.subTest(charge=charge):
+                wave = make_wavefront(replace(self.p, vortex_charge=charge), np.zeros(21), resolution=65)
+                self.assertAlmostEqual(phase_winding_number(wave.phase, wave.mask), charge)
+                self.assertEqual(wave.vortex_charge, charge)
+                if charge:
+                    self.assertFalse(wave.mask[32, 32])
+                    self.assertEqual(wave.intensity[32, 32], 0)
+                else:
+                    self.assertTrue(wave.mask[32, 32])
+                    self.assertEqual(wave.intensity[32, 32], 1)
+
+    def test_wrapped_residual_ignores_phase_sheets_and_global_piston(self):
+        wave = make_wavefront(replace(self.p, vortex_charge=4), np.zeros(21))
+        sheet = np.indices(wave.phase.shape)[0] % 3
+        changed = wave.phase + 2*np.pi*sheet + .7
+        score, rmse = compare_wavefronts(wave.phase, changed, wave.mask, wrapped=True)
+        self.assertAlmostEqual(score, 100)
+        self.assertLess(rmse, 1e-14)
+        delta = np.array([[-.1, .1], [-.2, .2]])
+        np.testing.assert_allclose(phase_residual(np.zeros((2, 2)), delta, np.ones((2, 2), bool), wrapped=True), delta)
+
+    def test_explicit_zero_charge_matches_legacy_forward_independent_of_parameter(self):
+        coeff = np.linspace(-.02, .02, 20)
+        legacy = self.model.forward(coeff)
+        q6_model = OpticalModel(replace(self.p, vortex_charge=6), pupil_resolution=48, camera_min=96)
+        np.testing.assert_array_equal(legacy, self.model.forward(coeff, vortex_charge=0))
+        np.testing.assert_array_equal(legacy, q6_model.forward(coeff, vortex_charge=0))
+
+    def test_nonzero_charge_analytic_jacobian(self):
+        coeff = np.linspace(-.02, .02, 20)
+        image, jac = self.model.forward(coeff, derivatives=True, vortex_charge=4)
+        self.assertAlmostEqual(image.sum(), 1)
+        h = 1e-5
+        for index in (0, 2, 9, 19):
+            plus, minus = coeff.copy(), coeff.copy()
+            plus[index] += h
+            minus[index] -= h
+            numerical = (self.model.forward(plus, vortex_charge=4)-self.model.forward(minus, vortex_charge=4))/(2*h)
+            self.assertLess(np.linalg.norm(numerical-jac[index])/np.linalg.norm(numerical), 2e-6)
+
+    def test_charge_inference_never_uses_requested_charge(self):
+        coeff = np.zeros(20)
+        coeff[2], coeff[6] = .12, -.08
+        image = self.model.forward(coeff, vortex_charge=4)
+        for configured_charge in (0, 6):
+            with self.subTest(configured_charge=configured_charge):
+                model = OpticalModel(replace(self.p, vortex_charge=configured_charge), pupil_resolution=48, camera_min=96)
+                phase, recovered, info = model.reconstruct(image, max_nfev=15)
+                self.assertEqual(info["recovered_vortex_charge"], 4)
+                self.assertEqual(info["charge_candidates"], list(range(7)))
+                self.assertLess(info["image_fit_error"], 1e-6)
+                np.testing.assert_allclose(recovered[1:], coeff, atol=2e-4)
+                self.assertAlmostEqual(phase_winding_number(phase, model.mask), 4)
+
+    def test_pure_vortex_charge_scan_zero_through_six(self):
+        for charge in range(7):
+            with self.subTest(charge=charge):
+                image = self.model.forward(np.zeros(20), vortex_charge=charge)
+                _, recovered, info = self.model.reconstruct(image, max_nfev=10)
+                self.assertEqual(info["recovered_vortex_charge"], charge)
+                self.assertLess(info["image_fit_error"], 1e-8)
+                np.testing.assert_allclose(recovered, 0, atol=1e-8)
+
+    def test_zernike_only_baseline_cannot_represent_charge_four(self):
+        image = self.model.forward(np.zeros(20), vortex_charge=4)
+        _, _, baseline = self.model.reconstruct(image, max_nfev=15, charge_candidates=(0,))
+        _, _, vortex = self.model.reconstruct(image, max_nfev=15)
+        self.assertEqual(baseline["recovered_vortex_charge"], 0)
+        self.assertGreater(baseline["image_fit_error"], .03)
+        self.assertLess(vortex["image_fit_error"], 1e-8)
+
+    def test_inexact_image_searches_all_requested_candidates(self):
+        image = (.9*self.model.forward(np.zeros(20), vortex_charge=0) +
+                 .1*self.model.forward(np.zeros(20), vortex_charge=1))
+        _, _, info = self.model.reconstruct(image, max_nfev=4, charge_candidates=(0, 1))
+        self.assertTrue(info["charge_search_complete"])
+        self.assertFalse(info["charge_search_exact_fit_early_stop"])
+        self.assertEqual({row["charge"] for row in info["charge_fits"]}, {0, 1})
 
 
 if __name__ == "__main__":

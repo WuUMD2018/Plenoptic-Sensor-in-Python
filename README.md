@@ -2,13 +2,17 @@
 
 **Plenoptic Studio — an interactive Python laboratory for laser wavefront sensing.** Construct a Gaussian beam with low-order Zernike distortion, propagate its coherent field through a shared-focus plenoptic sensor, and reconstruct the phase from the simulated camera image.
 
+The input also supports an **ideal Gaussian vortex with integer topological charge 0–6**, added to the Zernike phase. The vortex extension is based on [Wu, Ko and Davis, *Optics Letters* 41, 3169–3172 (2016)](https://doi.org/10.1364/OL.41.003169). See [vortex operation, reconstruction and validation](plenoptic_studio/docs/VORTEX.md).
+
+![Vortex-enabled GUI: charge 4 input and recovered phase](docs/vortex_validation/gui_charge4.png)
+
 [Quick start](#quick-start) · [GUI demos](#gui-demos) · [Prepared demo](#reproduce-the-prepared-demo) · [Model details](plenoptic_studio/docs/MODEL.md) · [Research and references](plenoptic_studio/docs/RESEARCH.md)
 
 ![Prepared plenoptic sensor demo: camera image, input phase, reconstruction, and residual](docs/media/prepared_sensor.png)
 
 ## GUI demos
 
-These are **edited sequences of snapshots from the actual running GUI**, using the prepared configuration below. Playback is time-compressed for demonstration and is **not a continuous screen recording or a real-time performance benchmark**. Click a preview to open its MP4 file.
+These clips show the original Zernike workflow; the screenshot above shows the new vortex controls. They are **edited sequences of snapshots from the actual running GUI**, using the prepared configuration below. Playback is time-compressed for demonstration and is **not a continuous screen recording or a real-time performance benchmark**. Click a preview to open its MP4 file.
 
 | Sensor workflow | Rotate the wavefront in 3D |
 |---|---|
@@ -116,6 +120,8 @@ print(result.similarity_pct, result.rms_error_rad)
 
 ## Controls and starting values
 
+**Vortex charge ℓ** is a separate integer slider spanning **0–6**. Zero disables the vortex. The existing phase-amplitude control scales only the smooth Zernike distortion; the vortex contributes `ℓ × atan2(y, x)` independently. For a pure vortex, set the Zernike phase amplitude to zero or clear the Zernike coefficients. The input amplitude remains Gaussian; this is a phase-imprinted beam, not a prescribed Laguerre–Gaussian intensity profile.
+
 | Parameter | Initial value | Interpretation |
 |---|---:|---|
 | Objective diameter | 10 mm | Effective circular entrance-pupil aperture |
@@ -159,7 +165,7 @@ The implementation propagates the **complex field**, not a ray-splatted image:
 4. Apply the periodic square-cell thin-lens phase, then Fresnel-propagate one MLA focal length to the camera.
 5. Sum spectral intensities using Gaussian quadrature. The optical-path distortion is fixed, so phase scales as `lambda_center / lambda`; ideal focal lengths remain constant.
 
-Reconstruction minimizes the discrepancy between predicted and measured **square-root normalized camera intensities**, fitting Noll 2–21 with analytic image derivatives. Initial guesses come from the camera image and a fixed set of seeds. Generating coefficients, the true phase, and the requested phase magnitude are **not supplied to the inverse fit**. Ground truth is used only after inference to calculate errors. This is a model-based nonlinear inverse solver, not a reproduction of the papers' graph/tree algorithm.
+Reconstruction minimizes the discrepancy between predicted and measured **square-root normalized camera intensities**, fitting Noll 2–21 with analytic image derivatives and searching integer vortex charges 0–6. Initial guesses and candidate ranking come from the camera image and a fixed set of seeds. Generating coefficients, the input charge, the true phase, and the requested phase magnitude are **not supplied as known answers to the inverse fit**. Ground truth is used only after inference to calculate errors. This is a model-based nonlinear inverse solver. A separate [gradient/curl and branch-cut LMSE diagnostic](plenoptic_studio/docs/VORTEX.md) evaluates the 2016 paper's reconstruction principle.
 
 Similarity is explicitly
 
@@ -168,6 +174,8 @@ Similarity is explicitly
 ```
 
 Both phases have piston removed on the transmitted pupil. No scale, sign, tilt, or rotation is fitted away. A reconstruction with half the correct phase amplitude scores 50%. This score is a normalized-error measure, not a correlation coefficient or confidence level.
+
+When a vortex is present or inferred, plots use wrapped phase and the score instead becomes `100 × max(0, 1 − circular_RMSE / π)`, after removing one global phase offset. The GUI reports the inferred charge separately. Circular phase error avoids penalizing equivalent branch-cut choices; the score alone cannot establish correct topology or experimental accuracy.
 
 ## Validation, scope, and limitations
 
@@ -181,7 +189,7 @@ Important modeling choices:
 - Default pupil sampling is 80 × 80. The camera covers approximately seven pitches, subject to a minimum grid size and a 384-pixel computational cap. A smaller pixel can reduce the field of view when that cap is reached.
 - FFT Fresnel propagation has a finite periodic window. Pixel flux is midpoint area quadrature, not exact subpixel integration. Refinement is necessary before quantitative optical design; edge-energy and sampling diagnostics cannot prove convergence.
 - Spectral integration uses three or five wavelengths. Very broad spectra are approximate and produce a warning; FWHM greater than half the central wavelength is rejected by this model.
-- Fitting assumes phase lies in the lowest 20 observable Zernike modes. Vortices, branch points, unknown amplitude/scintillation, arbitrary high-order turbulence, or miscalibration need a richer inverse model.
+- Fitting assumes the lowest 20 observable Zernike modes plus one centered ideal vortex with nonnegative integer charge 0–6. Displaced or multiple vortices, negative charges, unknown amplitude/scintillation, arbitrary high-order turbulence, or miscalibration need a richer inverse model.
 - Nonlinear phase retrieval can converge to a local minimum, especially at higher phase excursions. A converged optimizer or a low image residual does not prove a unique solution. The app reports residuals, conditioning, clipping, and convergence warnings.
 
 Detailed equations, numerical assumptions and diagnostics are in [MODEL.md](plenoptic_studio/docs/MODEL.md). Original paper algorithms and experimental results are described separately in the research notes.
@@ -193,9 +201,11 @@ Detailed equations, numerical assumptions and diagnostics are in [MODEL.md](plen
 python -m unittest discover -s plenoptic_studio/tests -v
 python -m plenoptic_studio.demo --output example_output
 python -m plenoptic_studio.demo --output example_output --validate
+python -m plenoptic_studio.demo --output vortex_example --vortex-charge 4
+python -m plenoptic_studio.vortex_validation --output vortex_results --refinement
 ```
 
-For predictable performance, use `OPENBLAS_NUM_THREADS=1` and `OMP_NUM_THREADS=1`; the supplied launchers set these. A run generally takes seconds, while the full sweep takes roughly a minute or longer depending on the machine, spectrum, geometry, and solver convergence.
+For predictable performance, use `OPENBLAS_NUM_THREADS=1` and `OMP_NUM_THREADS=1`; the supplied launchers set these. Charge search can require multiple nonlinear fits. Full validation and grid-refinement comparisons can take several minutes, depending on the machine, spectrum, geometry, and solver convergence. Progress and cancellation remain available in the GUI.
 
 The public numerical API is independent of Qt:
 

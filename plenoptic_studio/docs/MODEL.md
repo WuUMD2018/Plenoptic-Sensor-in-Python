@@ -1,6 +1,6 @@
 # Implemented numerical model
 
-All physical calculations use meters and radians internally. GUI unit conversions occur inside the numerical core. Phase plots are unwrapped, piston-free phases at the central wavelength.
+All physical calculations use meters and radians internally. GUI unit conversions occur inside the numerical core. Smooth charge-zero phase plots are unwrapped and piston-free. Vortex plots use wrapped phase at the central wavelength; see [VORTEX.md](VORTEX.md) for the phase convention and distinct metric.
 
 ## Forward operator
 
@@ -35,11 +35,11 @@ For spectral nodes λk and Gaussian quadrature weights wk, the camera records `�
 
 ## Phase parameterization and inference
 
-Noll 1–21 use RMS-normalized real polynomials, with positive signed m denoting cosine and negative m denoting sine. Piston is fixed at zero. User weights are normalized to the requested sampled phase range, while inference fits 20 **unconstrained signed coefficients in radians**. It does not assume the entered magnitude or selected generating mode.
+Noll 1–21 use RMS-normalized real polynomials, with positive signed m denoting cosine and negative m denoting sine. Piston is fixed at zero. User weights are normalized to the requested sampled Zernike phase range, while inference fits 20 **unconstrained signed coefficients in radians**. An additive integer vortex term `q atan2(y,x)`, q=0–6, is never amplitude-normalized. The ideal vortex factor is wavelength-independent; only the smooth Zernike OPD scales with wavelength. Inference searches all allowed charges from the camera image and does not assume the generating charge, entered magnitude or selected generating mode.
 
 The residual per pixel is `100 [sqrt(I_pred+epsilon) − sqrt(I_observed+epsilon)]`, with `epsilon=1e-12` on normalized intensity. Analytic derivatives propagate `i Z_j U` through the same optical system, including normalization and spectral scaling. SciPy uses trust-region least squares with at most 35 evaluations. The NumPy fallback uses damped Gauss–Newton with backtracking. The fixed search seeds and image-derived centroid estimate are selected using camera residual, not truth error.
 
-Piston removal is the only registration used for scoring. Phase RMSE is unweighted over the transmitted circular pupil. The similarity score is clipped at zero and is N/A for flat truth. The input Gaussian is known to the solver; reconstructing an unknown amplitude distribution is outside this implementation.
+For charge-zero input and fit, piston removal is the only registration used for scoring. Phase RMSE is unweighted over the transmitted circular pupil. Its original similarity score is clipped at zero and is N/A for flat truth. When input or recovered charge is nonzero, scoring uses a circular phase difference after one global phase offset and normalizes RMSE by π. Charge correctness and sampled winding are reported separately. The input Gaussian is known to the solver; reconstructing an unknown amplitude distribution is outside this implementation.
 
 ## Numerical diagnostics
 
@@ -56,4 +56,4 @@ Independent-grid tests generate a camera image using twice the pupil resolution,
 
 ## Scope relative to the literature
 
-The geometry and sensing interpretation are informed by the sources in RESEARCH.md. The coherent forward implementation and the nonlinear Zernike inverse fit are original code for this application. They do not claim to reproduce the published maximum-spanning-tree inversion, full plenoptic mapping algorithm, experimental amplitude retrieval, vortex recovery, or an adaptive-optics control loop.
+The geometry and sensing interpretation are informed by the sources in RESEARCH.md. The coherent forward implementation and discrete-vortex/nonlinear-Zernike inverse fit are original code for this application. The separate gradient/curl and branch-cut diagnostic follows the reconstruction principle of Wu, Ko and Davis (2016), with limitations described in [VORTEX.md](VORTEX.md). These methods do not claim to reproduce the physical phase plate, the full 20×20 MLA experiment, the published maximum-spanning-tree inversion, experimental amplitude retrieval, or an adaptive-optics control loop.
