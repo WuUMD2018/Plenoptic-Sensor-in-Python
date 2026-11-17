@@ -6,6 +6,12 @@ Set **Vortex charge ℓ** to an integer from 0 to 6, then run the sensor. Charge
 
 The phase-amplitude slider scales only the Zernike component. It never scales the topological charge. Reset restores charge 0. Exports preserve both the input and recovered charge, numerical phase arrays, and the metric definition.
 
+The front-panel validation selector includes **Vortex charges (1–6)**. This sweep generates six pure Gaussian vortices at the current optical settings, with zero Zernike distortion, independently of the composer mixture and the main charge slider. It does not change those controls. For each camera image the inverse still searches all charges 0–6 and fits the smooth Zernike coefficients. The results table reports the generated and recovered charge separately from the circular phase score and RMSE; select a row to inspect the camera image, wrapped phases and residual. Warnings remain visible even when the inferred charge matches.
+
+Use **Export results** on the validation tab to save `vortex_summary.csv`, `vortex_charges_1_to_6.pdf`, per-charge `vortex_charge_01.npz` through `vortex_charge_06.npz`, and `vortex_run_settings.json`. The JSON includes every completed case's settings and a complete/partial flag. Completed cases remain available if a sweep is cancelled, and switching validation types preserves both sets of results. The **Zernike modes (21)** option retains the original individual-mode sweep with the selected charge added to each input. Use a normal sensor run to test a specific combined Zernike/vortex mixture, or the command-line evaluation below to sweep both pure and mixed cases.
+
+The version 1.2 front-panel workflow passed a complete six-charge run, all 21 original Zernike cases, and **46 automated tests**. See the [verification record](TESTING.md) and [six-charge summary](../../docs/vortex_validation/gui_sweep_summary.csv). This remains a same-model numerical check.
+
 ## Beam convention
 
 At the reference wavelength,

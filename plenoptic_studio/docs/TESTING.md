@@ -1,5 +1,15 @@
 # Verification record
 
+## Front-panel validation, version 1.2 — 2026-11-16
+
+**46 tests passed in 70.816 seconds**, including the six-charge numerical sweep, streaming and cancellation, preservation of optical settings, independent charge inference, GUI sweep selection, separate result snapshots, mismatch display and partial exports. After the final dropdown and compact-layout changes, all **14 GUI tests passed again in 3.886 seconds**.
+
+The real Qt worker completed both **6/6 vortex cases** and **21/21 Zernike cases**, with row selection and CSV/PDF/NPZ/JSON export checks. These runs used the default optics with monochromatic 633 nm light. The vortex sweep took 24.50 seconds and the Zernike sweep 185.31 seconds including result drawing and row inspection, under concurrent local testing; these are not performance benchmarks. The six vortex charges were correctly inferred, and every exported result retained its original parameters after input edits. The PDF exports contained six and 21 pages respectively. [Detailed GUI run evidence](../../docs/vortex_validation/gui_sweep_results.json) and [test log](../../docs/vortex_validation/front_validation_tests.txt) are included.
+
+A separate native-window run at the default 0.1 nm spectral FWHM recovered charges 1–6. The dropdown, all six table rows and phase maps were visually checked, and the compact 1120×780 layout was rendered and inspected. The vortex table and its zero-Zernike scope note remain visible at that size; plots can be scrolled. [GUI screenshot](../../docs/vortex_validation/gui_sweep.png).
+
+These are noiseless, same-model software consistency checks. They do not establish experimental accuracy or validate the separate paper-inspired geometric reconstruction.
+
 ## Vortex extension, 2026-11-16
 
 **37 tests passed** in 61.162 seconds on Windows/Python 3.13.2 (NumPy 2.5.5, SciPy 1.18.1, Matplotlib 3.11.2, PySide6 6.12.0). This includes the original regressions, integer charge validation, additive phase and winding, zero-charge compatibility, nonzero-charge analytic derivatives, image-only candidate selection, wrapped metrics, GUI snapshots/exports, and gradient integration with branch cuts.

@@ -13,7 +13,7 @@ No ground-truth coefficients or phase map are supplied to reconstruction.
 """
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 from functools import lru_cache
 from math import factorial
 from typing import Callable
@@ -726,6 +726,38 @@ def validate_all(p: Parameters, progress=None, cancel=None, result_callback=None
         result = simulate(p, weights, report, cancel, model=model, max_nfev=max_nfev)
         result.metadata["mode_j"] = mode.j
         result.metadata["mode_name"] = mode.name
+        results.append(result)
+        if result_callback:
+            result_callback(index, result)
+    return results
+
+
+def validate_vortex_charges(p: Parameters, progress=None, cancel=None,
+                           result_callback=None, *, max_nfev=35) -> list[SimulationResult]:
+    """Validate pure Gaussian vortices q1..6 with image-only charge inference.
+
+    Keep the selected optical geometry and spectrum. Each case uses zero smooth
+    Zernike phase, regardless of the selected mixture or phase amplitude. The
+    generated charge is not supplied as a reconstruction constraint: simulate
+    searches its usual q0..6 candidates. Completed cases stream through the
+    zero-based callback, so callers can retain them if a later case is cancelled.
+    """
+    results = []
+    for index, charge in enumerate(range(1, 7)):
+        _check_cancel(cancel)
+        parameters = replace(p, vortex_charge=charge, phase_ptp_rad=0.0)
+        weights = np.zeros(21)
+        def report(message, q=charge):
+            if progress:
+                progress(f"Vortex {q}/6 · {message}")
+        result = simulate(parameters, weights, report, cancel, max_nfev=max_nfev)
+        result.metadata.update({
+            "validation_kind": "vortex",
+            "validation_charge": charge,
+            "validation_name": f"Vortex charge q={charge}",
+            "mode_name": f"Pure Gaussian vortex q={charge}",
+            "relative_weights": weights.tolist(),
+        })
         results.append(result)
         if result_callback:
             result_callback(index, result)

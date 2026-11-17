@@ -4,7 +4,9 @@
 
 The input also supports an **ideal Gaussian vortex with integer topological charge 0–6**, added to the Zernike phase. The vortex extension is based on [Wu, Ko and Davis, *Optics Letters* 41, 3169–3172 (2016)](https://doi.org/10.1364/OL.41.003169). See [vortex operation, reconstruction and validation](plenoptic_studio/docs/VORTEX.md).
 
-![Vortex-enabled GUI: charge 4 input and recovered phase](docs/vortex_validation/gui_charge4.png)
+**Front-panel validation:** choose **Vortex charges (1–6)** to run all six pure vortices, compare generated and recovered charges, and inspect or export each reconstruction. The existing 21-mode Zernike sweep remains available.
+
+![Front-panel vortex validation: six charges recovered, with charge 6 selected](docs/vortex_validation/gui_sweep.png)
 
 [Quick start](#quick-start) · [GUI demos](#gui-demos) · [Prepared demo](#reproduce-the-prepared-demo) · [Model details](plenoptic_studio/docs/MODEL.md) · [Research and references](plenoptic_studio/docs/RESEARCH.md)
 
@@ -134,7 +136,7 @@ print(result.similarity_pct, result.rms_error_rad)
 | Central wavelength | 633 nm | Reference wavelength for phase in radians |
 | Spectral FWHM | 0.1 nm | Gaussian intensity spectrum; 0 means monochromatic |
 
-Every main slider spans **0–200% of the last explicitly entered value**. Moving a slider updates its numeric box. Editing the numeric box, including retyping its current value, resets the reference to 100%. Zero phase and zero bandwidth are valid; zero dimensions, focal lengths, or wavelength disable computation with an explanation. If you set a reference value to zero, type a positive value again to restore a useful slider range.
+Every physical-parameter slider spans **0–200% of the last explicitly entered value**. The separate vortex slider uses absolute integer charges 0–6. Moving a slider updates its numeric box. Editing a physical-parameter box, including retyping its current value, resets its reference to 100%. Zero phase and zero bandwidth are valid; zero dimensions, focal lengths, or wavelength disable computation with an explanation. If you set a reference value to zero, type a positive value again to restore a useful slider range.
 
 The default objective is f/40 and each MLA cell is f/33.33. The interface uses a strict margin check and warns whenever `Fobjective <= FMLA`. The literature permits equality as the matched boundary; the warning explains that it has no margin.
 
@@ -144,8 +146,8 @@ The default objective is f/40 and each MLA cell is f/33.33. The interface uses a
 2. Click **View** to enable a rotatable 3D surface. Drag to rotate; changing coefficients then refreshes the surface automatically. **Finish setup** accepts the mixture and returns to the main window. Cancel discards changes.
 3. **Preview Gaussian input beam** displays the actual truncated intensity profile and cross section. The intensity, rather than field amplitude, has `sigma = beam diameter / 4`.
 4. **Run plenoptic sensor** displays the camera image, ground-truth phase, reconstructed phase, and residual. A background worker keeps controls responsive and allows cancellation.
-5. Enable **Validate individual Zernike modes**, then click **Validate all 21 modes**. Each mode is generated separately at the requested phase range; the inverse solver fits all 20 observable modes without knowing which one generated the image. Select a completed row to inspect its plots.
-6. **Export results** saves the current run as PNG, NPZ numerical arrays, and JSON settings. In the validation tab it saves a CSV table, a multipage PDF, and one NPZ per completed mode. Partial sweeps can be exported. Existing files of the same names in the chosen folder are overwritten.
+5. Enable validation and choose a sweep on the front panel: **Zernike modes (21)** tests each mode separately at the requested phase range and selected vortex charge; **Vortex charges (1–6)** tests six pure Gaussian vortices with no smooth Zernike distortion, using the current optical settings. The vortex sweep overrides the input charge for each case and searches all charges 0–6 from the camera image. Select a completed row to inspect its plots and compare the input and recovered charges.
+6. **Export results** saves the current run as PNG, NPZ numerical arrays, and JSON settings. In the validation tab it saves a CSV table, a multipage PDF, and one NPZ per completed case. The vortex sweep has separate filenames and per-charge settings. Partial sweeps can be exported. Existing files of the same names in the chosen folder are overwritten.
 
 ![Rotatable Zernike phase composer](plenoptic_studio/docs/zernike_preview.png)
 

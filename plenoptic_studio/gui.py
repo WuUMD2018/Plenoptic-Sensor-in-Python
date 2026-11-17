@@ -19,7 +19,7 @@ from matplotlib.figure import Figure
 from matplotlib.backends.backend_pdf import PdfPages
 
 from .optics import (MODES, Parameters, make_wavefront, simulate,
-                     validate_all, validate_parameters, phase_residual)
+                     validate_all, validate_vortex_charges, validate_parameters, phase_residual)
 
 BG = "#090f1c"
 PANEL = "#101c2e"
@@ -43,6 +43,8 @@ QLabel#warning { color: #f3b969; background: #29251f; border-radius: 7px; paddin
 QLabel#okay { color: #77ddbd; background: #142d2f; border-radius: 7px; padding: 9px; font-size: 11px; }
 QDoubleSpinBox, QSpinBox, QComboBox { background: #081321; border: 1px solid #32435b; border-radius: 5px; padding: 5px 6px; selection-background-color: #277e83; }
 QDoubleSpinBox:focus, QComboBox:focus { border: 1px solid #50dfd0; }
+QComboBox QAbstractItemView { background-color: #101c2e; color: #e5edf8; selection-background-color: #24535b; selection-color: #e5edf8; border: 1px solid #374a65; outline: 0; }
+QComboBox QAbstractItemView::item { min-height: 24px; padding: 3px 6px; }
 QDoubleSpinBox::up-button, QDoubleSpinBox::down-button, QSpinBox::up-button, QSpinBox::down-button { width: 16px; border: none; }
 QSlider::groove:horizontal { height: 4px; background: #2a3950; border-radius: 2px; }
 QSlider::sub-page:horizontal { background: #3baba8; border-radius: 2px; }
@@ -583,26 +585,27 @@ class SimulationWorker(QtCore.QObject):
     error = QtCore.Signal(str)
     finished = QtCore.Signal()
 
-    def __init__(self, params, weights, validation=False):
+    def __init__(self, params, weights, validation=False, validation_kind="zernike"):
         super().__init__()
         self.params = params
         self.weights = np.array(weights, copy=True)
         self.validation = validation
+        self.validation_kind = validation_kind
         self.cancel_event = threading.Event()
 
     @QtCore.Slot()
     def run(self):
         try:
             if self.validation:
-                # validate_all owns reuse of the calibrated propagation model.
+                validator = validate_vortex_charges if self.validation_kind == "vortex" else validate_all
                 import inspect
-                if "result_callback" in inspect.signature(validate_all).parameters:
-                    validate_all(self.params, progress=self.progress.emit,
-                                 cancel=self.cancel_event.is_set,
-                                 result_callback=lambda index, result: self.result.emit(index + 1, result))
+                if "result_callback" in inspect.signature(validator).parameters:
+                    validator(self.params, progress=self.progress.emit,
+                              cancel=self.cancel_event.is_set,
+                              result_callback=lambda index, result: self.result.emit(index + 1, result))
                 else:
-                    results = validate_all(self.params, progress=self.progress.emit,
-                                           cancel=self.cancel_event.is_set)
+                    results = validator(self.params, progress=self.progress.emit,
+                                        cancel=self.cancel_event.is_set)
                     for index, result in enumerate(results, 1):
                         self.result.emit(index, result)
             else:
@@ -663,7 +666,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.weights[3], self.weights[5], self.weights[7] = .6, .25, .15
         self.current_result = None
         self.single_result = None
-        self.validation_results = {}
+        self._validation_kind = "zernike"
+        self.validation_results_by_kind = {"zernike": {}, "vortex": {}}
         self.thread = None
         self.worker = None
         self.busy = False
@@ -773,9 +777,17 @@ class MainWindow(QtWidgets.QMainWindow):
         self.run_button.setObjectName("primary")
         self.run_button.clicked.connect(self._run)
         outer.addWidget(self.run_button)
-        self.validate_mode = QtWidgets.QCheckBox("Validate individual Zernike modes")
+        self.validate_mode = QtWidgets.QCheckBox("Enable validation sweep")
         self.validate_mode.toggled.connect(self._validation_toggled)
         outer.addWidget(self.validate_mode)
+        self.validation_kind = QtWidgets.QComboBox()
+        self.validation_kind.addItem("Zernike modes (21)", "zernike")
+        self.validation_kind.addItem("Vortex charges (1–6)", "vortex")
+        self.validation_kind.setToolTip("Zernike: validate each Noll mode with the selected vortex charge.\n"
+                                       "Vortex: sweep pure Gaussian vortices 1–6 with zero Zernike phase; "
+                                       "the main charge slider and Zernike mixture are ignored. Other optical settings are preserved.")
+        self.validation_kind.currentIndexChanged.connect(self._validation_kind_changed)
+        outer.addWidget(self.validation_kind)
         self.validate_button = QtWidgets.QPushButton("Validate all 21 modes")
         self.validate_button.setEnabled(False)
         self.validate_button.clicked.connect(self._validate)
@@ -826,7 +838,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 self.validation_table.setItem(i, col, QtWidgets.QTableWidgetItem(value))
         self.validation_table.itemSelectionChanged.connect(self._select_validation)
         vl.addWidget(self.validation_table)
-        self.validation_hint = label("Select a completed mode to inspect its camera image, reconstruction and residual below.", "muted")
+        self.validation_hint = label("Select a completed mode to inspect its camera image, reconstruction and residual below.", "muted", True)
         vl.addWidget(self.validation_hint)
         self.tabs.addTab(self.validation_tab, "21-mode validation")
         self.tabs.setMaximumHeight(225)
@@ -911,12 +923,105 @@ class MainWindow(QtWidgets.QMainWindow):
     def _beam(self):
         BeamProfileDialog(self.parameters(), self.weights, self).exec()
 
+    @property
+    def validation_results(self):
+        """Keep both sweep snapshots while retaining the original GUI API."""
+        return self.validation_results_by_kind[self._validation_kind]
+
+    @validation_results.setter
+    def validation_results(self, results):
+        self.validation_results_by_kind[self._validation_kind] = results
+
+    def _validation_name(self, index, kind=None):
+        kind = self._validation_kind if kind is None else kind
+        return f"Pure Gaussian vortex · ℓ = {index}" if kind == "vortex" else f"Noll {index:02d} · {MODES[index - 1].name}"
+
+    def _update_validation_row(self, index, result):
+        row = index - 1
+        if not 0 <= row < self.validation_table.rowCount():
+            return
+        sim = result.similarity_pct
+        if self._validation_kind == "vortex":
+            recovered = result.metadata.get("recovered_vortex_charge")
+            match = recovered == index
+            state = "Charge match" if match else "Charge mismatch"
+            if result.warnings:
+                state += " · review warnings"
+            values = [str(recovered) if recovered is not None else "—",
+                      "N/A" if sim is None else f"{sim:.1f}%", f"{result.rms_error_rad:.4g}", state]
+        else:
+            vortex = int(result.metadata.get("input_vortex_charge", 0))
+            state = ("Piston removed; vortex retained" if index == 1 and vortex else
+                     "Piston unobservable" if index == 1 else
+                     "Review warnings" if result.warnings else "Complete")
+            values = [("N/A · piston" if index == 1 else "N/A · flat") if sim is None else f"{sim:.1f}%",
+                      f"{result.rms_error_rad:.4g}", state]
+        for column, value in enumerate(values, 1):
+            self.validation_table.item(row, column).setText(value)
+
+    def _populate_validation_table(self):
+        vortex = self._validation_kind == "vortex"
+        blocker = QtCore.QSignalBlocker(self.validation_table)
+        self.validation_table.clearContents()
+        self.validation_table.setColumnCount(5 if vortex else 4)
+        self.validation_table.setRowCount(6 if vortex else 21)
+        headers = ["Input ℓ", "Recovered ℓ", "Circular score", "RMSE (rad)", "State"] if vortex else ["Noll mode", "Similarity", "RMSE (rad)", "State"]
+        self.validation_table.setHorizontalHeaderLabels(headers)
+        stretch_column = 4 if vortex else 0
+        for col in range(self.validation_table.columnCount()):
+            resize_mode = (QtWidgets.QHeaderView.ResizeMode.Stretch if col == stretch_column else
+                           QtWidgets.QHeaderView.ResizeMode.ResizeToContents)
+            self.validation_table.horizontalHeader().setSectionResizeMode(col, resize_mode)
+        for row in range(self.validation_table.rowCount()):
+            name = str(row + 1) if vortex else f"{row + 1:02d}  {MODES[row].name}"
+            values = [name] + ["—"] * (self.validation_table.columnCount() - 2) + ["Waiting"]
+            self.validation_table.setRowHeight(row, 20 if vortex else 25)
+            for col, value in enumerate(values):
+                self.validation_table.setItem(row, col, QtWidgets.QTableWidgetItem(value))
+        for index, result in self.validation_results.items():
+            self._update_validation_row(index, result)
+        if self.validation_results:
+            self.validation_table.selectRow(max(self.validation_results) - 1)
+        else:
+            self.validation_table.clearSelection()
+            self.validation_table.setCurrentCell(-1, -1)
+        del blocker
+
+    def _validation_kind_changed(self, _index):
+        if self.busy:
+            blocker = QtCore.QSignalBlocker(self.validation_kind)
+            self.validation_kind.setCurrentIndex(self.validation_kind.findData(self._validation_kind))
+            del blocker
+            return
+        self._validation_kind = self.validation_kind.currentData()
+        vortex = self._validation_kind == "vortex"
+        self.validate_button.setText("Validate vortex charges 1–6" if vortex else "Validate all 21 modes")
+        self.tabs.setTabText(1, "Vortex validation · 1–6" if vortex else "21-mode validation")
+        self.validation_hint.setText("Pure Gaussian vortices 1–6; Zernike phase is zero. Charge match and circular score are separate checks." if vortex else
+                                     "Select a completed mode to inspect its camera image, reconstruction and residual below.")
+        self._populate_validation_table()
+        self._update_validation_layout()
+        if self.tabs.currentIndex() == 1:
+            self._select_validation()
+        self._parameters_changed()
+
     def _validation_toggled(self, checked):
         self.tabs.setCurrentIndex(1 if checked else 0)
         self._parameters_changed()
 
+    def _update_validation_layout(self):
+        if not hasattr(self, "validation_hint"):
+            return
+        compact = self.height() < 900
+        vortex = self._validation_kind == "vortex"
+        # Six vortex rows and their scope note stay visible at the minimum
+        # window size; the larger Zernike table retains its compact scroll view.
+        self.validation_hint.setVisible(vortex or not compact)
+        expanded_height = 225 if vortex or not compact else 170
+        self.tabs.setFixedHeight(expanded_height if self.tabs.currentIndex() == 1 else 42)
+
     def _tab_changed(self, index):
-        self.tabs.setFixedHeight((170 if self.height() < 900 else 225) if index == 1 else 42)
+        self._update_validation_layout()
         if index == 1:
             self._select_validation()
         elif self.single_result is not None:
@@ -931,12 +1036,12 @@ class MainWindow(QtWidgets.QMainWindow):
         self._start(False)
 
     def _validate(self):
+        if self.busy:
+            return
         self.validation_results = {}
         self._clear_display()
         self.validation_params = self.parameters()
-        for row in range(21):
-            for col, value in enumerate(["—", "—", "Waiting"], 1):
-                self.validation_table.item(row, col).setText(value)
+        self._populate_validation_table()
         self.tabs.setCurrentIndex(1)
         self._start(True)
 
@@ -950,13 +1055,14 @@ class MainWindow(QtWidgets.QMainWindow):
             control.setEnabled(False)
         self.defaults_button.setEnabled(False)
         self.validate_mode.setEnabled(False)
+        self.validation_kind.setEnabled(False)
         self.cancel_button.setVisible(True)
         self.cancel_button.setEnabled(True)
         self.progress.setRange(0, 0)
         self.progress.setVisible(True)
         self.status_text.setText("Preparing the optical model…")
         self.thread = QtCore.QThread(self)
-        self.worker = SimulationWorker(self.parameters(), self.weights, validation)
+        self.worker = SimulationWorker(self.parameters(), self.weights, validation, self._validation_kind)
         self.worker.moveToThread(self.thread)
         self.thread.started.connect(self.worker.run)
         self.worker.progress.connect(self.status_text.setText)
@@ -976,23 +1082,15 @@ class MainWindow(QtWidgets.QMainWindow):
             if self.tabs.currentIndex() == 0:
                 self._display(result, "Custom mixture")
         else:
-            # Core callbacks use the displayed Noll number (1–21).
-            index = int(result.metadata.get("mode_j", index))
-            self.validation_results[index] = result
-            row = index - 1
-            if not 0 <= row < 21:
+            kind = result.metadata.get("validation_kind", self._validation_kind)
+            index = int(result.metadata.get("validation_charge" if kind == "vortex" else "mode_j", index))
+            self.validation_results_by_kind[kind][index] = result
+            if kind != self._validation_kind:
                 return
-            sim = result.similarity_pct
-            self.validation_table.item(row, 1).setText(("N/A · piston" if index == 1 else "N/A · flat") if sim is None else f"{sim:.1f}%")
-            self.validation_table.item(row, 2).setText(f"{result.rms_error_rad:.4g}")
-            vortex = int(result.metadata.get("input_vortex_charge", 0))
-            status = ("Piston removed; vortex retained" if index == 1 and vortex else
-                      "Piston unobservable" if index == 1 else
-                      "Review warnings" if result.warnings else "Complete")
-            self.validation_table.item(row, 3).setText(status)
-            self.validation_table.selectRow(row)
+            self._update_validation_row(index, result)
+            self.validation_table.selectRow(index - 1)
             if self.tabs.currentIndex() == 1:
-                self._display(result, f"Noll {index:02d} · {MODES[row].name}")
+                self._display(result, self._validation_name(index))
 
     def _display(self, result, name):
         self.current_result = result
@@ -1031,7 +1129,7 @@ class MainWindow(QtWidgets.QMainWindow):
         row = self.validation_table.currentRow()
         index = row + 1
         if index in self.validation_results:
-            self._display(self.validation_results[index], f"Noll {index:02d} · {MODES[row].name}")
+            self._display(self.validation_results[index], self._validation_name(index))
         elif hasattr(self, "canvas"):
             self._clear_display()
 
@@ -1044,7 +1142,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.error_card.value_label.setText("—")
         self.error_card.foot_label.setText("Radians across the illuminated pupil")
         self.export_button.setEnabled(False)
-        self.result_warning.setText("Run the sensor or validate the 21 modes to inspect results here.")
+        self.result_warning.setText("Run the sensor or a validation sweep to inspect results here.")
         self.plot_label.setText("Model: scalar paraxial optics · known Gaussian amplitude")
 
     def _cancel(self):
@@ -1067,6 +1165,7 @@ class MainWindow(QtWidgets.QMainWindow):
             control.setEnabled(True)
         self.defaults_button.setEnabled(True)
         self.validate_mode.setEnabled(True)
+        self.validation_kind.setEnabled(True)
         self.cancel_button.setVisible(False)
         self.progress.setVisible(False)
         self._parameters_changed()
@@ -1085,38 +1184,68 @@ class MainWindow(QtWidgets.QMainWindow):
             return
         directory = Path(target)
         try:
+            info = self._result_settings(self.current_result)
+            settings_name = "run_settings.json"
             if self.tabs.currentIndex() == 1 and self.validation_results:
                 results = sorted(self.validation_results.items())
-                with (directory / "validation_summary.csv").open("w", newline="", encoding="utf-8") as stream:
+                vortex = self._validation_kind == "vortex"
+                csv_name = "vortex_summary.csv" if vortex else "validation_summary.csv"
+                pdf_name = "vortex_charges_1_to_6.pdf" if vortex else "validation_21_modes.pdf"
+                settings_name = "vortex_run_settings.json" if vortex else "run_settings.json"
+                with (directory / csv_name).open("w", newline="", encoding="utf-8") as stream:
                     writer = csv.writer(stream)
-                    writer.writerow(["noll_j", "mode", "similarity_percent", "phase_rmse_rad", "warnings",
-                                     "input_vortex_charge", "recovered_vortex_charge", "phase_comparison"])
+                    if vortex:
+                        writer.writerow(["input_charge", "recovered_charge", "charge_match", "circular_score_percent",
+                                         "circular_rmse_rad", "image_fit_error", "warnings"])
+                    else:
+                        writer.writerow(["noll_j", "mode", "similarity_percent", "phase_rmse_rad", "warnings",
+                                         "input_vortex_charge", "recovered_vortex_charge", "phase_comparison"])
                     for index, result in results:
-                        writer.writerow([index, MODES[index - 1].name, result.similarity_pct,
-                                         result.rms_error_rad, " | ".join(result.warnings),
-                                         result.metadata.get("input_vortex_charge", 0),
-                                         result.metadata.get("recovered_vortex_charge", 0),
-                                         result.metadata.get("phase_comparison", "unwrapped")])
+                        if vortex:
+                            recovered = result.metadata.get("recovered_vortex_charge")
+                            writer.writerow([index, recovered, recovered == index, result.similarity_pct,
+                                             result.rms_error_rad, result.metadata.get("image_fit_error"),
+                                             " | ".join(result.warnings)])
+                        else:
+                            writer.writerow([index, MODES[index - 1].name, result.similarity_pct,
+                                             result.rms_error_rad, " | ".join(result.warnings),
+                                             result.metadata.get("input_vortex_charge", 0),
+                                             result.metadata.get("recovered_vortex_charge", 0),
+                                             result.metadata.get("phase_comparison", "unwrapped")])
                 previous = self.current_result
-                with PdfPages(directory / "validation_21_modes.pdf") as pdf:
-                    for index, result in results:
-                        self.canvas.show_result(result, f"Noll {index:02d} · {MODES[index - 1].name}")
-                        pdf.savefig(self.canvas.fig, facecolor=PANEL)
-                        self._save_result(directory / f"noll_{index:02d}.npz", result)
-                self.canvas.show_result(previous)
+                expected = 6 if vortex else 21
+                completion = "Complete sweep" if len(results) == expected else f"Partial sweep · {len(results)}/{expected} completed"
+                try:
+                    with PdfPages(directory / pdf_name) as pdf:
+                        for index, result in results:
+                            self.canvas.show_result(result, f"{self._validation_name(index)} · {completion}")
+                            pdf.savefig(self.canvas.fig, facecolor=PANEL)
+                            filename = f"vortex_charge_{index:02d}.npz" if vortex else f"noll_{index:02d}.npz"
+                            self._save_result(directory / filename, result)
+                finally:
+                    self.canvas.show_result(previous)
+                info.update({"validation_kind": self._validation_kind,
+                             "expected_count": expected, "completed_count": len(results),
+                             "complete": len(results) == expected,
+                             "completed_indices": [index for index, _ in results],
+                             "selected_result": "Top-level parameters describe only the selected result; validation_results contains every completed snapshot.",
+                             "validation_results": [{"index": index, **self._result_settings(result)} for index, result in results]})
             else:
                 self.canvas.fig.savefig(directory / "plenoptic_reconstruction.png", dpi=200, facecolor=PANEL)
                 self._save_result(directory / "plenoptic_result.npz", self.current_result)
-            info = {"parameters": self.current_result.metadata.get("parameters", {}),
-                    "relative_weights": self.current_result.metadata.get("relative_weights", "Individual unit Noll modes 1–21"),
-                    "similarity_definition": self.current_result.metadata.get("similarity_definition",
-                        "100 * max(0, 1 - RMSE / ground-truth RMS), after piston removal; flat phase N/A"),
-                    "metadata": self.current_result.metadata,
-                    "warnings": self.current_result.warnings}
-            (directory / "run_settings.json").write_text(json.dumps(info, indent=2, default=str), encoding="utf-8")
-            self.status_text.setText(f"Exported figures and numerical arrays to {directory.name}.")
+            (directory / settings_name).write_text(json.dumps(info, indent=2, default=str), encoding="utf-8")
+            count_text = f" · {info['completed_count']}/{info['expected_count']} completed" if "completed_count" in info else ""
+            self.status_text.setText(f"Exported figures and numerical arrays to {directory.name}{count_text}.")
         except Exception as exc:
             QtWidgets.QMessageBox.warning(self, "Export failed", str(exc))
+
+    @staticmethod
+    def _result_settings(result):
+        return {"parameters": result.metadata.get("parameters", {}),
+                "relative_weights": result.metadata.get("relative_weights", "Individual unit Noll modes 1–21"),
+                "similarity_definition": result.metadata.get("similarity_definition",
+                    "100 * max(0, 1 - RMSE / ground-truth RMS), after piston removal; flat phase N/A"),
+                "metadata": result.metadata, "warnings": result.warnings}
 
     @staticmethod
     def _save_result(path, result):
@@ -1129,6 +1258,8 @@ class MainWindow(QtWidgets.QMainWindow):
                             reconstructed_coefficients=result.coefficients,
                             input_vortex_charge=result.metadata.get("input_vortex_charge", getattr(wf, "vortex_charge", 0)),
                             reconstructed_vortex_charge=result.metadata.get("recovered_vortex_charge", 0),
+                            parameters_json=json.dumps(result.metadata.get("parameters", {}), default=str),
+                            metadata_json=json.dumps(result.metadata, default=str),
                             phase_residual_rad=phase_residual(wf.phase, result.reconstructed_phase, wf.mask,
                                 wrapped=bool(result.metadata.get("wrapped_phase_comparison", False))))
 
@@ -1145,8 +1276,7 @@ class MainWindow(QtWidgets.QMainWindow):
         if hasattr(self, "banner"):
             compact = self.height() < 900
             self.banner.setFixedHeight(112 if compact else 138)
-            self.validation_hint.setVisible(not compact)
-            self.tabs.setFixedHeight((170 if compact else 225) if self.tabs.currentIndex() == 1 else 42)
+            self._update_validation_layout()
 
 
 def launch(argv=None):

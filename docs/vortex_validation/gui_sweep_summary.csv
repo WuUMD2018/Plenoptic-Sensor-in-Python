@@ -1,0 +1,7 @@
+input_charge,recovered_charge,charge_match,circular_score_percent,circular_rmse_rad,image_fit_error,warnings
+1,1,True,100.0,0.0,0.0,Pupil phase changes by more than pi/2 per sample; increase numerical pupil resolution for convergence studies.
+2,2,True,100.0,0.0,1.1851617125031552e-16,Pupil phase changes by more than pi/2 per sample; increase numerical pupil resolution for convergence studies.
+3,3,True,100.0,0.0,0.0,Pupil phase changes by more than pi/2 per sample; increase numerical pupil resolution for convergence studies.
+4,4,True,100.0,0.0,0.0,Pupil phase changes by more than pi/2 per sample; increase numerical pupil resolution for convergence studies.
+5,5,True,100.0,0.0,0.0,Pupil phase changes by more than pi/2 per sample; increase numerical pupil resolution for convergence studies.
+6,6,True,100.0,0.0,0.0,Pupil phase changes by more than pi/2 per sample; increase numerical pupil resolution for convergence studies.

@@ -1,0 +1,271 @@
+{
+  "scope": "Real Qt worker, row selection and export; same-model noiseless consistency.",
+  "vortex": {
+    "completed": 6,
+    "seconds": 24.49815190001391,
+    "event_loop_ticks": 1133,
+    "rows": [
+      {
+        "case": 1,
+        "input_charge": 1,
+        "recovered_charge": 1,
+        "phase_rmse_rad": 0.0,
+        "similarity_pct": 100.0,
+        "image_fit_error": 0.0
+      },
+      {
+        "case": 2,
+        "input_charge": 2,
+        "recovered_charge": 2,
+        "phase_rmse_rad": 0.0,
+        "similarity_pct": 100.0,
+        "image_fit_error": 1.1851617125031552e-16
+      },
+      {
+        "case": 3,
+        "input_charge": 3,
+        "recovered_charge": 3,
+        "phase_rmse_rad": 0.0,
+        "similarity_pct": 100.0,
+        "image_fit_error": 0.0
+      },
+      {
+        "case": 4,
+        "input_charge": 4,
+        "recovered_charge": 4,
+        "phase_rmse_rad": 0.0,
+        "similarity_pct": 100.0,
+        "image_fit_error": 0.0
+      },
+      {
+        "case": 5,
+        "input_charge": 5,
+        "recovered_charge": 5,
+        "phase_rmse_rad": 0.0,
+        "similarity_pct": 100.0,
+        "image_fit_error": 0.0
+      },
+      {
+        "case": 6,
+        "input_charge": 6,
+        "recovered_charge": 6,
+        "phase_rmse_rad": 0.0,
+        "similarity_pct": 100.0,
+        "image_fit_error": 0.0
+      }
+    ],
+    "export_files": [
+      "vortex_charge_01.npz",
+      "vortex_charge_02.npz",
+      "vortex_charge_03.npz",
+      "vortex_charge_04.npz",
+      "vortex_charge_05.npz",
+      "vortex_charge_06.npz",
+      "vortex_charges_1_to_6.pdf",
+      "vortex_run_settings.json",
+      "vortex_summary.csv"
+    ]
+  },
+  "zernike": {
+    "completed": 21,
+    "seconds": 185.31339100003242,
+    "event_loop_ticks": 8912,
+    "rows": [
+      {
+        "case": 1,
+        "input_charge": 0,
+        "recovered_charge": 0,
+        "phase_rmse_rad": 0.0,
+        "similarity_pct": null,
+        "image_fit_error": 0.0
+      },
+      {
+        "case": 2,
+        "input_charge": 0,
+        "recovered_charge": 0,
+        "phase_rmse_rad": 2.935251519286161e-10,
+        "similarity_pct": 99.9999999806711,
+        "image_fit_error": 7.324569685706979e-11
+      },
+      {
+        "case": 3,
+        "input_charge": 0,
+        "recovered_charge": 0,
+        "phase_rmse_rad": 2.935250602265304e-10,
+        "similarity_pct": 99.9999999806711,
+        "image_fit_error": 7.324571914059868e-11
+      },
+      {
+        "case": 4,
+        "input_charge": 0,
+        "recovered_charge": 0,
+        "phase_rmse_rad": 2.343526354203621e-16,
+        "similarity_pct": 99.99999999999999,
+        "image_fit_error": 5.763550001831653e-16
+      },
+      {
+        "case": 5,
+        "input_charge": 0,
+        "recovered_charge": 0,
+        "phase_rmse_rad": 2.8178102336480083e-11,
+        "similarity_pct": 99.99999999774235,
+        "image_fit_error": 1.0114375050740669e-11
+      },
+      {
+        "case": 6,
+        "input_charge": 0,
+        "recovered_charge": 0,
+        "phase_rmse_rad": 1.0995582769582117e-14,
+        "similarity_pct": 99.99999999999912,
+        "image_fit_error": 3.294713582427955e-15
+      },
+      {
+        "case": 7,
+        "input_charge": 0,
+        "recovered_charge": 0,
+        "phase_rmse_rad": 2.9911330372801347e-13,
+        "similarity_pct": 99.99999999997262,
+        "image_fit_error": 8.700532168704879e-14
+      },
+      {
+        "case": 8,
+        "input_charge": 0,
+        "recovered_charge": 0,
+        "phase_rmse_rad": 2.991453778029131e-13,
+        "similarity_pct": 99.99999999997262,
+        "image_fit_error": 8.700215208741443e-14
+      },
+      {
+        "case": 9,
+        "input_charge": 0,
+        "recovered_charge": 0,
+        "phase_rmse_rad": 3.532535402547491e-09,
+        "similarity_pct": 99.99999967475894,
+        "image_fit_error": 7.031056649859109e-10
+      },
+      {
+        "case": 10,
+        "input_charge": 0,
+        "recovered_charge": 0,
+        "phase_rmse_rad": 3.532535321468835e-09,
+        "similarity_pct": 99.99999967475895,
+        "image_fit_error": 7.031056719553362e-10
+      },
+      {
+        "case": 11,
+        "input_charge": 0,
+        "recovered_charge": 0,
+        "phase_rmse_rad": 1.3128596352706231e-11,
+        "similarity_pct": 99.99999999926597,
+        "image_fit_error": 3.747502344466302e-12
+      },
+      {
+        "case": 12,
+        "input_charge": 0,
+        "recovered_charge": 0,
+        "phase_rmse_rad": 4.089919427176395e-10,
+        "similarity_pct": 99.99999995976748,
+        "image_fit_error": 1.2829912123231914e-10
+      },
+      {
+        "case": 13,
+        "input_charge": 0,
+        "recovered_charge": 0,
+        "phase_rmse_rad": 9.772277212010831e-10,
+        "similarity_pct": 99.99999990219335,
+        "image_fit_error": 3.7570109385582524e-10
+      },
+      {
+        "case": 14,
+        "input_charge": 0,
+        "recovered_charge": 0,
+        "phase_rmse_rad": 2.3936061678635486e-16,
+        "similarity_pct": 99.99999999999997,
+        "image_fit_error": 5.522670274356239e-16
+      },
+      {
+        "case": 15,
+        "input_charge": 0,
+        "recovered_charge": 0,
+        "phase_rmse_rad": 7.053829573258064e-10,
+        "similarity_pct": 99.99999992760192,
+        "image_fit_error": 2.189888660648809e-10
+      },
+      {
+        "case": 16,
+        "input_charge": 0,
+        "recovered_charge": 0,
+        "phase_rmse_rad": 5.572008387111616e-16,
+        "similarity_pct": 99.99999999999994,
+        "image_fit_error": 6.146401188671994e-16
+      },
+      {
+        "case": 17,
+        "input_charge": 0,
+        "recovered_charge": 0,
+        "phase_rmse_rad": 5.354961739671808e-16,
+        "similarity_pct": 99.99999999999994,
+        "image_fit_error": 6.071394836659491e-16
+      },
+      {
+        "case": 18,
+        "input_charge": 0,
+        "recovered_charge": 0,
+        "phase_rmse_rad": 1.2800955987633907e-16,
+        "similarity_pct": 99.99999999999999,
+        "image_fit_error": 5.356163912220831e-16
+      },
+      {
+        "case": 19,
+        "input_charge": 0,
+        "recovered_charge": 0,
+        "phase_rmse_rad": 1.3295498135080911e-16,
+        "similarity_pct": 99.99999999999999,
+        "image_fit_error": 5.21707263767899e-16
+      },
+      {
+        "case": 20,
+        "input_charge": 0,
+        "recovered_charge": 0,
+        "phase_rmse_rad": 1.509930413582122e-09,
+        "similarity_pct": 99.99999982973557,
+        "image_fit_error": 5.044777964607422e-10
+      },
+      {
+        "case": 21,
+        "input_charge": 0,
+        "recovered_charge": 0,
+        "phase_rmse_rad": 1.5099304088694165e-09,
+        "similarity_pct": 99.99999982973557,
+        "image_fit_error": 5.044777798743246e-10
+      }
+    ],
+    "export_files": [
+      "noll_01.npz",
+      "noll_02.npz",
+      "noll_03.npz",
+      "noll_04.npz",
+      "noll_05.npz",
+      "noll_06.npz",
+      "noll_07.npz",
+      "noll_08.npz",
+      "noll_09.npz",
+      "noll_10.npz",
+      "noll_11.npz",
+      "noll_12.npz",
+      "noll_13.npz",
+      "noll_14.npz",
+      "noll_15.npz",
+      "noll_16.npz",
+      "noll_17.npz",
+      "noll_18.npz",
+      "noll_19.npz",
+      "noll_20.npz",
+      "noll_21.npz",
+      "run_settings.json",
+      "validation_21_modes.pdf",
+      "validation_summary.csv"
+    ]
+  },
+  "status": "passed"
+}
